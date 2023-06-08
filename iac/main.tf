@@ -144,7 +144,7 @@ module "loki-stack" {
 
   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  distributed_mode = false
+  distributed_mode = true
 
   logs_storage = {
     bucket_name       = local.minio_config.buckets.0.name
@@ -155,5 +155,32 @@ module "loki-stack" {
 
   dependency_ids = {
     minio = module.minio.id
+  }
+}
+
+module "thanos" {
+  source = "./modules/thanos"
+
+  cluster_name     = local.cluster_name
+  base_domain      = local.base_domain
+  cluster_issuer   = local.cluster_issuer
+  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+
+  metrics_storage = {
+    bucket_name       = local.minio_config.buckets.1.name
+    endpoint          = module.minio.endpoint
+    access_key        = local.minio_config.users.1.accessKey
+    secret_access_key = local.minio_config.users.1.secretKey
+  }
+
+  thanos = {
+    oidc = module.oidc.oidc
+  }
+
+  dependency_ids = {
+    traefik      = module.traefik.id
+    cert-manager = module.cert-manager.id
+    minio        = module.minio.id
+    oidc         = module.oidc.id
   }
 }
