@@ -84,7 +84,7 @@ locals {
               retention_period            = "9000h"
             }
             querier = {
-              max_concurrent = 2
+              max_concurrent = 4
               query_timeout  = "5m"
             }
             query_range = {
@@ -143,7 +143,7 @@ locals {
         querier = {
           affinity       = ""
           replicas       = 4
-          maxUnavailable = 2
+          maxUnavailable = 4
         }
         ruler = {
           directories = {}

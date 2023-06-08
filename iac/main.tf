@@ -144,7 +144,7 @@ module "loki-stack" {
 
   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  distributed_mode = true
+  distributed_mode = false
 
   logs_storage = {
     bucket_name       = local.minio_config.buckets.0.name
