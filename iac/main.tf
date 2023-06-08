@@ -138,3 +138,24 @@ module "minio" {
     oidc         = module.oidc.id
   }
 }
+
+module "loki-stack" {
+  source = "git::https://github.com/camptocamp/devops-stack-module-loki-stack//kind?ref=v2.0.2"
+
+  cluster_name     = local.cluster_name
+  base_domain      = local.base_domain
+  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+
+  distributed_mode = true
+
+  logs_storage = {
+    bucket_name       = local.minio_config.buckets.0.name
+    endpoint          = module.minio.endpoint
+    access_key        = local.minio_config.users.0.accessKey
+    secret_access_key = local.minio_config.users.0.secretKey
+  }
+
+  dependency_ids = {
+    minio = module.minio.id
+  }
+}
