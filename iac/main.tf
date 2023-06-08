@@ -105,3 +105,15 @@ module "keycloak" {
     cert-manager = module.cert-manager.id
   }
 }
+
+module "oidc" {
+  source = "./modules/oidc"
+
+  cluster_name   = local.cluster_name
+  base_domain    = local.base_domain
+  cluster_issuer = local.cluster_issuer
+
+  dependency_ids = {
+    keycloak = module.keycloak.id
+  }
+}
