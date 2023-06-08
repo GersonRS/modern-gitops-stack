@@ -140,7 +140,7 @@ module "minio" {
 }
 
 module "loki-stack" {
-  source = "./modules/loki"
+  source = "./modules/loki-stack"
 
   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
@@ -174,6 +174,39 @@ module "thanos" {
   }
 
   thanos = {
+    oidc = module.oidc.oidc
+  }
+
+  dependency_ids = {
+    traefik      = module.traefik.id
+    cert-manager = module.cert-manager.id
+    minio        = module.minio.id
+    oidc         = module.oidc.id
+  }
+}
+
+module "kube-prometheus-stack" {
+  source = "git::https://github.com/camptocamp/devops-stack-module-kube-prometheus-stack//kind?ref=v2.3.0"
+
+  cluster_name     = local.cluster_name
+  base_domain      = local.base_domain
+  cluster_issuer   = local.cluster_issuer
+  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+
+  metrics_storage = {
+    bucket     = local.minio_config.buckets.1.name
+    endpoint   = module.minio.endpoint
+    access_key = local.minio_config.users.1.accessKey
+    secret_key = local.minio_config.users.1.secretKey
+  }
+
+  prometheus = {
+    oidc = module.oidc.oidc
+  }
+  alertmanager = {
+    oidc = module.oidc.oidc
+  }
+  grafana = {
     oidc = module.oidc.oidc
   }
 
