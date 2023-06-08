@@ -142,8 +142,6 @@ module "minio" {
 module "loki-stack" {
   source = "./modules/loki"
 
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
   distributed_mode = true
