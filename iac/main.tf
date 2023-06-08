@@ -186,7 +186,7 @@ module "thanos" {
 }
 
 module "kube-prometheus-stack" {
-  source = "git::https://github.com/camptocamp/devops-stack-module-kube-prometheus-stack//kind?ref=v2.3.0"
+  source = "./modules/kube-prometheus-stack"
 
   cluster_name     = local.cluster_name
   base_domain      = local.base_domain
