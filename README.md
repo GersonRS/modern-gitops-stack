@@ -19,8 +19,9 @@ helm upgrade --install gitlab gitlab/gitlab    --timeout 600s      --set global.
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://img.shields.io/badge/status-active-success.svg)
 
 <p align="center">
-  <img alt="logo" src="https://github.com/GersonRS/react-native-template-gersonrsantos-basic/raw/main/assets/logo.png"/>
+  <img alt="logo" src=".github/assets/images/logo.svg"/>
 </p>
+
 
 <!-- PROJECT LOGO -->
 
