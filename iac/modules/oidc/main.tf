@@ -3,8 +3,8 @@ resource "null_resource" "dependencies" {
 }
 
 resource "keycloak_realm" "modern_devops_stack" {
-  realm                    = "devops-stack"
-  display_name             = "DevOps Stack"
+  realm                    = "modern-devops-stack"
+  display_name             = "Modern DevOps Stack"
   display_name_html        = "<img width='200px' src='https://raw.githubusercontent.com/GersonRS/react-native-template-gersonrsantos-basic/main/assets/logo.png' alt='Modern DevOps Stack Logo'/>"
   login_with_email_allowed = true
   access_code_lifespan     = "1h"
@@ -83,7 +83,7 @@ resource "keycloak_openid_client_default_scopes" "client_default_scopes" {
 
 resource "keycloak_group" "modern_devops_stack_admins" {
   realm_id = resource.keycloak_realm.modern_devops_stack.id
-  name     = "devops-stack-admins"
+  name     = "modern-devops-stack-admins"
   attributes = {
     "terraform" = "true"
     "policy"    = "consoleAdmin##readwrite##diagnostics"
