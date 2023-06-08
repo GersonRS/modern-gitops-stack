@@ -140,7 +140,7 @@ module "minio" {
 }
 
 module "loki-stack" {
-  source = "git::https://github.com/camptocamp/devops-stack-module-loki-stack//kind?ref=v2.0.2"
+  source = "./modules/loki"
 
   cluster_name     = local.cluster_name
   base_domain      = local.base_domain
