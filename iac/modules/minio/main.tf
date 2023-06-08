@@ -58,7 +58,7 @@ resource "argocd_application" "this" {
 
     source {
       repo_url        = "https://github.com/GersonRS/modern-devops-stack.git"
-      path            = "iac/modules/minio/charts/minio/charts"
+      path            = "iac/modules/minio/charts/minio"
       target_revision = var.target_revision
       helm {
         values = data.utils_deep_merge_yaml.values.output
