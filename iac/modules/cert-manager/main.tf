@@ -20,7 +20,7 @@ resource "tls_self_signed_cert" "root" {
 }
 
 
-module "cert-manager" {
+module "self-signed" {
   source = "./self-signed"
 
   argocd_namespace = var.argocd_namespace

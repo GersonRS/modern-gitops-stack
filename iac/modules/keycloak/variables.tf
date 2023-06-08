@@ -15,6 +15,7 @@ variable "base_domain" {
 variable "argocd_namespace" {
   description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
   type        = string
+  default     = "argocd"
 }
 
 variable "target_revision" {
@@ -23,22 +24,16 @@ variable "target_revision" {
   default     = "main" # x-release-please-version
 }
 
+variable "cluster_issuer" {
+  description = "SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files."
+  type        = string
+  default     = "ca-issuer"
+}
+
 variable "namespace" {
   description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
   type        = string
-  default     = "traefik"
-}
-
-variable "replicas" {
-  description = "Number of Traefik pods to be deployed."
-  type        = string
-  default     = "2"
-}
-
-variable "enable_service_monitor" {
-  description = "Enable Prometheus ServiceMonitor in the Helm chart."
-  type        = bool
-  default     = true
+  default     = "keycloak"
 }
 
 variable "helm_values" {
@@ -70,3 +65,14 @@ variable "dependency_ids" {
 #######################
 ## Module variables
 #######################
+
+variable "database" {
+  description = "Keycloak external database server configuration."
+  type = object({
+    vendor   = string
+    host     = string
+    username = string
+    password = string
+  })
+  default = null
+}
