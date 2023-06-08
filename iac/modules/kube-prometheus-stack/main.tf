@@ -1,5 +1,5 @@
 module "kube-prometheus-stack" {
-  source = "../"
+  source = "./kube-prometheus-stack"
 
   cluster_name           = var.cluster_name
   base_domain            = var.base_domain
