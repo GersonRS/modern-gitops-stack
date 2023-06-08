@@ -63,7 +63,7 @@ resource "argocd_application" "this" {
 
     source {
       repo_url        = "https://github.com/GersonRS/modern-devops-stack.git"
-      path            = format("iac/modules/grafana/charts/%s", var.distributed_mode ? "loki-microservice" : "loki-stack")
+      path            = format("iac/modules/loki/charts/%s", var.distributed_mode ? "loki-microservice" : "loki-stack")
       target_revision = var.target_revision
       helm {
         values = data.utils_deep_merge_yaml.values.output
