@@ -62,23 +62,23 @@ module "argocd_bootstrap" {
   source = "./modules/argocd/bootstrap"
 }
 
-module "traefik" {
-  source = "./modules/traefik"
+# module "traefik" {
+#   source = "./modules/traefik"
 
-  cluster_name = local.cluster_name
+#   cluster_name = local.cluster_name
 
-  # TODO fix: the base domain is defined later. Proposal: remove redirection from traefik module and add it in dependent modules.
-  # For now random value is passed to base_domain. Redirections will not work before fix.
-  base_domain = "placeholder.com"
+#   # TODO fix: the base domain is defined later. Proposal: remove redirection from traefik module and add it in dependent modules.
+#   # For now random value is passed to base_domain. Redirections will not work before fix.
+#   base_domain = "placeholder.com"
 
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  enable_service_monitor = local.enable_service_monitor
+#   enable_service_monitor = local.enable_service_monitor
 
-  dependency_ids = {
-    argocd = module.argocd_bootstrap.id
-  }
-}
+#   dependency_ids = {
+#     argocd = module.argocd_bootstrap.id
+#   }
+# }
 
 module "cert-manager" {
   source = "./modules/cert-manager"
