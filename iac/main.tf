@@ -139,24 +139,24 @@ module "minio" {
   }
 }
 
-module "loki-stack" {
-  source = "./modules/loki-stack"
+# module "loki-stack" {
+#   source = "./modules/loki-stack"
 
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  distributed_mode = true
+#   distributed_mode = true
 
-  logs_storage = {
-    bucket_name       = local.minio_config.buckets.0.name
-    endpoint          = module.minio.endpoint
-    access_key        = local.minio_config.users.0.accessKey
-    secret_access_key = local.minio_config.users.0.secretKey
-  }
+#   logs_storage = {
+#     bucket_name       = local.minio_config.buckets.0.name
+#     endpoint          = module.minio.endpoint
+#     access_key        = local.minio_config.users.0.accessKey
+#     secret_access_key = local.minio_config.users.0.secretKey
+#   }
 
-  dependency_ids = {
-    minio = module.minio.id
-  }
-}
+#   dependency_ids = {
+#     minio = module.minio.id
+#   }
+# }
 
 module "thanos" {
   source = "./modules/thanos"
@@ -215,5 +215,26 @@ module "kube-prometheus-stack" {
     cert-manager = module.cert-manager.id
     minio        = module.minio.id
     oidc         = module.oidc.id
+  }
+}
+
+
+module "gitlab" {
+  source = "./modules/gitlab"
+
+  cluster_name     = local.cluster_name
+  base_domain      = local.base_domain
+  cluster_issuer   = local.cluster_issuer
+  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+
+  enable_service_monitor = local.enable_service_monitor
+
+  oidc = module.oidc.oidc
+
+  dependency_ids = {
+    traefik      = module.traefik.id
+    cert-manager = module.cert-manager.id
+    oidc         = module.oidc.id
+    minio        = module.minio.id
   }
 }

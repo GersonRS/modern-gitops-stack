@@ -5,7 +5,7 @@ resource "null_resource" "dependencies" {
 resource "keycloak_realm" "modern_devops_stack" {
   realm                    = "modern-devops-stack"
   display_name             = "Modern DevOps Stack"
-  display_name_html        = "<img width='200px' src='https://raw.githubusercontent.com/GersonRS/react-native-template-gersonrsantos-basic/main/assets/logo.png' alt='Modern DevOps Stack Logo'/>"
+  display_name_html        = "<img width='200px' src='https://raw.githubusercontent.com/GersonRS/modern-devops-stack/main/.github/assets/images/logo.png' alt='Modern DevOps Stack Logo'/>"
   login_with_email_allowed = true
   access_code_lifespan     = "1h"
   ssl_required             = "external"
