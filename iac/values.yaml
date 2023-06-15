@@ -1,0 +1,20 @@
+certmanager-issuer:
+  email: "gersonrs@live.com"
+global:
+  hosts:
+    domain: apps.kind.172-18-0-100.nip.io
+    externalIP: 172.18.0.100
+  appConfig:
+    omniauth:
+      enabled: true
+      allowSingleSignOn: ['oauth2_generic', 'openid_connect']
+      autoLinkLdapUser: false
+      blockAutoCreatedUsers: true
+      providers:
+        - secret: gitlab-oauth2-generic
+        - secret: gitlab-openid-connect
+
+gitlab-runner:
+  certsSecretName: gitlab-wildcard-tls-chain
+  runners:
+    privileged: true

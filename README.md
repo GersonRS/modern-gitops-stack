@@ -3,19 +3,19 @@
 *** que possa melhorá-lo ainda mais dê um fork no repositório e crie uma Pull
 *** Request ou abra uma Issue com a tag "sugestão".
 *** Obrigado novamente! Agora vamos rodar esse projeto incrível :D
-helm upgrade --install gitlab gitlab/gitlab    --timeout 600s      --set global.hosts.domain=$(minikube ip -p stack-devops).nip.io    --set global.hosts.externalIP=$(minikube ip -p stack-devops)    -f gitlab/gitlab-minimum.yaml -n gitlab
+"moderndevopsadmin": "SzBbWpZR2FW68hE8uzFFGnrzSCsFv3wV"
 -->
 
 <!-- PROJECT SHIELDS -->
 
 [![npm](https://img.shields.io/badge/type-Open%20Project-green?&style=plastic)](https://img.shields.io/badge/type-Open%20Project-green)
-[![GitHub last commit](https://img.shields.io/github/last-commit/GersonRS/stack-devops?logo=github&style=plastic)](https://github.com/GersonRS/stack-devops/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/gersonrs/stack-devops?logo=github&style=plastic)](https://github.com/GersonRS/stack-devops/issues)
-[![GitHub Language](https://img.shields.io/github/languages/top/gersonrs/stack-devops?&logo=github&style=plastic)](https://github.com/GersonRS/stack-devops/search?l=python)
-[![GitHub Repo-Size](https://img.shields.io/github/repo-size/GersonRS/stack-devops?logo=github&style=plastic)](https://img.shields.io/github/repo-size/GersonRS/stack-devops)
-[![GitHub Contributors](https://img.shields.io/github/contributors/GersonRS/stack-devops?logo=github&style=plastic)](https://img.shields.io/github/contributors/GersonRS/stack-devops)
-[![GitHub Stars](https://img.shields.io/github/stars/GersonRS/stack-devops?logo=github&style=plastic)](https://img.shields.io/github/stars/GersonRS/stack-devops)
-[![NPM](https://img.shields.io/github/license/GersonRS/stack-devops?&style=plastic)](LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/commits/master)
+[![GitHub Issues](https://img.shields.io/github/issues/gersonrs/modern-devops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/issues)
+[![GitHub Language](https://img.shields.io/github/languages/top/gersonrs/modern-devops-stack?&logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/search?l=python)
+[![GitHub Repo-Size](https://img.shields.io/github/repo-size/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/repo-size/GersonRS/modern-devops-stack)
+[![GitHub Contributors](https://img.shields.io/github/contributors/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/contributors/GersonRS/modern-devops-stack)
+[![GitHub Stars](https://img.shields.io/github/stars/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/stars/GersonRS/modern-devops-stack)
+[![NPM](https://img.shields.io/github/license/GersonRS/modern-devops-stack?&style=plastic)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://img.shields.io/badge/status-active-success.svg)
 
 <p align="center">
@@ -25,7 +25,7 @@ helm upgrade --install gitlab gitlab/gitlab    --timeout 600s      --set global.
 
 <!-- PROJECT LOGO -->
 
-# Template de Engenharia de Dados para Orquestração de Dados e DataOps
+# Modern DevOps Stack
 
 Esse repositório é um template para orquestração de fluxos de dados e DataOps. Ele contém uma estrutura básica e um conjunto de ferramentas para ajudá-lo a gerenciar seus fluxos de trabalho de dados.
 

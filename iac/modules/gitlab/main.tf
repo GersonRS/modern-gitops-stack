@@ -1,3 +1,25 @@
+resource "kubernetes_namespace" "gitlab_namespace" {
+  metadata {
+    annotations = {
+      name = var.namespace
+    }
+    name = var.namespace
+  }
+}
+data "utils_deep_merge_yaml" "provider" {
+  input = [for i in local.provider : yamlencode(i)]
+}
+resource "kubernetes_secret" "gitlab_provider_secret" {
+  metadata {
+    name = "gitlab-provider"
+    namespace = var.namespace
+  }
+
+  data = {
+    provider = data.utils_deep_merge_yaml.provider.output
+  }
+}
+
 resource "null_resource" "dependencies" {
   triggers = var.dependency_ids
 }

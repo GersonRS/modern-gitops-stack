@@ -62,35 +62,35 @@ module "argocd_bootstrap" {
   source = "./modules/argocd/bootstrap"
 }
 
-module "traefik" {
-  source = "./modules/traefik"
+# module "traefik" {
+#   source = "./modules/traefik"
 
-  cluster_name = local.cluster_name
+#   cluster_name = local.cluster_name
 
-  # TODO fix: the base domain is defined later. Proposal: remove redirection from traefik module and add it in dependent modules.
-  # For now random value is passed to base_domain. Redirections will not work before fix.
-  base_domain = "placeholder.com"
+#   # TODO fix: the base domain is defined later. Proposal: remove redirection from traefik module and add it in dependent modules.
+#   # For now random value is passed to base_domain. Redirections will not work before fix.
+#   base_domain = "placeholder.com"
 
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  enable_service_monitor = local.enable_service_monitor
+#   enable_service_monitor = local.enable_service_monitor
 
-  dependency_ids = {
-    argocd = module.argocd_bootstrap.id
-  }
-}
+#   dependency_ids = {
+#     argocd = module.argocd_bootstrap.id
+#   }
+# }
 
-module "cert-manager" {
-  source = "./modules/cert-manager"
+# module "cert-manager" {
+#   source = "./modules/cert-manager"
 
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  enable_service_monitor = local.enable_service_monitor
+#   enable_service_monitor = local.enable_service_monitor
 
-  dependency_ids = {
-    argocd = module.argocd_bootstrap.id
-  }
-}
+#   dependency_ids = {
+#     argocd = module.argocd_bootstrap.id
+#   }
+# }
 
 module "keycloak" {
   source = "./modules/keycloak"
@@ -102,7 +102,7 @@ module "keycloak" {
 
   dependency_ids = {
     traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
+    # cert-manager = module.cert-manager.id
   }
 }
 
@@ -118,26 +118,26 @@ module "oidc" {
   }
 }
 
-module "minio" {
-  source = "./modules/minio"
+# module "minio" {
+#   source = "./modules/minio"
 
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   cluster_name     = local.cluster_name
+#   base_domain      = local.base_domain
+#   cluster_issuer   = local.cluster_issuer
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  enable_service_monitor = local.enable_service_monitor
+#   enable_service_monitor = local.enable_service_monitor
 
-  config_minio = local.minio_config
+#   config_minio = local.minio_config
 
-  oidc = module.oidc.oidc
+#   oidc = module.oidc.oidc
 
-  dependency_ids = {
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    oidc         = module.oidc.id
-  }
-}
+#   dependency_ids = {
+#     traefik      = module.traefik.id
+#     cert-manager = module.cert-manager.id
+#     oidc         = module.oidc.id
+#   }
+# }
 
 # module "loki-stack" {
 #   source = "./modules/loki-stack"
@@ -158,83 +158,83 @@ module "minio" {
 #   }
 # }
 
-module "thanos" {
-  source = "./modules/thanos"
+# module "thanos" {
+#   source = "./modules/thanos"
 
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   cluster_name     = local.cluster_name
+#   base_domain      = local.base_domain
+#   cluster_issuer   = local.cluster_issuer
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  metrics_storage = {
-    bucket_name       = local.minio_config.buckets.1.name
-    endpoint          = module.minio.endpoint
-    access_key        = local.minio_config.users.1.accessKey
-    secret_access_key = local.minio_config.users.1.secretKey
-  }
+#   metrics_storage = {
+#     bucket_name       = local.minio_config.buckets.1.name
+#     endpoint          = module.minio.endpoint
+#     access_key        = local.minio_config.users.1.accessKey
+#     secret_access_key = local.minio_config.users.1.secretKey
+#   }
 
-  thanos = {
-    oidc = module.oidc.oidc
-  }
+#   thanos = {
+#     oidc = module.oidc.oidc
+#   }
 
-  dependency_ids = {
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    minio        = module.minio.id
-    oidc         = module.oidc.id
-  }
-}
+#   dependency_ids = {
+#     traefik      = module.traefik.id
+#     cert-manager = module.cert-manager.id
+#     minio        = module.minio.id
+#     oidc         = module.oidc.id
+#   }
+# }
 
-module "kube-prometheus-stack" {
-  source = "./modules/kube-prometheus-stack"
+# module "kube-prometheus-stack" {
+#   source = "./modules/kube-prometheus-stack"
 
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   cluster_name     = local.cluster_name
+#   base_domain      = local.base_domain
+#   cluster_issuer   = local.cluster_issuer
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  metrics_storage = {
-    bucket     = local.minio_config.buckets.1.name
-    endpoint   = module.minio.endpoint
-    access_key = local.minio_config.users.1.accessKey
-    secret_key = local.minio_config.users.1.secretKey
-  }
+#   metrics_storage = {
+#     bucket     = local.minio_config.buckets.1.name
+#     endpoint   = module.minio.endpoint
+#     access_key = local.minio_config.users.1.accessKey
+#     secret_key = local.minio_config.users.1.secretKey
+#   }
 
-  prometheus = {
-    oidc = module.oidc.oidc
-  }
-  alertmanager = {
-    oidc = module.oidc.oidc
-  }
-  grafana = {
-    oidc = module.oidc.oidc
-  }
+#   prometheus = {
+#     oidc = module.oidc.oidc
+#   }
+#   alertmanager = {
+#     oidc = module.oidc.oidc
+#   }
+#   grafana = {
+#     oidc = module.oidc.oidc
+#   }
 
-  dependency_ids = {
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    minio        = module.minio.id
-    oidc         = module.oidc.id
-  }
-}
+#   dependency_ids = {
+#     traefik      = module.traefik.id
+#     cert-manager = module.cert-manager.id
+#     minio        = module.minio.id
+#     oidc         = module.oidc.id
+#   }
+# }
 
 
-module "gitlab" {
-  source = "./modules/gitlab"
+# module "gitlab" {
+#   source = "./modules/gitlab"
 
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
+#   cluster_name     = local.cluster_name
+#   base_domain      = local.base_domain
+#   cluster_issuer   = local.cluster_issuer
+#   argocd_namespace = module.argocd_bootstrap.argocd_namespace
 
-  enable_service_monitor = local.enable_service_monitor
+#   enable_service_monitor = local.enable_service_monitor
 
-  oidc = module.oidc.oidc
+#   oidc = module.oidc.oidc
 
-  dependency_ids = {
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    oidc         = module.oidc.id
-    minio        = module.minio.id
-  }
-}
+#   dependency_ids = {
+#     traefik      = module.traefik.id
+#     # cert-manager = module.cert-manager.id
+#     oidc         = module.oidc.id
+#     # minio        = module.minio.id
+#   }
+# }

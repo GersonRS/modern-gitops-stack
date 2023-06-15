@@ -15,3 +15,8 @@ output "keycloak_users" {
   value       = module.oidc.devops_stack_users_passwords
   sensitive   = true
 }
+output "keycloak_secret" {
+  description = "Map containing the credentials of each created user."
+  value       = module.oidc.oidc.client_secret
+  sensitive   = true
+}

@@ -72,6 +72,9 @@ locals {
             enabled = var.enable_service_monitor
           }
         }
+        persistence = {
+          size = "50Gi"
+        }
         rootUser     = "root"
         rootPassword = random_password.minio_root_secretkey.result
         users        = var.config_minio.users

@@ -1,0 +1,19 @@
+name: "oauth2_generic"
+label: "Provider name" # optional label for login button defaults to "Oauth2 Generic"
+app_id: "modern-devops-stack-applications"
+app_secret: "HxPksdL3ucJCUJaUQDokKrg2HgycZ1H0"
+args:
+  client_options:
+    site: "https://keycloak.apps.kind.172-18-0-100.nip.io/realms/modern-devops-stack"
+    user_info_url: "/realms/modern-devops-stack/protocol/openid-connect/userinfo"
+    authorize_url: "/realms/modern-devops-stack/protocol/openid-connect/auth"
+    token_url: "/realms/modern-devops-stack/protocol/openid-connect/token"
+  user_response_structure:
+    root_path: []
+    id_path: ["sub"]
+    attributes:
+      email: "email"
+      name: "name"
+  authorize_params:
+    scope: "openid profile email"
+  strategy_class: "OmniAuth::Strategies::OAuth2Generic"

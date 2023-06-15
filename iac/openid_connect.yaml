@@ -1,0 +1,21 @@
+name: openid_connect
+label: Keycloak
+args:
+  client_auth_method: query
+  client_options:
+    authorization_endpoint: https://keycloak.apps.kind.172-18-0-100.nip.io/realms/modern-devops-stack/protocol/openid-connect/auth
+    identifier: modern-devops-stack-applications
+    redirect_uri: http://gitlab.kind.172-18-0-100.nip.io/users/auth/openid_connect/callback
+    secret: HxPksdL3ucJCUJaUQDokKrg2HgycZ1H0
+    token_endpoint: https://keycloak.apps.kind.172-18-0-100.nip.io/realms/modern-devops-stack/protocol/openid-connect/token
+    userinfo_endpoint: https://keycloak.apps.kind.172-18-0-100.nip.io/realms/modern-devops-stack/protocol/openid-connect/userinfo
+  discovery: true
+  issuer: https://keycloak.apps.kind.172-18-0-100.nip.io/realms/modern-devops-stack
+  name: openid_connect
+  pkce: true
+  response_type: code
+  scope:
+  - openid
+  - profile
+  - email
+  uid_field: uid
