@@ -10,13 +10,13 @@
 <!-- PROJECT SHIELDS -->
 
 [![npm](https://img.shields.io/badge/type-Open%20Project-green?&style=plastic)](https://img.shields.io/badge/type-Open%20Project-green)
-[![GitHub last commit](https://img.shields.io/github/last-commit/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/gersonrs/modern-devops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/issues)
-[![GitHub Language](https://img.shields.io/github/languages/top/gersonrs/modern-devops-stack?&logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/search?l=python)
-[![GitHub Repo-Size](https://img.shields.io/github/repo-size/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/repo-size/GersonRS/modern-devops-stack)
-[![GitHub Contributors](https://img.shields.io/github/contributors/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/contributors/GersonRS/modern-devops-stack)
-[![GitHub Stars](https://img.shields.io/github/stars/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/stars/GersonRS/modern-devops-stack)
-[![NPM](https://img.shields.io/github/license/GersonRS/modern-devops-stack?&style=plastic)](LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-gitops-stack/commits/master)
+[![GitHub Issues](https://img.shields.io/github/issues/gersonrs/modern-gitops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-gitops-stack/issues)
+[![GitHub Language](https://img.shields.io/github/languages/top/gersonrs/modern-gitops-stack?&logo=github&style=plastic)](https://github.com/GersonRS/modern-gitops-stack/search?l=python)
+[![GitHub Repo-Size](https://img.shields.io/github/repo-size/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://img.shields.io/github/repo-size/GersonRS/modern-gitops-stack)
+[![GitHub Contributors](https://img.shields.io/github/contributors/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://img.shields.io/github/contributors/GersonRS/modern-gitops-stack)
+[![GitHub Stars](https://img.shields.io/github/stars/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://img.shields.io/github/stars/GersonRS/modern-gitops-stack)
+[![NPM](https://img.shields.io/github/license/GersonRS/modern-gitops-stack?&style=plastic)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://img.shields.io/badge/status-active-success.svg)
 
 <p align="center">
