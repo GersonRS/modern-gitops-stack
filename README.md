@@ -25,9 +25,9 @@
 
 ## Overview
 
-The Modern DevOps Stack is composed of several Terraform modules used to deploy a Kubernetes cluster along with a stack of components that will allow you to deploy applications as well as monitor and troubleshoot your cluster.
+The Modern GitOps Stack is composed of several Terraform modules used to deploy a Kubernetes cluster along with a stack of components that will allow you to deploy applications as well as monitor and troubleshoot your cluster.
 
-The choice of the cluster module is dependant on the provider on which you wish to deploy your cluster. The Modern DevOps Stack currently supports only a local deployment using KinD. The modules that deploy the remaining components of the stack are as generic as possible, but in the future, some have provider-specific variants that deploy different resources depending on the platform.
+The choice of the cluster module is dependant on the provider on which you wish to deploy your cluster. The Modern GitOps Stack currently supports only a local deployment using KinD. The modules that deploy the remaining components of the stack are as generic as possible, but in the future, some have provider-specific variants that deploy different resources depending on the platform.
 
 As you’ll see in this project, after the cluster is deployed, a  Argo CD is installed to then deploy the rest of the components. After all the components have been deployed, this Argo CD instance can be used to deploy your applications (we also created modules to create and configure Argo CD Applications and ApplicationSets).
 
