@@ -5,7 +5,7 @@
 *** Thank you again! Now let's run this amazing project : D
 -->
 
-# Modern DevOps Stack
+# Modern GitOps Stack
 
 <!-- PROJECT SHIELDS -->
 
@@ -41,8 +41,8 @@ As you’ll see in this project, after the cluster is deployed, a  Argo CD is in
 * [Usage](#usage)
 * [Project Structure](#project-structure)
 * [Troubleshooting](#troubleshooting)
-  + [Jupyterhub Login](#jupyterhub-login)
-  + [Install libs Python](#install-libs-python)
+  + [connection_error during the first deployment](#connection_error-during-the-first-deployment)
+  + [loki stack promtail pods stuck with status CrashLoopBackOff](#loki-stack-promtail-pods-stuck-with-status-crashloopbackoff)
 * [Contributions](#sontributions)
 * [License](#license)
 * [Contact](#contact)
@@ -50,7 +50,7 @@ As you’ll see in this project, after the cluster is deployed, a  Argo CD is in
 
 ## Objective
 
-The purpose of this repository is to provide a framework and series of tools for data orchestration and DataOps, with the aim of facilitating the management of end-to-end data workflows. By leveraging Terraform and type, the project can be easily configured to provide a practical playground that includes tools capable of performing data extraction, transformation and loading, validation, and monitoring.
+The purpose of this repository is to provide a framework and series of tools for data orchestration and GitOps, with the aim of facilitating the management of end-to-end data workflows. By leveraging Terraform and type, the project can be easily configured to provide a practical playground that includes tools capable of performing data extraction, transformation and loading, validation, and monitoring.
 
 ## Versioning Flow
 
@@ -86,7 +86,7 @@ These tools together enable the creation of a complete infrastructure for the de
 
 ## Requirements
 
-To use MLflow-Kube, you need to have the following prerequisites installed and configured:
+To use Modern GitOps Stack, you need to have the following prerequisites installed and configured:
 
 1. Terraform:
     - Installation: Visit the [Terraform website](https://www.terraform.io/downloads.html) and follow the instructions for your operating system.
@@ -99,12 +99,12 @@ To use MLflow-Kube, you need to have the following prerequisites installed and c
 
 ## Getting Started
 
-To get started with the MLflow POC, follow these steps:
+To get started with the Modern GitOps Stack, follow these steps:
 
 1. Clone this repository to your local computer.
-    - `git clone https://github.com/GersonRS/mlflow-kube-poc.git`
+    - `git clone https://github.com/GersonRS/modern-gitops-stack.git`
 2. Change directory to the repository:
-    - `cd mlflow-kube-poc`
+    - `cd modern-gitops-stack`
 
 > Make sure you have Terraform installed on your system, along with other necessary dependencies.
 
@@ -143,31 +143,32 @@ Once the infrastructure is successfully provisioned, you can utilize the install
 This project follows a structured directory layout to organize its resources effectively:
 
 ```sh
-    .
-    ├── kind-config
-    ├── LICENSE
-    ├── locals.tf
-    ├── main.tf
-    ├── modules
-    │   ├── argocd
-    │   ├── cert-manager
-    │   ├── keycloak
-    │   ├── kind
-    │   ├── kube-prometheus-stack
-    │   ├── loki-stack
-    │   ├── metallb
-    │   ├── minio
-    │   ├── oidc
-    │   ├── thanos
-    │   └── traefik
-    ├── outputs.tf
-    ├── README.md
-    ├── terraform.tf
-    └── variables.tf
-
-    68 directories, 240 files
+.
+├── charts
+├── LICENSE
+├── locals.tf
+├── main.tf
+├── modules
+│   ├── argocd
+│   ├── argocd_bootstrap
+│   ├── cert-manager
+│   ├── keycloak
+│   ├── kind
+│   ├── kube-prometheus-stack
+│   ├── loki-stack
+│   ├── metallb
+│   ├── minio
+│   ├── oidc
+│   ├── thanos
+│   └── traefik
+├── outputs.tf
+├── pyproject.toml
+├── README.md
+├── terraform.tf
+└── variables.tf
 ```
 
+* [**charts**](charts/) - Directory containing all the helm charts used in the project.
 * [**LICENSE**](LICENSE) - License file of the project.
 * [**locals.tf**](locals.tf) - Terraform locals file.
 * [**main.tf**](main.tf) - Main Terraform configuration file.
@@ -184,11 +185,50 @@ This project follows a structured directory layout to organize its resources eff
   + [**postgresql**](modules/thanos/) - Directory for deploying and configuring Thanos.
   + [**traefik**](modules/traefik/) - Directory for setting up Traefik, an ingress controller for Kubernetes.
 * [**outputs.tf**](outputs.tf) - Terraform outputs file.
+* [**pyproject.toml**](pyproject.toml) - Poetry config.
 * [**README.md**](README.md) - Project's README file, containing important information and guidelines.
 * [**terraform.tf**](terraform.tf) - Terraform configuration file for initializing the project.
 * [**variables.tf**](variables.tf) - Terraform variables file, containing input variables for the project.
 
 ## Troubleshooting
+
+### connection_error during the first deployment
+
+In some cases, you could encounter an error like this the first deployment:
+
+```
+╷
+│ Error: Error while waiting for application argocd to be created
+│
+│   with module.argocd.argocd_application.this,
+│   on .terraform/modules/argocd/main.tf line 55, in resource "argocd_application" "this":
+│   55: resource "argocd_application" "this" {
+│
+│ error while waiting for application argocd to be synced and healthy: rpc error: code = Unavailable desc = connection error: desc = "transport: error while dialing: dial tcp 127.0.0.1:45729: connect: connection refused"
+╵
+```
+
+This error is due to the way we provision Argo CD on the final steps of the deployment. We use the bootstrap Argo CD to deploy the final Argo CD module, which causes a redeployment of Argo CD and consequently a momentary loss of connection between the Argo CD Terraform provider and the Argo CD server.
+
+**`You can simply re-run the command terraform apply to finalize the bootstrap of the cluster.`**
+
+### loki stack promtail pods stuck with status CrashLoopBackOff
+
+You could stumble upon loki-stack-promtail stuck in a creation loop with the following logs:
+
+```shell
+level=error ts=2023-05-09T06:32:38.495673778Z caller=main.go:117 msg="error creating promtail" error="failed to make file target manager: too many open files"
+Stream closed EOF for loki-stack/loki-stack-promtail-bxcmw (promtail)
+```
+
+If that’s the case, you will have to increase the upper limit on the number of INotify instances that can be created per real user ID:
+
+```bash
+# Increase the limit until next reboot
+sudo sysctl fs.inotify.max_user_instances=512
+# Increase the limit permanently (run this command as root)
+echo 'fs.inotify.max_user_instances=512' >> /etc/sysctl.conf
+```
 
 ## Contributions
 
@@ -213,16 +253,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For any inquiries or questions, please contact:
 
-<p align="center">
-
 [![twitter](https://img.shields.io/badge/-Twitter-9cf?logo=Twitter&logoColor=white)](https://twitter.com/gersonrs3)
 [![instagram](https://img.shields.io/badge/-Instagram-ff2b8e?logo=Instagram&logoColor=white)](https://instagram.com/gersonrsantos)
 [![linkedin](https://img.shields.io/badge/-Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/gersonrsantos/)
 [![Telegram](https://img.shields.io/badge/-Telegram-blue?logo=Telegram&logoColor=white)](https://t.me/gersonrsantos)
 [![Email](https://img.shields.io/badge/-Email-c14438?logo=Gmail&logoColor=white)](mailto:gersonrodriguessantos8@gmail.com)
 
-</p>
-
 ## Acknowledgments
 
-We appreciate your interest in using MLflow on Kubernetes PoC. We hope this configuration simplifies the management of your Machine Learning experiments on Kubernetes! 🚀📊
+We appreciate your interest in using the Modern GitOps Stack. We hope this configuration simplifies the management of your data pipelines experiments on Kubernetes! 🚀📊
