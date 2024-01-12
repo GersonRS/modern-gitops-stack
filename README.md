@@ -10,13 +10,13 @@
 <!-- PROJECT SHIELDS -->
 
 [![npm](https://img.shields.io/badge/type-Open%20Project-green?&style=plastic)](https://img.shields.io/badge/type-Open%20Project-green)
-[![GitHub last commit](https://img.shields.io/github/last-commit/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/gersonrs/modern-devops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/issues)
-[![GitHub Language](https://img.shields.io/github/languages/top/gersonrs/modern-devops-stack?&logo=github&style=plastic)](https://github.com/GersonRS/modern-devops-stack/search?l=python)
-[![GitHub Repo-Size](https://img.shields.io/github/repo-size/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/repo-size/GersonRS/modern-devops-stack)
-[![GitHub Contributors](https://img.shields.io/github/contributors/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/contributors/GersonRS/modern-devops-stack)
-[![GitHub Stars](https://img.shields.io/github/stars/GersonRS/modern-devops-stack?logo=github&style=plastic)](https://img.shields.io/github/stars/GersonRS/modern-devops-stack)
-[![NPM](https://img.shields.io/github/license/GersonRS/modern-devops-stack?&style=plastic)](LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-gitops-stack/commits/master)
+[![GitHub Issues](https://img.shields.io/github/issues/gersonrs/modern-gitops-stack?logo=github&style=plastic)](https://github.com/GersonRS/modern-gitops-stack/issues)
+[![GitHub Language](https://img.shields.io/github/languages/top/gersonrs/modern-gitops-stack?&logo=github&style=plastic)](https://github.com/GersonRS/modern-gitops-stack/search?l=python)
+[![GitHub Repo-Size](https://img.shields.io/github/repo-size/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://img.shields.io/github/repo-size/GersonRS/modern-gitops-stack)
+[![GitHub Contributors](https://img.shields.io/github/contributors/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://img.shields.io/github/contributors/GersonRS/modern-gitops-stack)
+[![GitHub Stars](https://img.shields.io/github/stars/GersonRS/modern-gitops-stack?logo=github&style=plastic)](https://img.shields.io/github/stars/GersonRS/modern-gitops-stack)
+[![NPM](https://img.shields.io/github/license/GersonRS/modern-gitops-stack?&style=plastic)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://img.shields.io/badge/status-active-success.svg)
 
 <p align="center">
@@ -137,6 +137,29 @@ To get started with the Modern GitOps Stack, follow these steps:
 ## Usage
 
 Once the infrastructure is successfully provisioned, you can utilize the installed applications.
+
+### Stop the cluster
+
+To definitively stop the cluster on a single command (that is the reason we delete some resources from the state file), you can use the following command:
+
+```sh
+terraform state rm $(terraform state list | grep "argocd_application\|argocd_project\|kubernetes_\|helm_\|keycloak_") && terraform destroy
+```
+
+A dirtier alternative is to directly destroy the Docker containers and volumes (replace kind-cluster by the cluster name you defined in locals.tf):
+
+```sh
+# Stop and remove Docker containers
+docker container stop kind-cluster-control-plane kind-cluster-worker{,2,3} && docker container rm -v kind-cluster-control-plane kind-cluster-worker{,2,3}
+# Remove the Terraform state file
+rm terraform.state
+```
+
+Or delete the cluster directly by kind
+
+```sh
+kind delete cluster
+```
 
 ## Project Structure
 
