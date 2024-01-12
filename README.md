@@ -138,6 +138,29 @@ To get started with the Modern GitOps Stack, follow these steps:
 
 Once the infrastructure is successfully provisioned, you can utilize the installed applications.
 
+### Stop the cluster
+
+To definitively stop the cluster on a single command (that is the reason we delete some resources from the state file), you can use the following command:
+
+```sh
+terraform state rm $(terraform state list | grep "argocd_application\|argocd_project\|kubernetes_\|helm_\|keycloak_") && terraform destroy
+```
+
+A dirtier alternative is to directly destroy the Docker containers and volumes (replace kind-cluster by the cluster name you defined in locals.tf):
+
+```sh
+# Stop and remove Docker containers
+docker container stop kind-cluster-control-plane kind-cluster-worker{,2,3} && docker container rm -v kind-cluster-control-plane kind-cluster-worker{,2,3}
+# Remove the Terraform state file
+rm terraform.state
+```
+
+Or delete the cluster directly by kind
+
+```sh
+kind delete cluster
+```
+
 ## Project Structure
 
 This project follows a structured directory layout to organize its resources effectively:
