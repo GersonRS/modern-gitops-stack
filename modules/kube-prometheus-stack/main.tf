@@ -9,13 +9,13 @@ resource "argocd_project" "this" {
     name      = var.destination_cluster != "in-cluster" ? "kube-prometheus-stack-${var.destination_cluster}" : "kube-prometheus-stack"
     namespace = var.argocd_namespace
     annotations = {
-      "modern-devops-stack.io/argocd_namespace" = var.argocd_namespace
+      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
     }
   }
 
   spec {
     description  = "kube-prometheus-stack application project for cluster ${var.destination_cluster}"
-    source_repos = ["https://github.com/GersonRS/data-engineering-for-machine-learning.git"]
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = var.destination_cluster
@@ -96,7 +96,7 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = "https://github.com/GersonRS/data-engineering-for-machine-learning.git"
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/kube-prometheus-stack"
       target_revision = var.target_revision
       plugin {
