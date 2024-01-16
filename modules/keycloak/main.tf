@@ -17,7 +17,7 @@ resource "argocd_project" "this" {
   spec {
     description = "Keycloak application project"
     source_repos = [
-      "https://github.com/GersonRS/data-engineering-for-machine-learning.git",
+      "https://github.com/GersonRS/modern-gitops-stack.git",
     ]
 
     destination {
@@ -52,7 +52,7 @@ resource "argocd_application" "operator" {
     project = argocd_project.this.metadata.0.name
 
     source {
-      repo_url        = "https://github.com/GersonRS/data-engineering-for-machine-learning.git"
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/keycloak-operator"
       target_revision = var.target_revision
     }
@@ -109,7 +109,7 @@ resource "argocd_application" "this" {
     project = argocd_project.this.metadata.0.name
 
     source {
-      repo_url        = "https://github.com/GersonRS/data-engineering-for-machine-learning.git"
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/keycloak"
       target_revision = var.target_revision
       helm {

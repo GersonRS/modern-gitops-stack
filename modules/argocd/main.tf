@@ -25,13 +25,13 @@ resource "argocd_project" "this" {
     name      = "argocd"
     namespace = var.argocd_namespace
     annotations = {
-      "modern-devops-stack.io/argocd_namespace" = var.argocd_namespace
+      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
     }
   }
 
   spec {
     description  = "Argo CD application project"
-    source_repos = ["https://github.com/GersonRS/data-engineering-for-machine-learning.git"]
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = "in-cluster"
@@ -72,7 +72,7 @@ resource "argocd_application" "this" {
 
     source {
       path            = "charts/argocd"
-      repo_url        = "https://github.com/GersonRS/data-engineering-for-machine-learning.git"
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       target_revision = var.target_revision
       helm {
         values = data.utils_deep_merge_yaml.values.output
