@@ -197,8 +197,6 @@ module "airflow" {
     oidc       = module.oidc.id
     minio      = module.minio.id
     postgresql = module.postgresql.id
-    mlflow     = module.mlflow.id
-    # ray        = module.ray.id
   }
 }
 
@@ -236,5 +234,6 @@ module "argocd" {
     cert-manager          = module.cert-manager.id
     oidc                  = module.oidc.id
     kube-prometheus-stack = module.kube-prometheus-stack.id
+    airflow               = module.airflow.id
   }
 }

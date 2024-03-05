@@ -9,6 +9,7 @@ module "loki-stack" {
   namespace           = var.namespace
   app_autosync        = var.app_autosync
   dependency_ids      = var.dependency_ids
+  project_source_repo = var.project_source_repo
 
   retention = var.retention
   ingress   = var.ingress

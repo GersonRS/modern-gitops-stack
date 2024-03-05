@@ -12,6 +12,7 @@ module "traefik" {
   enable_service_monitor   = var.enable_service_monitor
   app_autosync             = var.app_autosync
   enable_https_redirection = var.enable_https_redirection
+  project_source_repo      = var.project_source_repo
 
   helm_values = concat(local.helm_values, var.helm_values)
 
