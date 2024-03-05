@@ -1,3 +1,4 @@
+# Modules locais
 module "kind" {
   source             = "./modules/kind"
   cluster_name       = local.cluster_name
@@ -8,6 +9,8 @@ module "metallb" {
   source = "./modules/metallb"
   subnet = module.kind.kind_subnet
 }
+
+# FIM Modulos locais
 
 module "argocd_bootstrap" {
   source     = "./modules/argocd_bootstrap"
@@ -235,5 +238,19 @@ module "argocd" {
     oidc                  = module.oidc.id
     kube-prometheus-stack = module.kube-prometheus-stack.id
     airflow               = module.airflow.id
+  }
+}
+
+module "spark" {
+  source                 = "./modules/spark"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  cluster_issuer         = local.cluster_issuer
+  argocd_namespace       = module.argocd_bootstrap.argocd_namespace
+  enable_service_monitor = local.enable_service_monitor
+  target_revision        = local.target_revision
+  project_source_repo    = local.project_source_repo
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
   }
 }
