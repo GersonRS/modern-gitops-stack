@@ -2,11 +2,43 @@ resource "null_resource" "dependencies" {
   triggers = var.dependency_ids
 }
 
+resource "random_password" "airflow_webserver_secret_key" {
+  length  = 16
+  special = false
+  depends_on = [
+    resource.null_resource.dependencies,
+  ]
+}
+resource "kubernetes_namespace" "airflow_namespace" {
+  metadata {
+    annotations = {
+      name = var.namespace
+    }
+    name = var.namespace
+  }
+  depends_on = [
+    resource.null_resource.dependencies,
+  ]
+}
+
+resource "kubernetes_secret" "airflow_ssh_secret" {
+  metadata {
+    name      = "airflow-ssh-secret"
+    namespace = var.namespace
+  }
+
+  data = {
+    gitSshKey = file("${var.home_ssh}")
+  }
+
+  depends_on = [kubernetes_namespace.airflow_namespace]
+}
+
 resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
   metadata {
-    name      = var.destination_cluster != "in-cluster" ? "cert-manager-${var.destination_cluster}" : "cert-manager"
+    name      = var.destination_cluster != "in-cluster" ? "airflow-${var.destination_cluster}" : "airflow"
     namespace = var.argocd_namespace
     annotations = {
       "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
@@ -14,18 +46,12 @@ resource "argocd_project" "this" {
   }
 
   spec {
-    description  = "cert-manager application project for cluster ${var.destination_cluster}"
+    description  = "Airflow application project for cluster ${var.destination_cluster}"
     source_repos = [var.project_source_repo]
-
 
     destination {
       name      = var.destination_cluster
       namespace = var.namespace
-    }
-
-    destination {
-      name      = var.destination_cluster
-      namespace = "kube-system"
     }
 
     orphaned_resources {
@@ -40,18 +66,22 @@ resource "argocd_project" "this" {
 }
 
 data "utils_deep_merge_yaml" "values" {
-  input       = [for i in concat(local.helm_values, var.helm_values) : yamlencode(i)]
-  append_list = var.deep_merge_append_list
+  input = [for i in concat(local.helm_values, var.helm_values) : yamlencode(i)]
 }
 
 resource "argocd_application" "this" {
   metadata {
-    name      = var.destination_cluster != "in-cluster" ? "cert-manager-${var.destination_cluster}" : "cert-manager"
+    name      = var.destination_cluster != "in-cluster" ? "airflow-${var.destination_cluster}" : "airflow"
     namespace = var.argocd_namespace
     labels = merge({
-      "application" = "cert-manager"
+      "application" = "airflow"
       "cluster"     = var.destination_cluster
     }, var.argocd_labels)
+  }
+
+  timeouts {
+    create = "15m"
+    delete = "15m"
   }
 
   wait = var.app_autosync == { "allow_empty" = tobool(null), "prune" = tobool(null), "self_heal" = tobool(null) } ? false : true
@@ -61,7 +91,7 @@ resource "argocd_application" "this" {
 
     source {
       repo_url        = var.project_source_repo
-      path            = "charts/cert-manager"
+      path            = "charts/airflow"
       target_revision = var.target_revision
       helm {
         values = data.utils_deep_merge_yaml.values.output
@@ -71,13 +101,6 @@ resource "argocd_application" "this" {
     destination {
       name      = var.destination_cluster
       namespace = var.namespace
-    }
-
-    ignore_difference {
-      group         = "admissionregistration.k8s.io"
-      kind          = "ValidatingWebhookConfiguration"
-      name          = format("%s-webhook", var.destination_cluster != "in-cluster" ? "cert-manager-${var.destination_cluster}" : "cert-manager")
-      json_pointers = ["/webhooks/0/namespaceSelector/matchExpressions"]
     }
 
     sync_policy {
@@ -107,6 +130,7 @@ resource "argocd_application" "this" {
 
   depends_on = [
     resource.null_resource.dependencies,
+    kubernetes_secret.airflow_ssh_secret
   ]
 }
 

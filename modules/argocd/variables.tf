@@ -69,8 +69,14 @@ variable "app_autosync" {
 }
 
 variable "dependency_ids" {
-  type    = map(string)
-  default = {}
+  description = "IDs of the other modules on which this module depends on."
+  type        = map(string)
+  default     = {}
+}
+
+variable "project_source_repo" {
+  description = "Repository allowed to be scraped in this AppProject."
+  type        = string
 }
 
 #######################
@@ -241,9 +247,9 @@ variable "repositories" {
 variable "ssh_known_hosts" {
   description = <<-EOT
     List of SSH known hosts to add to Argo CD.
-    
-    Check the official `values.yaml` to get the format to pass this value. 
-    
+
+    Check the official `values.yaml` to get the format to pass this value.
+
     IMPORTANT: If you set this variable, the default known hosts will be overridden by this value, so you might want to consider adding the ones you need here."
   EOT
   type        = string

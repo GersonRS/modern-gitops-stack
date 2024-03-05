@@ -81,8 +81,14 @@ variable "app_autosync" {
 }
 
 variable "dependency_ids" {
-  type    = map(string)
-  default = {}
+  description = "IDs of the other modules on which this module depends on."
+  type        = map(string)
+  default     = {}
+}
+
+variable "project_source_repo" {
+  description = "Repository allowed to be scraped in this AppProject."
+  type        = string
 }
 
 #######################

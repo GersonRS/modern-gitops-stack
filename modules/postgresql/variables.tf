@@ -2,6 +2,16 @@
 ## Standard variables
 #######################
 
+variable "cluster_name" {
+  description = "Name given to the cluster. Value used for naming some the resources created by the module."
+  type        = string
+}
+
+variable "base_domain" {
+  description = "Base domain of the cluster. Value used for the ingress' URL of the application."
+  type        = string
+}
+
 variable "argocd_namespace" {
   description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
   type        = string
@@ -32,10 +42,16 @@ variable "target_revision" {
   default     = "develop" # x-release-please-version
 }
 
+variable "cluster_issuer" {
+  description = "SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files."
+  type        = string
+  default     = "ca-issuer"
+}
+
 variable "namespace" {
   description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
   type        = string
-  default     = "cert-manager"
+  default     = "database"
 }
 
 variable "enable_service_monitor" {
@@ -45,15 +61,9 @@ variable "enable_service_monitor" {
 }
 
 variable "helm_values" {
-  description = "Helm values, passed as a list of HCL structures."
+  description = "Helm chart value overrides. They should be passed as a list of HCL structures."
   type        = any
   default     = []
-}
-
-variable "deep_merge_append_list" {
-  description = "A boolean flag to enable/disable appending lists instead of overwriting them."
-  type        = bool
-  default     = false
 }
 
 variable "app_autosync" {
@@ -79,32 +89,4 @@ variable "dependency_ids" {
 variable "project_source_repo" {
   description = "Repository allowed to be scraped in this AppProject."
   type        = string
-}
-
-#######################
-## Module variables
-#######################
-
-variable "letsencrypt_issuer_email_main" {
-  description = "E-mail address used to register with Let's Encrypt."
-  type        = string
-  default     = null # This value needs to be null and it is the variants job to make the outside variable required.
-}
-
-variable "use_default_dns01_solver" {
-  description = "Whether to use the default dns01 solver configuration."
-  type        = bool
-  default     = true
-}
-
-variable "use_default_http01_solver" {
-  description = "Whether to use the default http01 solver configuration."
-  type        = bool
-  default     = true
-}
-
-variable "custom_solver_configurations" {
-  description = "List of additional solver configurations, appended to the default dns01 and http01 solvers (if enabled)."
-  type        = list(any)
-  default     = []
 }

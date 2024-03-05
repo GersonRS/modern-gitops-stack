@@ -31,7 +31,8 @@ resource "argocd_project" "this" {
 
   spec {
     description  = "Argo CD application project"
-    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
+    source_repos = [var.project_source_repo]
+
 
     destination {
       name      = "in-cluster"
@@ -72,7 +73,7 @@ resource "argocd_application" "this" {
 
     source {
       path            = "charts/argocd"
-      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
+      repo_url        = var.project_source_repo
       target_revision = var.target_revision
       helm {
         values = data.utils_deep_merge_yaml.values.output
@@ -119,4 +120,3 @@ resource "null_resource" "this" {
     resource.argocd_application.this,
   ]
 }
-

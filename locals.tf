@@ -10,5 +10,6 @@ locals {
   enable_service_monitor = false # Can be enabled after the first bootstrap.
   app_autosync           = true ? { allow_empty = false, prune = true, self_heal = true } : {}
   target_revision        = "develop"
+  project_source_repo    = "https://github.com/GersonRS/modern-gitops-stack.git"
   airflow_fernetKey      = base64encode(resource.random_password.airflow_fernetKey.result)
 }
