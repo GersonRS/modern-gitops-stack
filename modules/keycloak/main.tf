@@ -15,10 +15,8 @@ resource "argocd_project" "this" {
   }
 
   spec {
-    description = "Keycloak application project"
-    source_repos = [
-      "https://github.com/GersonRS/modern-gitops-stack.git",
-    ]
+    description  = "Keycloak application project"
+    source_repos = [var.project_source_repo]
 
     destination {
       name      = "in-cluster"
@@ -52,7 +50,7 @@ resource "argocd_application" "operator" {
     project = argocd_project.this.metadata.0.name
 
     source {
-      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
+      repo_url        = var.project_source_repo
       path            = "charts/keycloak-operator"
       target_revision = var.target_revision
     }
@@ -109,7 +107,7 @@ resource "argocd_application" "this" {
     project = argocd_project.this.metadata.0.name
 
     source {
-      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
+      repo_url        = var.project_source_repo
       path            = "charts/keycloak"
       target_revision = var.target_revision
       helm {
@@ -156,7 +154,7 @@ resource "null_resource" "wait_for_keycloak" {
   provisioner "local-exec" {
     command = <<EOT
     while [ $(curl -k https://keycloak.apps.${var.cluster_name}.${var.base_domain} -I -s | head -n 1 | cut -d' ' -f2) != '200' ]; do
-      sleep 5 
+      sleep 5
     done
     EOT
   }

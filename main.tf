@@ -1,3 +1,4 @@
+# Modules locais
 module "kind" {
   source             = "./modules/kind"
   cluster_name       = local.cluster_name
@@ -8,6 +9,8 @@ module "metallb" {
   source = "./modules/metallb"
   subnet = module.kind.kind_subnet
 }
+
+# FIM Modulos locais
 
 module "argocd_bootstrap" {
   source     = "./modules/argocd_bootstrap"
@@ -21,6 +24,7 @@ module "traefik" {
   argocd_namespace       = module.argocd_bootstrap.argocd_namespace
   enable_service_monitor = local.enable_service_monitor
   target_revision        = local.target_revision
+  project_source_repo    = local.project_source_repo
   dependency_ids = {
     argocd = module.argocd_bootstrap.id
   }
@@ -31,18 +35,20 @@ module "cert-manager" {
   argocd_namespace       = module.argocd_bootstrap.argocd_namespace
   enable_service_monitor = local.enable_service_monitor
   target_revision        = local.target_revision
+  project_source_repo    = local.project_source_repo
   dependency_ids = {
     argocd = module.argocd_bootstrap.id
   }
 }
 
 module "keycloak" {
-  source           = "./modules/keycloak"
-  cluster_name     = local.cluster_name
-  base_domain      = local.base_domain
-  cluster_issuer   = local.cluster_issuer
-  argocd_namespace = module.argocd_bootstrap.argocd_namespace
-  target_revision  = local.target_revision
+  source              = "./modules/keycloak"
+  cluster_name        = local.cluster_name
+  base_domain         = local.base_domain
+  cluster_issuer      = local.cluster_issuer
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
   dependency_ids = {
     traefik      = module.traefik.id
     cert-manager = module.cert-manager.id
@@ -68,10 +74,26 @@ module "minio" {
   enable_service_monitor = local.enable_service_monitor
   oidc                   = module.oidc.oidc
   target_revision        = local.target_revision
+  project_source_repo    = local.project_source_repo
   dependency_ids = {
     traefik      = module.traefik.id
     cert-manager = module.cert-manager.id
     oidc         = module.oidc.id
+  }
+}
+
+module "postgresql" {
+  source                 = "./modules/postgresql"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  cluster_issuer         = local.cluster_issuer
+  argocd_namespace       = module.argocd_bootstrap.argocd_namespace
+  enable_service_monitor = local.enable_service_monitor
+  target_revision        = local.target_revision
+  project_source_repo    = local.project_source_repo
+  dependency_ids = {
+    traefik = module.traefik.id
+    argocd  = module.argocd_bootstrap.id
   }
 }
 
@@ -84,7 +106,8 @@ module "loki-stack" {
     access_key  = module.minio.minio_root_user_credentials.username
     secret_key  = module.minio.minio_root_user_credentials.password
   }
-  target_revision = local.target_revision
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
   dependency_ids = {
     minio = module.minio.id
   }
@@ -105,7 +128,8 @@ module "thanos" {
   thanos = {
     oidc = module.oidc.oidc
   }
-  target_revision = local.target_revision
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
   dependency_ids = {
     argocd       = module.argocd_bootstrap.id
     traefik      = module.traefik.id
@@ -137,12 +161,45 @@ module "kube-prometheus-stack" {
   grafana = {
     oidc = module.oidc.oidc
   }
-  target_revision = local.target_revision
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
   dependency_ids = {
     traefik      = module.traefik.id
     cert-manager = module.cert-manager.id
     minio        = module.minio.id
     oidc         = module.oidc.id
+  }
+}
+
+module "airflow" {
+  source                 = "./modules/airflow"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  cluster_issuer         = local.cluster_issuer
+  argocd_namespace       = module.argocd_bootstrap.argocd_namespace
+  enable_service_monitor = local.enable_service_monitor
+  target_revision        = local.target_revision
+  oidc                   = module.oidc.oidc
+  fernetKey              = local.airflow_fernetKey
+  storage = {
+    bucket_name       = "airflow"
+    endpoint          = module.minio.cluster_dns
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
+  database = {
+    user     = module.postgresql.credentials.user
+    password = module.postgresql.credentials.password
+    database = "airflow"
+    endpoint = module.postgresql.cluster_dns
+  }
+  project_source_repo = local.project_source_repo
+  dependency_ids = {
+    argocd     = module.argocd_bootstrap.id
+    traefik    = module.traefik.id
+    oidc       = module.oidc.id
+    minio      = module.minio.id
+    postgresql = module.postgresql.id
   }
 }
 
@@ -155,6 +212,7 @@ module "argocd" {
   accounts_pipeline_tokens = module.argocd_bootstrap.argocd_accounts_pipeline_tokens
   admin_enabled            = false
   exec_enabled             = true
+  project_source_repo      = local.project_source_repo
   oidc = {
     name         = "OIDC"
     issuer       = module.oidc.oidc.issuer_url
@@ -169,6 +227,7 @@ module "argocd" {
   rbac = {
     policy_csv = <<-EOT
       g, pipeline, role:admin
+      g, user, role:view
       g, modern-gitops-stack-admins, role:admin
     EOT
   }
@@ -178,6 +237,20 @@ module "argocd" {
     cert-manager          = module.cert-manager.id
     oidc                  = module.oidc.id
     kube-prometheus-stack = module.kube-prometheus-stack.id
-    jupyterhub            = module.jupyterhub.id
+    airflow               = module.airflow.id
+  }
+}
+
+module "spark" {
+  source                 = "./modules/spark"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  cluster_issuer         = local.cluster_issuer
+  argocd_namespace       = module.argocd_bootstrap.argocd_namespace
+  enable_service_monitor = local.enable_service_monitor
+  target_revision        = local.target_revision
+  project_source_repo    = local.project_source_repo
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
   }
 }

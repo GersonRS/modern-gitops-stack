@@ -13,6 +13,7 @@ module "thanos" {
   deep_merge_append_list = var.deep_merge_append_list
   app_autosync           = var.app_autosync
   dependency_ids         = var.dependency_ids
+  project_source_repo    = var.project_source_repo
 
   thanos = var.thanos
 

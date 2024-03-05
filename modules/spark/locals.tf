@@ -1,0 +1,3 @@
+locals {
+  helm_values = [{}]
+}

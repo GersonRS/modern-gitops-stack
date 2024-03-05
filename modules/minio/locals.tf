@@ -1,23 +1,8 @@
-resource "random_password" "mlflow_secretkey" {
+resource "random_password" "minio_root_secretkey" {
   length  = 32
   special = false
 }
-resource "random_password" "airflow_secretkey" {
-  length  = 32
-  special = false
-}
-resource "random_password" "jupyterhub_secretkey" {
-  length  = 32
-  special = false
-}
-resource "random_password" "loki_secretkey" {
-  length  = 32
-  special = false
-}
-resource "random_password" "thanos_secretkey" {
-  length  = 32
-  special = false
-}
+
 locals {
   domain      = format("minio.apps.%s", var.base_domain)
   domain_full = format("minio.apps.%s.%s", var.cluster_name, var.base_domain)
@@ -62,9 +47,12 @@ locals {
   helm_values = [{
     minio = merge(
       {
-        mode = "standalone" # Set the deployment mode of MinIO to standalone
+        # mode = "standalone" # Set the deployment mode of MinIO to standalone
+        drivesPerNode : 2
+        replicas : 1
+        pools : 2
         persistence = {
-          size : "20Gi"
+          size : "10Gi"
         }
         resources = {
           requests = {
@@ -179,27 +167,27 @@ locals {
     users = [
       {
         accessKey = "mlflow-user"
-        secretKey = random_password.mlflow_secretkey.result
+        secretKey = random_password.minio_root_secretkey.result
         policy    = "mlflow-policy"
       },
       {
         accessKey = "airflow-user"
-        secretKey = random_password.airflow_secretkey.result
+        secretKey = random_password.minio_root_secretkey.result
         policy    = "airflow-policy"
       },
       {
         accessKey = "jupterhub-user"
-        secretKey = random_password.jupyterhub_secretkey.result
+        secretKey = random_password.minio_root_secretkey.result
         policy    = "jupterhub-policy"
       },
       {
         accessKey = "loki-user"
-        secretKey = random_password.loki_secretkey.result
+        secretKey = random_password.minio_root_secretkey.result
         policy    = "loki-policy"
       },
       {
         accessKey = "thanos-user"
-        secretKey = random_password.thanos_secretkey.result
+        secretKey = random_password.minio_root_secretkey.result
         policy    = "thanos-policy"
       }
     ],

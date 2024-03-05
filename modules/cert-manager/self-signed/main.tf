@@ -32,6 +32,7 @@ module "cert-manager" {
   enable_service_monitor = var.enable_service_monitor
   deep_merge_append_list = var.deep_merge_append_list
   app_autosync           = var.app_autosync
+  project_source_repo    = var.project_source_repo
 
   helm_values = concat(local.helm_values, var.helm_values)
 
