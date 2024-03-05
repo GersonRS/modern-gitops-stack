@@ -169,6 +169,7 @@ module "argocd" {
   rbac = {
     policy_csv = <<-EOT
       g, pipeline, role:admin
+      g, user, role:view
       g, modern-gitops-stack-admins, role:admin
     EOT
   }
@@ -178,6 +179,5 @@ module "argocd" {
     cert-manager          = module.cert-manager.id
     oidc                  = module.oidc.id
     kube-prometheus-stack = module.kube-prometheus-stack.id
-    jupyterhub            = module.jupyterhub.id
   }
 }
