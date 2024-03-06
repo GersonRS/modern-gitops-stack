@@ -6,7 +6,7 @@ resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
   metadata {
-    name      = var.destination_cluster != "in-cluster" ? "Spark-${var.destination_cluster}" : "Spark"
+    name      = var.destination_cluster != "in-cluster" ? "spark-${var.destination_cluster}" : "spark"
     namespace = var.argocd_namespace
     annotations = {
       "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
@@ -39,10 +39,10 @@ data "utils_deep_merge_yaml" "values" {
 
 resource "argocd_application" "this" {
   metadata {
-    name      = var.destination_cluster != "in-cluster" ? "Spark-${var.destination_cluster}" : "Spark"
+    name      = var.destination_cluster != "in-cluster" ? "spark-${var.destination_cluster}" : "spark"
     namespace = var.argocd_namespace
     labels = merge({
-      "application" = "Spark"
+      "application" = "spark"
       "cluster"     = var.destination_cluster
     }, var.argocd_labels)
   }
