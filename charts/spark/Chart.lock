@@ -1,6 +1,0 @@
-dependencies:
-- name: spark-operator
-  repository: https://googlecloudplatform.github.io/spark-on-k8s-operator
-  version: 1.1.27
-digest: sha256:973944711d8f473ebb667ab1a5a2678a37d9c883754339f850f19ce233100d49
-generated: "2024-03-05T20:09:34.724446373-03:00"

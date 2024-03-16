@@ -12,10 +12,17 @@ variable "base_domain" {
   type        = string
 }
 
+variable "subdomain" {
+  description = "Subdomain of the cluster. Value used for the ingress' URL of the application."
+  type        = string
+  default     = "apps"
+  nullable    = false
+}
+
 variable "cluster_issuer" {
   description = "SSL certificate issuer to use. In this module it is used to conditionally add extra arguments to the OIDC configuration."
   type        = string
-  default     = "ca-issuer"
+  default     = "selfsigned-issuer"
 }
 
 variable "dependency_ids" {
@@ -37,7 +44,7 @@ variable "oidc_redirect_uris" {
 }
 
 variable "user_map" {
-  description = "List of users to be added to the gitops Stack Realm. Note that all fields are mandatory."
+  description = "List of users to be added to the Modern GitOps Stack Realm. Note that all fields are mandatory."
   type = map(object({
     username   = string
     email      = string
@@ -45,11 +52,11 @@ variable "user_map" {
     last_name  = string
   }))
   default = {
-    moderngitopsadmin = {
-      username   = "moderngitopsadmin"
-      email      = "moderngitopsadmin@modern-gitops-stack.io"
+    modern-gitopsadmin = {
+      username   = "modern-gitopsadmin"
+      email      = "modern-gitopsadmin@modern-gitops-stack.io"
       first_name = "Administrator"
-      last_name  = "Modern gitops Stack"
+      last_name  = "Modern GitOps Stack"
     }
   }
 }

@@ -1,10 +1,34 @@
 locals {
   oauth2_proxy_image = "quay.io/oauth2-proxy/oauth2-proxy:v7.5.0"
 
+  ingress_annotations = {
+    "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
+    "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+    "traefik.ingress.kubernetes.io/router.tls"         = "true"
+  }
+
   # values.yaml translated into HCL structures.
   # Possible values available here -> https://github.com/bitnami/charts/tree/master/bitnami/thanos/
   helm_values = [{
+    redis = {
+      architecture = "standalone"
+      auth = {
+        enabled  = true
+        password = random_password.redis_password.result
+      }
+      master = {
+        persistence = {
+          enabled = false
+        }
+      }
+    }
     thanos = {
+      metrics = {
+        enabled = true
+        serviceMonitor = {
+          enabled = var.enable_service_monitor
+        }
+      }
 
       storegateway = {
         enabled = true
@@ -12,6 +36,31 @@ locals {
           enabled = false
         }
         resources = local.thanos.storegateway_resources
+        networkPolicy = {
+          enabled = false
+        }
+        extraFlags = [
+          # Store Gateway index cache config -> https://thanos.io/tip/components/store.md/#index-cache
+          <<-EOT
+          --index-cache.config="config":
+            addr: "thanos-redis-master:6379"
+            password: ${random_password.redis_password.result}
+            db: 0
+            dial_timeout: 5s
+            read_timeout: 3s
+            write_timeout: 3s
+            max_get_multi_concurrency: 1000
+            get_multi_batch_size: 100
+            max_set_multi_concurrency: 1000
+            set_multi_batch_size: 100
+            tls_enabled: false
+            cache_size: 0
+            max_async_buffer_size: 1000000
+            max_async_concurrency: 200
+            expiration: 2h
+          "type": "REDIS"
+          EOT
+        ]
       }
 
       query = {
@@ -24,6 +73,9 @@ locals {
           "thanos-storegateway:10901"
         ]
         resources = local.thanos.query_resources
+        networkPolicy = {
+          enabled = false
+        }
       }
 
       compactor = {
@@ -34,13 +86,16 @@ locals {
         resources              = local.thanos.compactor_resources
         persistence = {
           # The Access Mode needs to be set as ReadWriteOnce because AWS Elastic Block storage does not support other
-          # modes (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).          
+          # modes (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).
           # Since the compactor is the only pod accessing this volume, there should be no issue to have this as
           # ReadWriteOnce (https://stackoverflow.com/a/57799347).
           accessModes = [
             "ReadWriteOnce"
           ]
           size = local.thanos.compactor_persistence_size
+        }
+        networkPolicy = {
+          enabled = false
         }
       }
 
@@ -75,20 +130,13 @@ locals {
           }]
         }
         ingress = {
-          enabled = true
-          annotations = {
-            "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
-            "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-            "traefik.ingress.kubernetes.io/router.middlewares" = "traefik-withclustername@kubernetescrd"
-            "traefik.ingress.kubernetes.io/router.tls"         = "true"
-            "ingress.kubernetes.io/ssl-redirect"               = "true"
-            "kubernetes.io/ingress.allow-http"                 = "false"
-          }
-          tls      = false
-          hostname = ""
+          enabled     = true
+          annotations = local.ingress_annotations
+          tls         = false
+          hostname    = ""
           extraRules = [
             {
-              host = "thanos-bucketweb.apps.${var.base_domain}"
+              host = "thanos-bucketweb.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}"
               http = {
                 paths = [
                   {
@@ -129,18 +177,64 @@ locals {
           extraTls = [{
             secretName = "thanos-bucketweb-tls"
             hosts = [
-              "thanos-bucketweb.apps.${var.base_domain}",
+              "thanos-bucketweb.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}",
               "${local.thanos.bucketweb_domain}"
             ]
           }]
         }
+        networkPolicy = {
+          enabled = false
+        }
       }
 
       queryFrontend = {
+        extraFlags = [
+          # Query Frontend response cache config -> https://thanos.io/tip/components/query-frontend.md/#caching
+          <<-EOT
+          --query-range.response-cache-config="config":
+            addr: "thanos-redis-master:6379"
+            password: ${random_password.redis_password.result}
+            db: 1
+            dial_timeout: 5s
+            read_timeout: 3s
+            write_timeout: 3s
+            max_get_multi_concurrency: 1000
+            get_multi_batch_size: 100
+            max_set_multi_concurrency: 1000
+            set_multi_batch_size: 100
+            tls_enabled: false
+            cache_size: 0
+            max_async_buffer_size: 1000000
+            max_async_concurrency: 200
+            expiration: 2h
+          "type": "REDIS"   
+          EOT
+          ,
+          <<-EOT
+          --labels.response-cache-config="config":
+            addr: "thanos-redis-master:6379"
+            password: ${random_password.redis_password.result}
+            db: 2
+            dial_timeout: 5s
+            read_timeout: 3s
+            write_timeout: 3s
+            max_get_multi_concurrency: 1000
+            get_multi_batch_size: 100
+            max_set_multi_concurrency: 1000
+            set_multi_batch_size: 100
+            tls_enabled: false
+            cache_size: 0
+            max_async_buffer_size: 1000000
+            max_async_concurrency: 200
+            expiration: 2h
+          "type": "REDIS"   
+          EOT
+          ,
+        ]
         sidecars = [{
           args = concat([
             "--http-address=0.0.0.0:9075",
-            "--upstream=http://localhost:10902",
+            "--upstream=http://localhost:9090",
             "--provider=oidc",
             "--oidc-issuer-url=${replace(local.thanos.oidc.issuer_url, "\"", "\\\"")}",
             "--client-id=${replace(local.thanos.oidc.client_id, "\"", "\\\"")}",
@@ -166,20 +260,13 @@ locals {
           }]
         }
         ingress = {
-          enabled = true
-          annotations = {
-            "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
-            "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-            "traefik.ingress.kubernetes.io/router.middlewares" = "traefik-withclustername@kubernetescrd"
-            "traefik.ingress.kubernetes.io/router.tls"         = "true"
-            "ingress.kubernetes.io/ssl-redirect"               = "true"
-            "kubernetes.io/ingress.allow-http"                 = "false"
-          }
-          tls      = false
-          hostname = ""
+          enabled     = true
+          annotations = local.ingress_annotations
+          tls         = false
+          hostname    = ""
           extraRules = [
             {
-              host = "thanos-query.apps.${var.base_domain}"
+              host = "thanos-query.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}"
               http = {
                 paths = [
                   {
@@ -220,19 +307,31 @@ locals {
           extraTls = [{
             secretName = "thanos-query-tls"
             hosts = [
-              "thanos-query.apps.${var.base_domain}",
+              "thanos-query.${trimprefix("${var.subdomain}.${var.base_domain}", ".")}",
               "${local.thanos.query_domain}"
             ]
           }]
         }
+        networkPolicy = {
+          enabled = false
+        }
       }
-
+      receive = {
+        networkPolicy = {
+          enabled = false
+        }
+      }
+      ruler = {
+        networkPolicy = {
+          enabled = false
+        }
+      }
     }
   }]
 
   thanos_defaults = {
-    query_domain     = "thanos-query.apps.${var.cluster_name}.${var.base_domain}"
-    bucketweb_domain = "thanos-bucketweb.apps.${var.cluster_name}.${var.base_domain}"
+    query_domain     = "thanos-query.${trimprefix("${var.subdomain}.${var.cluster_name}", ".")}.${var.base_domain}"
+    bucketweb_domain = "thanos-bucketweb.${trimprefix("${var.subdomain}.${var.cluster_name}", ".")}.${var.base_domain}"
 
     # TODO Create proper Terraform variables for these values instead of bundling everything inside of these locals
 

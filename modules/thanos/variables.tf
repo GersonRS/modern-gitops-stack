@@ -12,10 +12,11 @@ variable "base_domain" {
   type        = string
 }
 
-variable "argocd_namespace" {
-  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
+variable "subdomain" {
+  description = "Subdomain of the cluster. Value used for the ingress' URL of the application."
   type        = string
-  default     = "argocd"
+  default     = "apps"
+  nullable    = false
 }
 
 variable "argocd_project" {
@@ -45,13 +46,7 @@ variable "target_revision" {
 variable "cluster_issuer" {
   description = "SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files."
   type        = string
-  default     = "ca-issuer"
-}
-
-variable "namespace" {
-  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
-  type        = string
-  default     = "monitoring"
+  default     = "selfsigned-issuer"
 }
 
 variable "helm_values" {
@@ -86,11 +81,6 @@ variable "dependency_ids" {
   default     = {}
 }
 
-variable "project_source_repo" {
-  description = "Repository allowed to be scraped in this AppProject."
-  type        = string
-}
-
 #######################
 ## Module variables
 #######################
@@ -99,4 +89,10 @@ variable "thanos" {
   description = "Most frequently used Thanos settings. This variable is merged with the local value `thanos_defaults`, which contains some sensible defaults. You can check the default values on the link:./local.tf[`local.tf`] file. If there still is anything other that needs to be customized, you can always pass on configuration values using the variable `helm_values`."
   type        = any
   default     = {}
+}
+
+variable "enable_service_monitor" {
+  description = "Boolean to enable the deployment of a service monitor for Prometheus. This also enables the deployment of default Prometheus rules and Grafana dashboards, which are embedded inside the chart templates and are taken from the official Thanos examples, available https://github.com/thanos-io/thanos/blob/main/examples/alerts/alerts.yaml[here]."
+  type        = bool
+  default     = false
 }

@@ -3,6 +3,11 @@ output "id" {
   value       = resource.null_resource.this.id
 }
 
+output "endpoint" {
+  description = "MinIO endpoint where the buckets are available."
+  value       = "minio.minio:9000"
+}
+
 output "minio_root_user_credentials" {
   description = "The MinIO root user password."
   value = {
@@ -10,18 +15,4 @@ output "minio_root_user_credentials" {
     password = random_password.minio_root_secretkey.result
   }
   sensitive = true
-}
-
-output "cluster_dns" {
-  description = "MinIO cluster dns endpoint where the buckets are available."
-  value       = "minio.${var.namespace}.svc.cluster.local:9000"
-}
-output "cluster_ip" {
-  description = "MinIO cluster ip internal"
-  value       = data.kubernetes_service.minio.spec[0].cluster_ip
-}
-
-output "endpoint" {
-  description = "MinIO endpoint external"
-  value       = "https://minio.apps.${var.cluster_name}.${var.base_domain}"
 }

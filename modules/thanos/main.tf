@@ -2,25 +2,26 @@ resource "null_resource" "dependencies" {
   triggers = var.dependency_ids
 }
 
+resource "random_password" "redis_password" {
+  length  = 16
+  special = false
+}
+
 resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "thanos-${var.destination_cluster}" : "thanos"
-    namespace = var.argocd_namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
-    }
+    namespace = "argocd"
   }
 
   spec {
     description  = "Thanos application project for cluster ${var.destination_cluster}"
-    source_repos = [var.project_source_repo]
-
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "thanos"
     }
 
     orphaned_resources {
@@ -47,7 +48,7 @@ data "utils_deep_merge_yaml" "values" {
 resource "argocd_application" "this" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "thanos-${var.destination_cluster}" : "thanos"
-    namespace = var.argocd_namespace
+    namespace = "argocd"
     labels = merge({
       "application" = "thanos"
       "cluster"     = var.destination_cluster
@@ -65,17 +66,18 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/thanos"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "thanos"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "thanos"
     }
 
     sync_policy {

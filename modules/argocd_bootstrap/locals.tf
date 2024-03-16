@@ -1,10 +1,6 @@
 locals {
-  argocd_chart = {
-    name       = "argo-cd"
-    repository = "https://argoproj.github.io/argo-helm"
-    version    = "5.45.3"
-  }
-  argocd_version = "v2.8.3"
+  argocd_chart   = yamldecode(file("${path.root}/charts/argocd/Chart.lock")).dependencies.0
+  argocd_version = yamldecode(file("${path.root}/charts/argocd/chart-version.yaml")).appVersion
 
   jwt_token_payload = {
     jti = random_uuid.jti.result

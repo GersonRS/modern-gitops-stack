@@ -2,43 +2,9 @@ resource "null_resource" "dependencies" {
   triggers = var.dependency_ids
 }
 
-resource "kubernetes_service_account" "minio_storage" {
-  metadata {
-    name = "minio-storage"
-    annotations = {
-      "serving.kserve.io/s3-endpoint"          = "minio.${var.namespace}.svc.cluster.local:9000"
-      "serving.kserve.io/s3-usehttps"          = "1"
-      "serving.kserve.io/s3-region"            = "us-east-2"
-      "serving.kserve.io/s3-useanoncredential" = "false"
-      "serving.kserve.io/s3-verifyssl"         = "0"
-    }
-  }
-  secret {
-    name = kubernetes_secret.minio_credention_secret.metadata.0.name
-  }
-}
-
-resource "kubernetes_secret" "minio_credention_secret" {
-  metadata {
-    name      = "minio-credention-secret"
-    namespace = var.namespace
-    annotations = {
-      "serving.kserve.io/s3-endpoint"                                 = "minio.${var.namespace}.svc.cluster.local:9000"
-      "serving.kserve.io/s3-region"                                   = "us-east-2"
-      "serving.kserve.io/s3-useanoncredential"                        = "false"
-      "serving.kserve.io/s3-usehttps"                                 = "1"
-      "serving.kserve.io/s3-verifyssl"                                = "0"
-      "reflector.v1.k8s.emberstack.com/reflection-allowed"            = "true"
-      "reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces" = "${var.namespace},management"
-    }
-  }
-
-  data = {
-    AWS_ACCESS_KEY_ID     = "root"
-    AWS_SECRET_ACCESS_KEY = random_password.minio_root_secretkey.result
-  }
-
-  depends_on = [null_resource.this]
+resource "random_password" "minio_root_secretkey" {
+  length  = 16
+  special = false
 }
 
 resource "argocd_project" "this" {
@@ -46,20 +12,16 @@ resource "argocd_project" "this" {
 
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "minio-${var.destination_cluster}" : "minio"
-    namespace = var.argocd_namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
-    }
+    namespace = "argocd"
   }
 
   spec {
     description  = "MinIO application project for cluster ${var.destination_cluster}"
-    source_repos = [var.project_source_repo]
-
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "minio"
     }
 
     orphaned_resources {
@@ -77,11 +39,10 @@ data "utils_deep_merge_yaml" "values" {
   input = [for i in concat(local.helm_values, var.helm_values) : yamlencode(i)]
 }
 
-
 resource "argocd_application" "this" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "minio-${var.destination_cluster}" : "minio"
-    namespace = var.argocd_namespace
+    namespace = "argocd"
     labels = merge({
       "application" = "minio"
       "cluster"     = var.destination_cluster
@@ -99,17 +60,18 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/minio"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "minio"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "minio"
     }
 
     sync_policy {
@@ -145,16 +107,5 @@ resource "argocd_application" "this" {
 resource "null_resource" "this" {
   depends_on = [
     resource.argocd_application.this,
-  ]
-}
-
-data "kubernetes_service" "minio" {
-  metadata {
-    name      = "minio"
-    namespace = var.namespace
-  }
-
-  depends_on = [
-    null_resource.this
   ]
 }

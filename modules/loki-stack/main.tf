@@ -17,20 +17,16 @@ resource "argocd_project" "this" {
 
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "loki-stack-${var.destination_cluster}" : "loki-stack"
-    namespace = var.argocd_namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
-    }
+    namespace = "argocd"
   }
 
   spec {
     description  = "Loki application project for cluster ${var.destination_cluster}"
-    source_repos = [var.project_source_repo]
-
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "loki-stack"
     }
 
     orphaned_resources {
@@ -51,7 +47,7 @@ data "utils_deep_merge_yaml" "values" {
 resource "argocd_application" "this" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "loki-stack-${var.destination_cluster}" : "loki-stack"
-    namespace = var.argocd_namespace
+    namespace = "argocd"
     labels = merge({
       "application" = "loki-stack"
       "cluster"     = var.destination_cluster
@@ -69,17 +65,18 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/loki-microservice"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "loki"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "loki-stack"
     }
 
     sync_policy {

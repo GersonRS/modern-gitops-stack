@@ -9,18 +9,22 @@ resource "random_password" "db_password" {
 }
 
 resource "argocd_project" "this" {
+  count = var.argocd_project == null ? 1 : 0
+
   metadata {
-    name      = "keycloak"
-    namespace = var.argocd_namespace
+    name      = var.destination_cluster != "in-cluster" ? "keycloak-${var.destination_cluster}" : "keycloak"
+    namespace = "argocd"
   }
 
   spec {
-    description  = "Keycloak application project"
-    source_repos = [var.project_source_repo]
+    description = "Keycloak application project for cluster ${var.destination_cluster}"
+    source_repos = [
+      "https://github.com/GersonRS/modern-gitops-stack.git",
+    ]
 
     destination {
-      name      = "in-cluster"
-      namespace = var.namespace
+      name      = var.destination_cluster
+      namespace = "keycloak"
     }
 
     orphaned_resources {
@@ -40,24 +44,31 @@ data "utils_deep_merge_yaml" "values" {
 
 resource "argocd_application" "operator" {
   metadata {
-    name      = "keycloak-operator"
-    namespace = var.argocd_namespace
+    name      = var.destination_cluster != "in-cluster" ? "keycloak-operator-${var.destination_cluster}" : "keycloak-operator"
+    namespace = "argocd"
+    labels = merge({
+      "application" = "keycloak-operator"
+      "cluster"     = var.destination_cluster
+    }, var.argocd_labels)
   }
 
   wait = var.app_autosync == { "allow_empty" = tobool(null), "prune" = tobool(null), "self_heal" = tobool(null) } ? false : true
 
   spec {
-    project = argocd_project.this.metadata.0.name
+    project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/keycloak-operator"
       target_revision = var.target_revision
+      helm {
+        release_name = "keycloak-operator"
+      }
     }
 
     destination {
-      name      = "in-cluster"
-      namespace = var.namespace
+      name      = var.destination_cluster
+      namespace = "keycloak"
     }
 
     sync_policy {
@@ -92,8 +103,12 @@ resource "argocd_application" "operator" {
 
 resource "argocd_application" "this" {
   metadata {
-    name      = "keycloak"
-    namespace = var.argocd_namespace
+    name      = var.destination_cluster != "in-cluster" ? "keycloak-${var.destination_cluster}" : "keycloak"
+    namespace = "argocd"
+    labels = merge({
+      "application" = "keycloak"
+      "cluster"     = var.destination_cluster
+    }, var.argocd_labels)
   }
 
   timeouts {
@@ -104,20 +119,21 @@ resource "argocd_application" "this" {
   wait = var.app_autosync == { "allow_empty" = tobool(null), "prune" = tobool(null), "self_heal" = tobool(null) } ? false : true
 
   spec {
-    project = argocd_project.this.metadata.0.name
+    project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/keycloak"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "keycloak"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
     destination {
-      name      = "in-cluster"
-      namespace = var.namespace
+      name      = var.destination_cluster
+      namespace = "keycloak"
     }
 
     sync_policy {
@@ -153,7 +169,7 @@ resource "argocd_application" "this" {
 resource "null_resource" "wait_for_keycloak" {
   provisioner "local-exec" {
     command = <<EOT
-    while [ $(curl -k https://keycloak.apps.${var.cluster_name}.${var.base_domain} -I -s | head -n 1 | cut -d' ' -f2) != '200' ]; do
+    while [ $(curl -k https://keycloak.${trimprefix("${var.subdomain}.${var.cluster_name}", ".")}.${var.base_domain} -I -s | head -n 1 | cut -d' ' -f2) != '200' ]; do
       sleep 5
     done
     EOT
@@ -167,7 +183,7 @@ resource "null_resource" "wait_for_keycloak" {
 data "kubernetes_secret" "admin_credentials" {
   metadata {
     name      = "keycloak-initial-admin"
-    namespace = var.namespace
+    namespace = "keycloak"
   }
   depends_on = [
     resource.null_resource.wait_for_keycloak,

@@ -1,21 +1,20 @@
 locals {
   oauth2_proxy_image       = "quay.io/oauth2-proxy/oauth2-proxy:v7.5.0"
   curl_wait_for_oidc_image = "curlimages/curl:8.3.0"
+  domain                   = trimprefix("${var.subdomain}.${var.base_domain}", ".")
+  domain_full              = trimprefix("${var.subdomain}.${var.cluster_name}.${var.base_domain}", ".")
 
   ingress_annotations = {
     "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
     "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-    "traefik.ingress.kubernetes.io/router.middlewares" = "traefik-withclustername@kubernetescrd"
     "traefik.ingress.kubernetes.io/router.tls"         = "true"
-    "ingress.kubernetes.io/ssl-redirect"               = "true"
-    "kubernetes.io/ingress.allow-http"                 = "false"
   }
 
   grafana_defaults = {
     enabled                  = true
     additional_data_sources  = false
     generic_oauth_extra_args = {}
-    domain                   = "grafana.apps.${var.cluster_name}.${var.base_domain}"
+    domain                   = "grafana.${local.domain_full}"
     admin_password           = random_password.grafana_admin_password.result
   }
 
@@ -26,7 +25,7 @@ locals {
 
   prometheus_defaults = {
     enabled = true
-    domain  = "prometheus.apps.${var.cluster_name}.${var.base_domain}"
+    domain  = "prometheus.${local.domain_full}"
   }
 
   prometheus = merge(
@@ -36,7 +35,7 @@ locals {
 
   alertmanager_defaults = {
     enabled            = true
-    domain             = "alertmanager.apps.${var.cluster_name}.${var.base_domain}"
+    domain             = "alertmanager.${local.domain_full}"
     deadmanssnitch_url = null
     slack_routes       = []
   }
@@ -156,14 +155,14 @@ locals {
           servicePort = "9095"
           hosts = [
             "${local.alertmanager.domain}",
-            "alertmanager.apps.${var.base_domain}"
+            "alertmanager.${local.domain}"
           ]
           tls = [
             {
               secretName = "alertmanager-tls"
               hosts = [
                 "${local.alertmanager.domain}",
-                "alertmanager.apps.${var.base_domain}",
+                "alertmanager.${local.domain}",
               ]
             },
           ]
@@ -197,7 +196,7 @@ locals {
             auth_url                 = "${replace(local.grafana.oidc.oauth_url, "\"", "\\\"")}"
             token_url                = "${replace(local.grafana.oidc.token_url, "\"", "\\\"")}"
             api_url                  = "${replace(local.grafana.oidc.api_url, "\"", "\\\"")}"
-            tls_skip_verify_insecure = var.cluster_issuer == "ca-issuer" || var.cluster_issuer == "letsencrypt-staging"
+            tls_skip_verify_insecure = var.cluster_issuer != "letsencrypt-prod"
           }, local.grafana.generic_oauth_extra_args)
           users = {
             auto_assign_org_role = "Editor"
@@ -237,14 +236,14 @@ locals {
           annotations = local.ingress_annotations
           hosts = [
             "${local.grafana.domain}",
-            "grafana.apps.${var.base_domain}",
+            "grafana.${local.domain}",
           ]
           tls = [
             {
               secretName = "grafana-tls"
               hosts = [
                 "${local.grafana.domain}",
-                "grafana.apps.${var.base_domain}",
+                "grafana.${local.domain}",
               ]
             },
           ]
@@ -288,14 +287,14 @@ locals {
           servicePort = "9091"
           hosts = [
             "${local.prometheus.domain}",
-            "prometheus.apps.${var.base_domain}",
+            "prometheus.${local.domain}",
           ]
           tls = [
             {
               secretName = "prometheus-tls"
               hosts = [
                 "${local.prometheus.domain}",
-                "prometheus.apps.${var.base_domain}",
+                "prometheus.${local.domain}",
               ]
             },
           ]
@@ -372,6 +371,9 @@ locals {
         } : null, {
         enabled = local.prometheus.enabled
         thanosService = {
+          enabled = var.metrics_storage_main != null ? true : false
+        }
+        thanosServiceMonitor = {
           enabled = var.metrics_storage_main != null ? true : false
         }
         }

@@ -20,7 +20,7 @@ resource "helm_release" "argocd" {
   chart      = local.argocd_chart.name
   version    = local.argocd_chart.version
 
-  namespace         = var.namespace
+  namespace         = "argocd"
   dependency_update = true
   create_namespace  = true
   timeout           = 10800
@@ -31,16 +31,12 @@ resource "helm_release" "argocd" {
   }
 }
 
-# TODO Consider chosing better names than control_plane and workers
-resource "argocd_project" "modern_gitops_stack_applications" {
+resource "argocd_project" "modern-gitops_stack_applications" {
   for_each = var.argocd_projects
 
   metadata {
     name      = each.key
-    namespace = var.namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.namespace
-    }
+    namespace = "argocd"
   }
 
   spec {
@@ -76,6 +72,6 @@ resource "null_resource" "this" {
   depends_on = [
     resource.helm_release.argocd,
     resource.random_password.argocd_server_secretkey,
-    resource.argocd_project.modern_gitops_stack_applications,
+    resource.argocd_project.modern-gitops_stack_applications,
   ]
 }

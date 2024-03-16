@@ -7,20 +7,16 @@ resource "argocd_project" "this" {
 
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "kube-prometheus-stack-${var.destination_cluster}" : "kube-prometheus-stack"
-    namespace = var.argocd_namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
-    }
+    namespace = "argocd"
   }
 
   spec {
     description  = "kube-prometheus-stack application project for cluster ${var.destination_cluster}"
-    source_repos = [var.project_source_repo]
-
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "kube-prometheus-stack"
     }
 
     # This extra destination block is needed by the v1/Service
@@ -44,8 +40,12 @@ resource "argocd_project" "this" {
 
 resource "kubernetes_namespace" "kube_prometheus_stack_namespace" {
   metadata {
-    name = var.namespace
+    name = "kube-prometheus-stack"
   }
+
+  depends_on = [
+    resource.null_resource.dependencies,
+  ]
 }
 
 
@@ -54,7 +54,7 @@ resource "kubernetes_secret" "thanos_object_storage_secret" {
 
   metadata {
     name      = "thanos-objectstorage"
-    namespace = var.namespace
+    namespace = "kube-prometheus-stack"
   }
 
   data = {
@@ -62,6 +62,7 @@ resource "kubernetes_secret" "thanos_object_storage_secret" {
   }
 
   depends_on = [
+    resource.null_resource.dependencies,
     resource.kubernetes_namespace.kube_prometheus_stack_namespace
   ]
 }
@@ -79,7 +80,7 @@ data "utils_deep_merge_yaml" "values" {
 resource "argocd_application" "this" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "kube-prometheus-stack-${var.destination_cluster}" : "kube-prometheus-stack"
-    namespace = var.argocd_namespace
+    namespace = "argocd"
     labels = merge({
       "application" = "kube-prometheus-stack"
       "cluster"     = var.destination_cluster
@@ -97,11 +98,15 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       path            = "charts/kube-prometheus-stack"
       target_revision = var.target_revision
       plugin {
         name = "kustomized-helm"
+        env {
+          name  = "HELM_ARGS"
+          value = "--name-template kube-prometheus-stack"
+        }
         env {
           name  = "HELM_VALUES"
           value = data.utils_deep_merge_yaml.values.output
@@ -111,7 +116,7 @@ resource "argocd_application" "this" {
 
     destination {
       name      = var.destination_cluster
-      namespace = var.namespace
+      namespace = "kube-prometheus-stack"
     }
 
     sync_policy {

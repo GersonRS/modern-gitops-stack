@@ -23,20 +23,16 @@ resource "argocd_project" "this" {
 
   metadata {
     name      = "argocd"
-    namespace = var.argocd_namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
-    }
+    namespace = "argocd"
   }
 
   spec {
     description  = "Argo CD application project"
-    source_repos = [var.project_source_repo]
-
+    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
 
     destination {
       name      = "in-cluster"
-      namespace = var.namespace
+      namespace = "argocd"
     }
 
     orphaned_resources {
@@ -58,7 +54,7 @@ data "utils_deep_merge_yaml" "values" {
 resource "argocd_application" "this" {
   metadata {
     name      = "argocd"
-    namespace = var.argocd_namespace
+    namespace = "argocd"
     labels = merge({
       "application" = "argocd"
       "cluster"     = "in-cluster"
@@ -73,16 +69,17 @@ resource "argocd_application" "this" {
 
     source {
       path            = "charts/argocd"
-      repo_url        = var.project_source_repo
+      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "argocd"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
     destination {
       name      = "in-cluster"
-      namespace = var.namespace
+      namespace = "argocd"
     }
 
     sync_policy {
@@ -120,3 +117,4 @@ resource "null_resource" "this" {
     resource.argocd_application.this,
   ]
 }
+
