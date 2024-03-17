@@ -110,7 +110,7 @@ variable "argocd_namespace" {
 variable "namespace" {
   description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
   type        = string
-  default     = "cert-manager"
+  default     = "thanos"
 }
 
 variable "project_source_repo" {

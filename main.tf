@@ -32,6 +32,10 @@ module "metrics-server" {
 
   kubelet_insecure_tls = true
 
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
+
   dependency_ids = {
     argocd = module.argocd_bootstrap.id
   }
@@ -45,6 +49,10 @@ module "traefik" {
   app_autosync           = local.app_autosync
   enable_service_monitor = local.enable_service_monitor
 
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
+
   dependency_ids = {
     argocd = module.argocd_bootstrap.id
   }
@@ -57,6 +65,10 @@ module "cert-manager" {
 
   app_autosync           = local.app_autosync
   enable_service_monitor = local.enable_service_monitor
+
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
 
   dependency_ids = {
     argocd = module.argocd_bootstrap.id
@@ -73,6 +85,10 @@ module "keycloak" {
   argocd_project = local.cluster_name
 
   app_autosync = local.app_autosync
+
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
 
   dependency_ids = {
     traefik      = module.traefik.id
@@ -118,6 +134,10 @@ module "minio" {
 
   oidc = module.oidc.oidc
 
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
+
   dependency_ids = {
     traefik      = module.traefik.id
     cert-manager = module.cert-manager.id
@@ -138,6 +158,10 @@ module "loki-stack" {
     access_key  = local.minio_config.users.0.accessKey
     secret_key  = local.minio_config.users.0.secretKey
   }
+
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
 
   dependency_ids = {
     minio = module.minio.id
@@ -167,6 +191,10 @@ module "thanos" {
   thanos = {
     oidc = module.oidc.oidc
   }
+
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
 
   dependency_ids = {
     argocd       = module.argocd_bootstrap.id
@@ -205,6 +233,10 @@ module "kube-prometheus-stack" {
   grafana = {
     oidc = module.oidc.oidc
   }
+
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
 
   dependency_ids = {
     traefik      = module.traefik.id
@@ -248,6 +280,10 @@ module "argocd" {
       g, modern-gitops-stack-admins, role:admin
     EOT
   }
+
+  argocd_namespace    = module.argocd_bootstrap.argocd_namespace
+  target_revision     = local.target_revision
+  project_source_repo = local.project_source_repo
 
   dependency_ids = {
     traefik               = module.traefik.id
