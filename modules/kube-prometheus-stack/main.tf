@@ -46,6 +46,10 @@ resource "kubernetes_namespace" "kube_prometheus_stack_namespace" {
   metadata {
     name = var.namespace
   }
+
+  depends_on = [
+    resource.null_resource.dependencies,
+  ]
 }
 
 
@@ -62,6 +66,7 @@ resource "kubernetes_secret" "thanos_object_storage_secret" {
   }
 
   depends_on = [
+    resource.null_resource.dependencies,
     resource.kubernetes_namespace.kube_prometheus_stack_namespace
   ]
 }
@@ -102,6 +107,10 @@ resource "argocd_application" "this" {
       target_revision = var.target_revision
       plugin {
         name = "kustomized-helm"
+        env {
+          name  = "HELM_ARGS"
+          value = "--name-template kube-prometheus-stack"
+        }
         env {
           name  = "HELM_VALUES"
           value = data.utils_deep_merge_yaml.values.output

@@ -4,13 +4,13 @@ output "id" {
 }
 
 output "argocd_namespace" {
-  description = "The namespace where to deploy Argo CD."
+  description = "The namespace where Argo CD resides. The main use of this output is to create an implicit dependency when passing this attribute to the oboukili/argocd provider settings."
   value       = helm_release.argocd.metadata.0.namespace
 }
 
 output "argocd_project_names" {
   description = "The names of all the Argo CD AppProjects created by the bootstrap module."
-  value       = [for i in argocd_project.modern_gitops_stack_applications : i.metadata.0.name]
+  value       = [for i in argocd_project.modern-gitops_stack_applications : i.metadata.0.name]
 }
 
 output "argocd_server_secretkey" {

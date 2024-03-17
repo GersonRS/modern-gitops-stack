@@ -12,10 +12,11 @@ variable "base_domain" {
   type        = string
 }
 
-variable "argocd_namespace" {
-  description = "Namespace used by Argo CD where the Application and AppProject resources should be created. Normally, it should take the outputof the namespace from the bootstrap module."
+variable "subdomain" {
+  description = "Subdomain of the cluster. Value used for the ingress' URL of the application."
   type        = string
-  default     = "argocd"
+  default     = "apps"
+  nullable    = false
 }
 
 variable "argocd_project" {
@@ -30,6 +31,12 @@ variable "argocd_labels" {
   default     = {}
 }
 
+variable "destination_cluster" {
+  description = "Destination cluster where the application should be deployed."
+  type        = string
+  default     = "in-cluster"
+}
+
 variable "target_revision" {
   description = "Override of target revision of the application chart."
   type        = string
@@ -40,12 +47,6 @@ variable "cluster_issuer" {
   description = "SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files. You can use `ca-issuer` when using the self-signed variant of cert-manager."
   type        = string
   default     = "selfsigned-issuer"
-}
-
-variable "namespace" {
-  description = "Namespace where to deploy Argo CD."
-  type        = string
-  default     = "argocd"
 }
 
 variable "helm_values" {
@@ -69,14 +70,8 @@ variable "app_autosync" {
 }
 
 variable "dependency_ids" {
-  description = "IDs of the other modules on which this module depends on."
-  type        = map(string)
-  default     = {}
-}
-
-variable "project_source_repo" {
-  description = "Repository allowed to be scraped in this AppProject."
-  type        = string
+  type    = map(string)
+  default = {}
 }
 
 #######################
@@ -247,9 +242,9 @@ variable "repositories" {
 variable "ssh_known_hosts" {
   description = <<-EOT
     List of SSH known hosts to add to Argo CD.
-
-    Check the official `values.yaml` to get the format to pass this value.
-
+    
+    Check the official `values.yaml` to get the format to pass this value. 
+    
     IMPORTANT: If you set this variable, the default known hosts will be overridden by this value, so you might want to consider adding the ones you need here."
   EOT
   type        = string
@@ -323,4 +318,25 @@ variable "helmfile_cmp_env_variables" {
     }))
   }))
   default = []
+}
+
+#######################
+## Extras variables
+#######################
+
+variable "argocd_namespace" {
+  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
+  type        = string
+  default     = "argocd"
+}
+
+variable "namespace" {
+  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
+  type        = string
+  default     = "argocd"
+}
+
+variable "project_source_repo" {
+  description = "Repository allowed to be scraped in this AppProject."
+  type        = string
 }

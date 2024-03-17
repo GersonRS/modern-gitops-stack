@@ -1,9 +1,0 @@
-apiVersion: v2
-dependencies:
-- name: airflow
-  repository: https://airflow.apache.org/
-  version: 1.11.0
-description: |
-  This chart installs airflow.
-name: airflow
-version: "0"

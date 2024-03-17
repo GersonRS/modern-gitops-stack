@@ -7,7 +7,7 @@ variable "cluster_name" {
 variable "kubernetes_version" {
   description = "Kubernetes version to use for the KinD cluster (images available https://hub.docker.com/r/kindest/node/tags[here])."
   type        = string
-  default     = "v1.27.3"
+  default     = "v1.29.1"
 }
 
 variable "nodes" {
@@ -27,6 +27,6 @@ variable "nodes" {
 
   validation {
     condition     = length(var.nodes) >= 3
-    error_message = "A minimum of 3 nodes is required because of the way the other gitops Stack modules are configured."
+    error_message = "A minimum of 3 nodes is required because of the way the other Modern GitOps Stack modules are configured."
   }
 }

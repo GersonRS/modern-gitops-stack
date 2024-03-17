@@ -12,10 +12,11 @@ variable "base_domain" {
   type        = string
 }
 
-variable "argocd_namespace" {
-  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
+variable "subdomain" {
+  description = "Subdomain of the cluster. Value used for the ingress' URL of the application."
   type        = string
-  default     = "argocd"
+  default     = "apps"
+  nullable    = false
 }
 
 variable "argocd_project" {
@@ -45,13 +46,7 @@ variable "target_revision" {
 variable "cluster_issuer" {
   description = "SSL certificate issuer to use. Usually you would configure this value as `letsencrypt-staging` or `letsencrypt-prod` on your root `*.tf` files."
   type        = string
-  default     = "ca-issuer"
-}
-
-variable "namespace" {
-  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
-  type        = string
-  default     = "deepstorage"
+  default     = "selfsigned-issuer"
 }
 
 variable "enable_service_monitor" {
@@ -86,14 +81,38 @@ variable "dependency_ids" {
   default     = {}
 }
 
-variable "project_source_repo" {
-  description = "Repository allowed to be scraped in this AppProject."
-  type        = string
-}
-
 #######################
 ## Module variables
 #######################
+
+# This variable is used to create policies, users and buckets instead of using hard coded values.
+variable "config_minio" {
+  description = "Variable to create buckets and required users and policies."
+
+  type = object({
+    policies = optional(list(object({
+      name = string
+      statements = list(object({
+        resources = list(string)
+        actions   = list(string)
+      }))
+    })), [])
+    users = optional(list(object({
+      accessKey = string
+      secretKey = string
+      policy    = string
+    })), [])
+    buckets = optional(list(object({
+      name          = string
+      policy        = optional(string, "none")
+      purge         = optional(bool, false)
+      versioning    = optional(bool, false)
+      objectlocking = optional(bool, false)
+    })), [])
+  })
+
+  default = {}
+}
 
 variable "oidc" {
   description = "OIDC configuration to access the MinIO web interface."
@@ -109,4 +128,25 @@ variable "oidc" {
   })
 
   default = null
+}
+
+#######################
+## Extras variables
+#######################
+
+variable "argocd_namespace" {
+  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
+  type        = string
+  default     = "argocd"
+}
+
+variable "namespace" {
+  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
+  type        = string
+  default     = "minio"
+}
+
+variable "project_source_repo" {
+  description = "Repository allowed to be scraped in this AppProject."
+  type        = string
 }

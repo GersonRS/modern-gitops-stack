@@ -1,8 +1,8 @@
 
 locals {
-  argocd_version                  = "v2.8.3"
-  argocd_hostname_withclustername = format("argocd.apps.%s.%s", var.cluster_name, var.base_domain)
-  argocd_hostname                 = format("argocd.apps.%s", var.base_domain)
+  argocd_version                  = yamldecode(file("${path.root}/charts/argocd/chart-version.yaml")).appVersion
+  argocd_hostname_withclustername = format("argocd.%s.%s", trimprefix("${var.subdomain}.${var.cluster_name}", "."), var.base_domain)
+  argocd_hostname                 = format("argocd.%s", trimprefix("${var.subdomain}.${var.base_domain}", "."))
 
   jwt_tokens = {
     for account in var.extra_accounts : account => {
@@ -52,6 +52,7 @@ locals {
       command = ["/var/run/argocd/argocd-cmp-server"]
       # Note: Argo CD official image ships Helm and Kustomize. No need to build a custom image to use "kustomized-helm" plugin.
       image = "quay.io/argoproj/argocd:${local.argocd_version}"
+      args  = ["--loglevel=warn"]
       securityContext = {
         runAsNonRoot = true
         runAsUser    = 999
@@ -75,7 +76,7 @@ locals {
           name      = "kustomized-helm-cmp-tmp"
         }
       ]
-      # The extra containers of the repo_server pod must have resource requests/limits in order to allow this component 
+      # The extra containers of the repo_server pod must have resource requests/limits in order to allow this component
       # to autoscale properly.
       resources = var.resources.repo_server # TODO Maybe this resources should be different from the repo_server one.
     },
@@ -83,6 +84,7 @@ locals {
       name    = "helmfile-cmp"
       command = ["/var/run/argocd/argocd-cmp-server"]
       image   = "ghcr.io/camptocamp/docker-argocd-cmp-helmfile:${var.helmfile_cmp_version}"
+      args    = ["--loglevel=warn"]
       env     = var.helmfile_cmp_env_variables
       securityContext = {
         runAsNonRoot = true
@@ -104,7 +106,7 @@ locals {
           name      = "helmfile-cmp-tmp"
         }
       ]
-      # The extra containers of the repo_server pod must have resource requests/limits in order to allow this component 
+      # The extra containers of the repo_server pod must have resource requests/limits in order to allow this component
       # to autoscale properly.
       resources = var.resources.repo_server # TODO Maybe this resources should be different from the repo_server one.
     }
@@ -247,10 +249,7 @@ locals {
           annotations = {
             "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
             "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-            "traefik.ingress.kubernetes.io/router.middlewares" = "traefik-withclustername@kubernetescrd"
             "traefik.ingress.kubernetes.io/router.tls"         = "true"
-            "ingress.kubernetes.io/ssl-redirect"               = "true"
-            "kubernetes.io/ingress.allow-http"                 = "false"
           }
           hosts = [
             local.argocd_hostname_withclustername,

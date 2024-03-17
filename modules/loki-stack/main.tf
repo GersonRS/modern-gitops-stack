@@ -73,7 +73,8 @@ resource "argocd_application" "this" {
       path            = "charts/loki-microservice"
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "loki"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 

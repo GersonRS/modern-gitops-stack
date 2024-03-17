@@ -2,12 +2,6 @@
 ## Standard variables
 #######################
 
-variable "argocd_namespace" {
-  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
-  type        = string
-  default     = "argocd"
-}
-
 variable "argocd_project" {
   description = "Name of the Argo CD AppProject where the Application should be created. If not set, the Application will be created in a new AppProject only for this Application."
   type        = string
@@ -30,12 +24,6 @@ variable "target_revision" {
   description = "Override of target revision of the application chart."
   type        = string
   default     = "develop" # x-release-please-version
-}
-
-variable "namespace" {
-  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
-  type        = string
-  default     = "logging"
 }
 
 variable "helm_values" {
@@ -64,11 +52,6 @@ variable "dependency_ids" {
   default     = {}
 }
 
-variable "project_source_repo" {
-  description = "Repository allowed to be scraped in this AppProject."
-  type        = string
-}
-
 #######################
 ## Module variables
 #######################
@@ -92,4 +75,25 @@ variable "retention" {
     condition     = var.retention != null
     error_message = "Variable must not be null."
   }
+}
+
+#######################
+## Extras variables
+#######################
+
+variable "argocd_namespace" {
+  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
+  type        = string
+  default     = "argocd"
+}
+
+variable "namespace" {
+  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
+  type        = string
+  default     = "loki-stack"
+}
+
+variable "project_source_repo" {
+  description = "Repository allowed to be scraped in this AppProject."
+  type        = string
 }

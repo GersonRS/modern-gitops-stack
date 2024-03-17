@@ -22,7 +22,7 @@ resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
   metadata {
-    name      = "argocd"
+    name      = var.destination_cluster != "in-cluster" ? "argocd-${var.destination_cluster}" : "argocd"
     namespace = var.argocd_namespace
     annotations = {
       "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
@@ -32,7 +32,6 @@ resource "argocd_project" "this" {
   spec {
     description  = "Argo CD application project"
     source_repos = [var.project_source_repo]
-
 
     destination {
       name      = "in-cluster"
@@ -57,11 +56,11 @@ data "utils_deep_merge_yaml" "values" {
 
 resource "argocd_application" "this" {
   metadata {
-    name      = "argocd"
+    name      = var.destination_cluster != "in-cluster" ? "argocd-${var.destination_cluster}" : "argocd"
     namespace = var.argocd_namespace
     labels = merge({
       "application" = "argocd"
-      "cluster"     = "in-cluster"
+      "cluster"     = var.destination_cluster
     }, var.argocd_labels)
   }
 
@@ -76,12 +75,13 @@ resource "argocd_application" "this" {
       repo_url        = var.project_source_repo
       target_revision = var.target_revision
       helm {
-        values = data.utils_deep_merge_yaml.values.output
+        release_name = "argocd"
+        values       = data.utils_deep_merge_yaml.values.output
       }
     }
 
     destination {
-      name      = "in-cluster"
+      name      = var.destination_cluster
       namespace = var.namespace
     }
 
@@ -120,3 +120,4 @@ resource "null_resource" "this" {
     resource.argocd_application.this,
   ]
 }
+

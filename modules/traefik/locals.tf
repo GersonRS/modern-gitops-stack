@@ -10,7 +10,7 @@ locals {
             enabled = true
           }
           serviceMonitor = var.enable_service_monitor ? {
-            # dummy attribute to make serviceMonitor evaluate to true in a condition in the helm chart
+            # Dummy attribute to make serviceMonitor evaluate to true in a condition in the Helm chart
             foo = "bar"
           } : {}
         }
@@ -35,7 +35,7 @@ locals {
           }
         }
       } : null
-      ressources = {
+      ressources = { # TODO: use var.resources instead and fix the typo in "reSSources"
         limits = {
           cpu    = "250m"
           memory = "512Mi"
@@ -43,15 +43,6 @@ locals {
         requests = {
           cpu    = "125m"
           memory = "256Mi"
-        }
-      }
-      middlewares = {
-        redirections = {
-          withclustername = {
-            permanent   = false
-            regex       = "apps.${var.base_domain}"
-            replacement = "apps.${var.cluster_name}.${var.base_domain}"
-          }
         }
       }
     }

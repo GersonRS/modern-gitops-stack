@@ -1,9 +1,3 @@
-variable "namespace" {
-  description = "Namespace where to deploy Argo CD."
-  type        = string
-  default     = "argocd"
-}
-
 variable "argocd_projects" {
   description = <<-EOT
     List of AppProject definitions to be created in Argo CD. By default, no projects are created since this variable defaults to an empty map.
