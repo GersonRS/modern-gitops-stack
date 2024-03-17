@@ -1,42 +1,12 @@
 {
-  "__inputs": [],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "6.3.4"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -47,14 +17,19 @@
   },
   "description": "cert-manager dashboard",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 11001,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1571233502297,
+  "id": 32,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -63,12 +38,23 @@
       },
       "id": 18,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Certificates",
       "type": "row"
     },
     {
       "columns": [],
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 8,
@@ -77,8 +63,6 @@
         "y": 1
       },
       "id": 15,
-      "options": {},
-      "pageSize": null,
       "pluginVersion": "6.3.4",
       "scroll": true,
       "showHeader": true,
@@ -89,12 +73,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "hidden"
         },
         {
           "alias": "Time Left",
+          "align": "auto",
           "colorMode": "cell",
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -113,7 +99,7 @@
         },
         {
           "alias": "Certificate",
-          "colorMode": null,
+          "align": "auto",
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -130,25 +116,33 @@
       ],
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sort_desc( sum(certmanager_certificate_expiration_timestamp_seconds{exported_namespace=~\"$Namespace\"} - time()) BY (name,exported_namespace) )",
           "instant": true,
           "legendFormat": " {{exported_namespace}} / {{name}}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Time Left",
       "transform": "timeseries_to_rows",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "aliasColors": {},
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -157,6 +151,7 @@
         "x": 12,
         "y": 1
       },
+      "hiddenSeries": false,
       "id": 13,
       "legend": {
         "alignAsTable": false,
@@ -174,9 +169,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -186,6 +182,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(certmanager_certificate_ready_status) BY (condition)",
           "format": "time_series",
           "intervalFactor": 2,
@@ -195,9 +194,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Certificate Ready Status",
       "tooltip": {
         "shared": true,
@@ -206,33 +203,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -240,7 +229,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -249,6 +246,7 @@
         "x": 0,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 16,
       "legend": {
         "avg": false,
@@ -264,10 +262,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "6.3.4",
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -277,6 +275,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(certmanager_certificate_expiration_timestamp_seconds{exported_namespace=~\"$Namespace\"} - time()) BY (name,exported_namespace)",
           "instant": false,
           "intervalFactor": 1,
@@ -285,9 +286,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Time Left",
       "tooltip": {
         "shared": true,
@@ -296,9 +295,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -306,7 +303,6 @@
         {
           "decimals": 2,
           "format": "s",
-          "label": null,
           "logBase": 1,
           "max": "7776000",
           "min": "0",
@@ -314,20 +310,20 @@
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -336,6 +332,15 @@
       },
       "id": 20,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "ACME Client",
       "type": "row"
     },
@@ -344,7 +349,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -353,6 +366,7 @@
         "x": 0,
         "y": 18
       },
+      "hiddenSeries": false,
       "id": 22,
       "legend": {
         "avg": false,
@@ -367,9 +381,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -379,15 +394,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Overall requests per 2m",
       "tooltip": {
         "shared": true,
@@ -396,52 +412,62 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "$Datasource",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -450,71 +476,50 @@
         "y": 18
       },
       "id": 26,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(certmanager_http_acme_client_request_count)",
           "instant": true,
           "refId": "A"
         }
       ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total requests",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "type": "stat"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -523,6 +528,7 @@
         "x": 0,
         "y": 26
       },
+      "hiddenSeries": false,
       "id": 24,
       "legend": {
         "avg": false,
@@ -537,9 +543,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -549,15 +556,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/directory\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/directory",
       "tooltip": {
         "shared": true,
@@ -566,33 +574,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -600,7 +599,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -609,6 +616,7 @@
         "x": 8,
         "y": 26
       },
+      "hiddenSeries": false,
       "id": 27,
       "legend": {
         "avg": false,
@@ -623,9 +631,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -635,15 +644,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/cert\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/cert",
       "tooltip": {
         "shared": true,
@@ -652,33 +662,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -686,7 +687,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -695,6 +704,7 @@
         "x": 16,
         "y": 26
       },
+      "hiddenSeries": false,
       "id": 28,
       "legend": {
         "avg": false,
@@ -709,9 +719,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -721,15 +732,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/new-acct\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/new-acct",
       "tooltip": {
         "shared": true,
@@ -738,33 +750,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -772,7 +775,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -781,6 +792,7 @@
         "x": 0,
         "y": 34
       },
+      "hiddenSeries": false,
       "id": 29,
       "legend": {
         "avg": false,
@@ -795,9 +807,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -807,15 +820,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/order\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/order",
       "tooltip": {
         "shared": true,
@@ -824,33 +838,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -858,7 +863,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -867,6 +880,7 @@
         "x": 8,
         "y": 34
       },
+      "hiddenSeries": false,
       "id": 30,
       "legend": {
         "avg": false,
@@ -881,9 +895,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -893,15 +908,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/new-order\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/new-order",
       "tooltip": {
         "shared": true,
@@ -910,33 +926,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -944,7 +951,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -953,6 +968,7 @@
         "x": 16,
         "y": 34
       },
+      "hiddenSeries": false,
       "id": 31,
       "legend": {
         "avg": false,
@@ -967,9 +983,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -979,15 +996,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/authz-v3\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/authz-v3",
       "tooltip": {
         "shared": true,
@@ -996,33 +1014,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1030,7 +1039,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1039,6 +1056,7 @@
         "x": 0,
         "y": 42
       },
+      "hiddenSeries": false,
       "id": 32,
       "legend": {
         "avg": false,
@@ -1053,9 +1071,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1065,15 +1084,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/chall-v3\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/chall-v3",
       "tooltip": {
         "shared": true,
@@ -1082,33 +1102,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1116,7 +1127,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$Datasource",
+      "datasource": {
+        "uid": "$Datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1125,6 +1144,7 @@
         "x": 8,
         "y": 42
       },
+      "hiddenSeries": false,
       "id": 33,
       "legend": {
         "avg": false,
@@ -1139,9 +1159,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "10.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1151,15 +1172,16 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$Datasource"
+          },
           "expr": "sum(rate(certmanager_http_acme_client_request_count{path=\"/acme/finalize\"}[2m])) BY (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "/acme/finalize",
       "tooltip": {
         "shared": true,
@@ -1168,38 +1190,29 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 19,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "cert-manager-mixin"
@@ -1208,8 +1221,9 @@
     "list": [
       {
         "current": {
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "selected": true,
+          "text": "default",
+          "value": "default"
         },
         "hide": 0,
         "includeAll": false,
@@ -1218,6 +1232,7 @@
         "name": "Datasource",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1225,12 +1240,18 @@
       },
       {
         "allValue": ".*",
-        "current": {},
-        "datasource": "$Datasource",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "$Datasource"
+        },
         "definition": "label_values(exported_namespace)",
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Namespace",
         "options": [],
@@ -1240,19 +1261,24 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
         "allValue": ".*",
-        "current": {},
-        "datasource": "$Datasource",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "$Datasource"
+        },
         "definition": "label_values(certmanager_certificate_expiration_timestamp_seconds{exported_namespace=~\"$Namespace\"},name) ",
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Certificate",
         "options": [],
@@ -1262,7 +1288,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1301,5 +1326,6 @@
   "timezone": "browser",
   "title": "cert-manager",
   "uid": "u6M5igpWk",
-  "version": 5
+  "version": 2,
+  "weekStart": ""
 }
