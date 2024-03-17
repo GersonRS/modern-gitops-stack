@@ -7,16 +7,20 @@ resource "argocd_project" "this" {
 
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "kube-prometheus-stack-${var.destination_cluster}" : "kube-prometheus-stack"
-    namespace = "argocd"
+    namespace = var.argocd_namespace
+    annotations = {
+      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
+    }
   }
 
   spec {
     description  = "kube-prometheus-stack application project for cluster ${var.destination_cluster}"
-    source_repos = ["https://github.com/GersonRS/modern-gitops-stack.git"]
+    source_repos = [var.project_source_repo]
+
 
     destination {
       name      = var.destination_cluster
-      namespace = "kube-prometheus-stack"
+      namespace = var.namespace
     }
 
     # This extra destination block is needed by the v1/Service
@@ -40,7 +44,7 @@ resource "argocd_project" "this" {
 
 resource "kubernetes_namespace" "kube_prometheus_stack_namespace" {
   metadata {
-    name = "kube-prometheus-stack"
+    name = var.namespace
   }
 
   depends_on = [
@@ -54,7 +58,7 @@ resource "kubernetes_secret" "thanos_object_storage_secret" {
 
   metadata {
     name      = "thanos-objectstorage"
-    namespace = "kube-prometheus-stack"
+    namespace = var.namespace
   }
 
   data = {
@@ -80,7 +84,7 @@ data "utils_deep_merge_yaml" "values" {
 resource "argocd_application" "this" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "kube-prometheus-stack-${var.destination_cluster}" : "kube-prometheus-stack"
-    namespace = "argocd"
+    namespace = var.argocd_namespace
     labels = merge({
       "application" = "kube-prometheus-stack"
       "cluster"     = var.destination_cluster
@@ -98,7 +102,7 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
+      repo_url        = var.project_source_repo
       path            = "charts/kube-prometheus-stack"
       target_revision = var.target_revision
       plugin {
@@ -116,7 +120,7 @@ resource "argocd_application" "this" {
 
     destination {
       name      = var.destination_cluster
-      namespace = "kube-prometheus-stack"
+      namespace = var.namespace
     }
 
     sync_policy {

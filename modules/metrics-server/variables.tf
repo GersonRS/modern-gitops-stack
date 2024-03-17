@@ -56,25 +56,10 @@ variable "dependency_ids" {
 ## Module variables
 #######################
 
-variable "ingress" {
-  description = "Loki frontend ingress configuration."
-  type = object({
-    hosts          = list(string)
-    cluster_issuer = string
-    allowed_ips    = optional(list(string), [])
-  })
-  default = null
-}
-
-variable "retention" {
-  description = "Logs retention period. To deactivate retention, pass 0s."
-  type        = string
-  default     = "30d"
-
-  validation {
-    condition     = var.retention != null
-    error_message = "Variable must not be null."
-  }
+variable "kubelet_insecure_tls" {
+  description = "Whether metrics-server should be configured to accept insecure TLS connections when kubelet does not have valit SSL certificates."
+  type        = bool
+  default     = false
 }
 
 #######################

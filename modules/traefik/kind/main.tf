@@ -12,6 +12,10 @@ module "traefik" {
   helm_values = concat(local.helm_values, var.helm_values)
 
   dependency_ids = var.dependency_ids
+
+  project_source_repo = var.project_source_repo
+  argocd_namespace    = var.argocd_namespace
+  namespace           = var.namespace
 }
 
 data "kubernetes_service" "traefik" {

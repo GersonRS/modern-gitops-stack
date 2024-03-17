@@ -36,4 +36,8 @@ module "cert-manager" {
   letsencrypt_issuer_email_main = "gersonrodriguessantos8@gmail.com"
 
   dependency_ids = var.dependency_ids
+
+  project_source_repo = var.project_source_repo
+  argocd_namespace    = var.argocd_namespace
+  namespace           = var.namespace
 }

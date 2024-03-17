@@ -126,3 +126,24 @@ variable "dataproxy_timeout" {
   type        = number
   default     = 30
 }
+
+#######################
+## Extras variables
+#######################
+
+variable "argocd_namespace" {
+  description = "Namespace used by Argo CD where the Application and AppProject resources should be created."
+  type        = string
+  default     = "argocd"
+}
+
+variable "namespace" {
+  description = "Namespace where the applications's Kubernetes resources should be created. Namespace will be created in case it doesn't exist."
+  type        = string
+  default     = "kube-prometheus-stack"
+}
+
+variable "project_source_repo" {
+  description = "Repository allowed to be scraped in this AppProject."
+  type        = string
+}

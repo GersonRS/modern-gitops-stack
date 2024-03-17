@@ -17,4 +17,8 @@ module "thanos" {
   thanos = var.thanos
 
   helm_values = concat(local.helm_values, var.helm_values)
+
+  project_source_repo = var.project_source_repo
+  argocd_namespace    = var.argocd_namespace
+  namespace           = var.namespace
 }

@@ -6,25 +6,17 @@ resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
   metadata {
-    name      = var.destination_cluster != "in-cluster" ? "cert-manager-${var.destination_cluster}" : "cert-manager"
+    name      = var.destination_cluster != "in-cluster" ? "metrics-server-${var.destination_cluster}" : "metrics-server"
     namespace = var.argocd_namespace
-    annotations = {
-      "modern-gitops-stack.io/argocd_namespace" = var.argocd_namespace
-    }
   }
 
   spec {
-    description  = "cert-manager application project for cluster ${var.destination_cluster}"
+    description  = "Metrics Server application project for cluster ${var.destination_cluster}"
     source_repos = [var.project_source_repo]
 
     destination {
       name      = var.destination_cluster
       namespace = var.namespace
-    }
-
-    destination {
-      name      = var.destination_cluster
-      namespace = "kube-system"
     }
 
     orphaned_resources {
@@ -39,18 +31,22 @@ resource "argocd_project" "this" {
 }
 
 data "utils_deep_merge_yaml" "values" {
-  input       = [for i in concat(local.helm_values, var.helm_values) : yamlencode(i)]
-  append_list = var.deep_merge_append_list
+  input = [for i in concat(local.helm_values, var.helm_values) : yamlencode(i)]
 }
 
 resource "argocd_application" "this" {
   metadata {
-    name      = var.destination_cluster != "in-cluster" ? "cert-manager-${var.destination_cluster}" : "cert-manager"
+    name      = var.destination_cluster != "in-cluster" ? "metrics-server-${var.destination_cluster}" : "metrics-server"
     namespace = var.argocd_namespace
     labels = merge({
-      "application" = "cert-manager"
+      "application" = "metrics-server"
       "cluster"     = var.destination_cluster
     }, var.argocd_labels)
+  }
+
+  timeouts {
+    create = "15m"
+    delete = "15m"
   }
 
   wait = var.app_autosync == { "allow_empty" = tobool(null), "prune" = tobool(null), "self_heal" = tobool(null) } ? false : true
@@ -60,10 +56,10 @@ resource "argocd_application" "this" {
 
     source {
       repo_url        = var.project_source_repo
-      path            = "charts/cert-manager"
+      path            = "charts/metrics-server"
       target_revision = var.target_revision
       helm {
-        release_name = "cert-manager"
+        release_name = "metrics-server"
         values       = data.utils_deep_merge_yaml.values.output
       }
     }
@@ -71,13 +67,6 @@ resource "argocd_application" "this" {
     destination {
       name      = var.destination_cluster
       namespace = var.namespace
-    }
-
-    ignore_difference {
-      group         = "admissionregistration.k8s.io"
-      kind          = "ValidatingWebhookConfiguration"
-      name          = "cert-manager-webhook"
-      json_pointers = ["/webhooks/0/namespaceSelector/matchExpressions"]
     }
 
     sync_policy {

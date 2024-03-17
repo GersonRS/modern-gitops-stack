@@ -13,18 +13,16 @@ resource "argocd_project" "this" {
 
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "keycloak-${var.destination_cluster}" : "keycloak"
-    namespace = "argocd"
+    namespace = var.argocd_namespace
   }
 
   spec {
-    description = "Keycloak application project for cluster ${var.destination_cluster}"
-    source_repos = [
-      "https://github.com/GersonRS/modern-gitops-stack.git",
-    ]
+    description  = "Keycloak application project for cluster ${var.destination_cluster}"
+    source_repos = [var.project_source_repo]
 
     destination {
       name      = var.destination_cluster
-      namespace = "keycloak"
+      namespace = var.namespace
     }
 
     orphaned_resources {
@@ -45,7 +43,7 @@ data "utils_deep_merge_yaml" "values" {
 resource "argocd_application" "operator" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "keycloak-operator-${var.destination_cluster}" : "keycloak-operator"
-    namespace = "argocd"
+    namespace = var.argocd_namespace
     labels = merge({
       "application" = "keycloak-operator"
       "cluster"     = var.destination_cluster
@@ -58,7 +56,7 @@ resource "argocd_application" "operator" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
+      repo_url        = var.project_source_repo
       path            = "charts/keycloak-operator"
       target_revision = var.target_revision
       helm {
@@ -68,7 +66,7 @@ resource "argocd_application" "operator" {
 
     destination {
       name      = var.destination_cluster
-      namespace = "keycloak"
+      namespace = var.namespace
     }
 
     sync_policy {
@@ -104,7 +102,7 @@ resource "argocd_application" "operator" {
 resource "argocd_application" "this" {
   metadata {
     name      = var.destination_cluster != "in-cluster" ? "keycloak-${var.destination_cluster}" : "keycloak"
-    namespace = "argocd"
+    namespace = var.argocd_namespace
     labels = merge({
       "application" = "keycloak"
       "cluster"     = var.destination_cluster
@@ -122,7 +120,7 @@ resource "argocd_application" "this" {
     project = var.argocd_project == null ? argocd_project.this[0].metadata.0.name : var.argocd_project
 
     source {
-      repo_url        = "https://github.com/GersonRS/modern-gitops-stack.git"
+      repo_url        = var.project_source_repo
       path            = "charts/keycloak"
       target_revision = var.target_revision
       helm {
@@ -133,7 +131,7 @@ resource "argocd_application" "this" {
 
     destination {
       name      = var.destination_cluster
-      namespace = "keycloak"
+      namespace = var.namespace
     }
 
     sync_policy {
@@ -183,7 +181,7 @@ resource "null_resource" "wait_for_keycloak" {
 data "kubernetes_secret" "admin_credentials" {
   metadata {
     name      = "keycloak-initial-admin"
-    namespace = "keycloak"
+    namespace = var.namespace
   }
   depends_on = [
     resource.null_resource.wait_for_keycloak,
