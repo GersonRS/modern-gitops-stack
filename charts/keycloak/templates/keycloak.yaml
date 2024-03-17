@@ -4,12 +4,12 @@ kind: Keycloak
 metadata:
   name: keycloak
   labels:
-    { { - include "modern-gitops-stack-module-keycloak.labels" $ | indent 4 } }
+    {{- include "modern-gitops-stack-module-keycloak.labels" $ | indent 4 }}
 spec:
   instances: 1
   db:
-    vendor: { { .Values.keycloak.database.vendor } }
-    host: { { .Values.keycloak.database.host } }
+    vendor: {{ .Values.keycloak.database.vendor }}
+    host: {{ .Values.keycloak.database.host }}
     usernameSecret:
       name: keycloak-db-secret
       key: username

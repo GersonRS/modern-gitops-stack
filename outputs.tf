@@ -17,7 +17,7 @@ output "keycloak_admin_credentials" {
 
 output "keycloak_users" {
   description = "Map containing the credentials of each created user."
-  value       = module.oidc.modern-gitops_stack_users_passwords
+  value       = module.oidc.modern_gitops_stack_users_passwords
   sensitive   = true
 }
 
