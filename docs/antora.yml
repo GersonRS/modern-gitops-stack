@@ -1,0 +1,6 @@
+---
+name: "ROOT"
+title: "Modern GitOps Stack"
+version: true # Get version directly from the tag
+nav:
+  - "modules/ROOT/nav.adoc"

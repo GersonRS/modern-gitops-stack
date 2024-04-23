@@ -1,0 +1,3 @@
+[submodule "website/themes/bigspring"]
+	path = website/themes/bigspring
+	url = https://github.com/camptocamp/bigspring-hugo-startup-theme.git

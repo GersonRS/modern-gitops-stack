@@ -1,0 +1,9 @@
+= Camptocamp's DevOps Stack
+
+The DevOps Stack provides a standard Kubernetes Platform, bringing together automated Provisioning as Code, Continuous Application Deployment, and readily-made configurations for the best Cloud Native tools in the industry.
+
+== Documentation
+
+The documentation is published here: https://modern-gitops-stack.io/docs/latest
+
+There you will find everything you need to know to get started with the DevOps Stack as well as how our contribution guidelines.
