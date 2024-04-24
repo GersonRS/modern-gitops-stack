@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.3.0...v1.4.0) (2024-04-24)
+
+
+### Features
+
+* fix and change antora template ([aabe98e](https://github.com/GersonRS/modern-gitops-stack/commit/aabe98e626d5ec1d768cd4ee2cf9100f315cd269))
+
 ## [1.3.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.2.2...v1.3.0) (2024-04-24)
 
 
