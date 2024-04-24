@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.1.0...v1.2.0) (2024-04-24)
+
+
+### Features
+
+* config workflows ([85b4498](https://github.com/GersonRS/modern-gitops-stack/commit/85b44980cd43efbe595697555869ff4ae0152e90))
+* simplefi workflow configuration ([a1ad774](https://github.com/GersonRS/modern-gitops-stack/commit/a1ad77407844091b74997b59247b2bf5c6e4426d))
+* simplefi workflow configuration ([f369338](https://github.com/GersonRS/modern-gitops-stack/commit/f36933834eb7e7d464636684ed7d0b698bdeb4f3))
+
 ## [1.1.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.0.2...v1.1.0) (2024-04-24)
 
 
