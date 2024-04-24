@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.2.1...v1.2.2) (2024-04-24)
+
+
+### Bug Fixes
+
+* fix some things ([f66bc70](https://github.com/GersonRS/modern-gitops-stack/commit/f66bc70b76fe8234cfdd647b217e18560c1497d0))
+
 ## [1.2.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.2.0...v1.2.1) (2024-04-24)
 
 
