@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.1...v1.4.2) (2024-04-24)
+
+
+### Bug Fixes
+
+* fix images names ([4ba9871](https://github.com/GersonRS/modern-gitops-stack/commit/4ba9871b065f214845b3ff26c334f898bb4f78a3))
+
 ## [1.4.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.0...v1.4.1) (2024-04-24)
 
 
