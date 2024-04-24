@@ -1,18 +1,18 @@
 module "kind" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git?ref=v1.0.0"
 
   cluster_name       = local.cluster_name
   kubernetes_version = local.kubernetes_version
 }
 
 module "metallb" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v1.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v1.0.0"
 
   subnet = module.kind.kind_subnet
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v4.4.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v1.0.0"
 
   argocd_projects = {
     "${local.cluster_name}" = {
@@ -24,7 +24,7 @@ module "argocd_bootstrap" {
 }
 
 module "metrics-server" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v2.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v1.0.0"
 
   argocd_project = local.cluster_name
 
@@ -38,7 +38,7 @@ module "metrics-server" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//kind?ref=v6.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//kind?ref=v1.0.0"
 
   argocd_project = local.cluster_name
 
@@ -51,7 +51,7 @@ module "traefik" {
 }
 
 module "cert-manager" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//self-signed?ref=v8.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//self-signed?ref=v1.0.0"
 
   argocd_project = local.cluster_name
 
@@ -64,7 +64,7 @@ module "cert-manager" {
 }
 
 module "keycloak" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v3.1.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v1.0.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -81,7 +81,7 @@ module "keycloak" {
 }
 
 module "oidc" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git//oidc_bootstrap?ref=v3.1.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git//oidc_bootstrap?ref=v1.0.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -103,7 +103,7 @@ module "oidc" {
 }
 
 module "minio" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v3.1.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v1.0.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -126,7 +126,7 @@ module "minio" {
 }
 
 module "loki-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v7.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v1.0.0"
 
   argocd_project = local.cluster_name
 
@@ -145,7 +145,7 @@ module "loki-stack" {
 }
 
 module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v4.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v1.0.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -177,7 +177,7 @@ module "thanos" {
 }
 
 module "kube-prometheus-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//kind?ref=v10.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//kind?ref=v1.0.00"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -213,7 +213,7 @@ module "kube-prometheus-stack" {
 }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v4.4.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v1.0.0"
 
   base_domain              = local.base_domain
   cluster_name             = local.cluster_name
