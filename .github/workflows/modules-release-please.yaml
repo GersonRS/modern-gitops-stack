@@ -1,8 +1,8 @@
 ---
-# GitHub Actions workflow to automatically create releases and changelogs in our DevOps Stack repositories.
+# GitHub Actions workflow to automatically create releases and changelogs in our Modern Gitops Stack repositories.
 #
-# IMPORTANT: This workflow is called by other workflows in our DevOps Stack repositories and it is centralized here in 
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking 
+# IMPORTANT: This workflow is called by other workflows in our Modern Gitops Stack repositories and it is centralized here in
+# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
 # changes when modifying this workflow.
 
 name: "modules-release-please"
@@ -16,13 +16,13 @@ jobs:
     outputs:
       releases_created: ${{ steps.release-please.outputs.releases_created }}
     steps:
-    - uses: google-github-actions/release-please-action@v4
-      id: release-please
-      with:
-        release-type: simple
-        labels: "autorelease-pending"
-        release-labels: "autorelease-tagged"
-        pull-request-title-pattern: "chore: release ${version}"
-        bump-minor-pre-major: true
-        extra-files: |
-          variables.tf
+      - uses: google-github-actions/release-please-action@v4
+        id: release-please
+        with:
+          release-type: simple
+          labels: "autorelease-pending"
+          release-labels: "autorelease-tagged"
+          pull-request-title-pattern: "chore: release ${version}"
+          bump-minor-pre-major: true
+          extra-files: |
+            variables.tf

@@ -8,7 +8,7 @@ updates:
       # Check for updated GitHub Actions every week
       interval: "weekly"
 
-  # DevOps Stack examples
+  # Modern Gitops Stack examples
   # TODO Check if we can use a wildcard to include all subfolders in the examples folder
   - package-ecosystem: "terraform"
     directory: "/examples/eks" # TODO Add other examples when we are sure everything works

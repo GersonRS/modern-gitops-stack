@@ -4,12 +4,12 @@ An example of a local deployment of a Kubernetes cluster on Azure AKS is provide
 In the repository, as in a standard https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[Terraform module], you will find the following files:
 
 * *`terraform.tf`* - declaration of the Terraform providers used in this project;
-* *`locals.tf`* - local variables used by the DevOps Stack modules;
+* *`locals.tf`* - local variables used by the Modern Gitops Stack modules;
 * *`main.tf`* - definition of all the deployed modules;
 * *`storage.tf`* - creation of the Storage Account and Storage Container used by Loki and Thanos;
-* *`dns.tf`* - creation of the wildcard record for the ingresses of the DevOps Stack components;
-* *`oidc.tf`* - addition of the redirect URIs to the Azure AD Enterprise Application in order to use it to authenticate to the DevOps Stack components providing a web interface;
-* *`outputs.tf`* - the output variables of the DevOps Stack;
+* *`dns.tf`* - creation of the wildcard record for the ingresses of the Modern Gitops Stack components;
+* *`oidc.tf`* - addition of the redirect URIs to the Azure AD Enterprise Application in order to use it to authenticate to the Modern Gitops Stack components providing a web interface;
+* *`outputs.tf`* - the output variables of the Modern Gitops Stack;
 
 IMPORTANT: The *`requirements`* folder is not part of the Terraform code you execute directly. Its importance is explained on the next section.
 
@@ -24,8 +24,8 @@ On your local machine, you need to have the following tools installed:
 Other than that, you will require the following:
 
 * An active Azure account with an active subscription;
-* An Enterprise Application on Entra ID to use as an identity provider for the DevOps Stack components;
-* The Azure subscription needs to have a Key Vault to store the secrets used to pass the credentials of said application to the DevOps Stack components;
+* An Enterprise Application on Entra ID to use as an identity provider for the Modern Gitops Stack components;
+* The Azure subscription needs to have a Key Vault to store the secrets used to pass the credentials of said application to the Modern Gitops Stack components;
 * Your Azure account needs to be part of a user group that has been assigned the role `Owner`, `Key Vault Reader` and `Key Vault Secrets User` on the subscription;
 * Your Azure account also needs to be an `Owner` of the Enterprise Application in order to add the proper redirect URIs.
 
@@ -57,7 +57,7 @@ NOTE: More information about the remote backends is available on the https://dev
 
 === OIDC authentication
 
-IMPORTANT: The DevOps Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the DevOps Stack applications.
+IMPORTANT: The Modern Gitops Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the Modern Gitops Stack applications.
 
 In this example, we use an https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/[Enterprise Applicaion] as OIDC provider.
 
@@ -114,9 +114,9 @@ IMPORTANT: This flag needs to be set as `false` for the first bootstrap of the c
 +
 NOTE: You can either set the flag as `true` in the `locals.tf` file or you can simply delete the line on the modules' declarations, since this variable is set as `true` by default on each module.
 +
-TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the DevOps Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
+TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the Modern Gitops Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
 
-== Access the cluster and the DevOps Stack applications
+== Access the cluster and the Modern Gitops Stack applications
 
 To access your cluster, you need to use the Azure CLI to recover a Kubeconfig you can use:
 
@@ -137,7 +137,7 @@ Then you can use the `kubectl` or `k9s` command to interact with the cluster:
 k9s --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-As for the DevOps Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
+As for the Modern Gitops Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
 
 [source,shell]
 ----

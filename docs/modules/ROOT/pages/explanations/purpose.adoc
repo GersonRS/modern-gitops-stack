@@ -1,4 +1,4 @@
-= Purpose of the DevOps Stack
+= Purpose of the Modern Gitops Stack
 
 == Introduction
 
@@ -8,17 +8,17 @@ The concrete consequences of this revolution for IT companies like Camptocamp ha
 
 We had no respite in this automation journey and made the best out of a thriving ecosystem of open source projects that address all the needs related to this paradigm shift.
 
-We have learned a lot during all these years and the DevOps Stack is our answer to implement our best practices in a containerized world where Kubernetes is the _de facto_ standard for application platforms.
+We have learned a lot during all these years and the Modern Gitops Stack is our answer to implement our best practices in a containerized world where Kubernetes is the _de facto_ standard for application platforms.
 
 == Cloud Agnostic Kubernetes Distribution
 
 Nowadays, the question is not so much whether there is software to solve a problem, but which one to use. Like a Linux distribution, we have container orchestrators (Kubernetes as a kernel) and many other projects revolving around it and offering different features. These features are sometimes oriented towards developers, operators or both (e.g. observability tools).
 
-As for a Linux distribution, what we need is consistency, components that work together and that are easy to install and maintain. But unlike a Linux distribution which is by definition server-centric, the promise of containers and Kubernetes is portability. The possibility of moving from one cloud (or on-prem infrastructure) to another, of distributing the workloads on different platforms. At the end, this DevOps Stack is simply a "Cloud Agnostic Kubernetes Distribution".
+As for a Linux distribution, what we need is consistency, components that work together and that are easy to install and maintain. But unlike a Linux distribution which is by definition server-centric, the promise of containers and Kubernetes is portability. The possibility of moving from one cloud (or on-prem infrastructure) to another, of distributing the workloads on different platforms. At the end, this Modern Gitops Stack is simply a "Cloud Agnostic Kubernetes Distribution".
 
-== Without the DevOps Stack
+== Without the Modern Gitops Stack
 
-image::explanations/without_modern-gitops-stack.png[Without the DevOps Stack]
+image::explanations/without_modern-gitops-stack.png[Without the Modern Gitops Stack]
 
 The illustration above tries to show that while it is quite simple to manage one Kubernetes project, the complexity increases dramatically when you add more and more projects and you want to keep a certain homogeneity between them. The main problems observed are:
 
@@ -32,25 +32,25 @@ The illustration above tries to show that while it is quite simple to manage one
 
 This is not a new IT problem. Two decades ago, it was not really easy to manage thousands, or even hundreds of hosts in a homogeneous way. This problem has been successfully addressed by solutions like CFEngine, Puppet or more recently by Ansible. Today, we must adapt these principles for Kubernetes. There are many open source components out there, we just a smart way to interconnect them.
 
-== With the DevOps Stack
+== With the Modern Gitops Stack
 
-image::explanations/with_modern-gitops-stack.png[With the DevOps Stack]
+image::explanations/with_modern-gitops-stack.png[With the Modern Gitops Stack]
 
-By creating the DevOps Stack (a kind of abstraction layer), it becomes possible to instantiate all the components through a logical and coherent process. The main advantages are:
+By creating the Modern Gitops Stack (a kind of abstraction layer), it becomes possible to instantiate all the components through a logical and coherent process. The main advantages are:
 
 * It scales
 * Minimal code duplication
 * A reference implementation
 * Improvements can be easily backported to other projects
-* Dependency pining is done on the DevOps Stack to ensure reproducibility
+* Dependency pining is done on the Modern Gitops Stack to ensure reproducibility
 
 == Summary
 
-In the end, the DevOps Stack provides:
+In the end, the Modern Gitops Stack provides:
 
 * A Playground to test/prototype new stuff related to k8s world
 * An opinionated abstraction layer to deploy and manage our Kubernetes deployments
-* Enforce DevOps best practices:
+* Enforce Modern Gitops best practices:
 ** Infrastructure as Code (IaC)
 ** Configuration Management (CM)
 ** GitOps

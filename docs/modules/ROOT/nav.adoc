@@ -11,11 +11,11 @@
 ** xref:ROOT:tutorials/deploy_aks.adoc[Deployment on AKS]
 ** xref:ROOT:tutorials/deploy_eks.adoc[Deployment on EKS]
 ** xref:ROOT:tutorials/deploy_sks.adoc[Deployment on SKS]
-** xref:ROOT:tutorials/deploy_apps.adoc[Deploying Applications on the DevOps Stack]
+** xref:ROOT:tutorials/deploy_apps.adoc[Deploying Applications on the Modern Gitops Stack]
 ** xref:ROOT:tutorials/greenfield_upgrade.adoc[Blue-Green Upgrade]
 * Contributing Guidelines
 ** xref:ROOT:contributing/general_guidelines.adoc[General Guidelines]
-** xref:ROOT:contributing/modules.adoc[DevOps Stack Modules]
+** xref:ROOT:contributing/modules.adoc[Modern Gitops Stack Modules]
 ** xref:ROOT:contributing/module_creation_checklist.adoc[Module Creation Checklist]
 ** xref:ROOT:contributing/documentation.adoc[Documentation]
 ** xref:ROOT:contributing/release.adoc[Release]

@@ -1,42 +1,42 @@
 ---
-# GitHub Actions workflow to automatically push PRs and issues to the DevOps Stack project board.
+# GitHub Actions workflow to automatically push PRs and issues to the Modern Gitops Stack project board.
 #
-# IMPORTANT: This workflow is called by other workflows in our DevOps Stack repositories and it is centralized here in 
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking 
+# IMPORTANT: This workflow is called by other workflows in our Modern Gitops Stack repositories and it is centralized here in
+# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
 # changes when modifying this workflow.
-  
+
 name: "pr-issues-project"
 
 on:
   workflow_call:
     secrets:
       PROJECT_APP_PRIVATE_KEY:
-        description: "GitHub App private key for the DevOps Stack Project app"
+        description: "GitHub App private key for the Modern Gitops Stack Project app"
         required: true
 
   issues:
-    types: 
-    - opened
-    - reopened
-  
+    types:
+      - opened
+      - reopened
+
   pull_request:
     types:
-    - opened
-    - reopened
+      - opened
+      - reopened
 
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
     steps:
-    - name: Generate authentication token from GitHub App
-      id: generate_token
-      uses: tibdex/github-app-token@v2
-      with:
-        app_id: 322306
-        private_key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
+      - name: Generate authentication token from GitHub App
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: 882683
+          private_key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
 
-    - name: Add PR or issue to DevOps Stack project board
-      uses: actions/add-to-project@v1.0.1
-      with:
-        project-url: https://github.com/orgs/camptocamp/projects/3/
-        github-token: ${{ steps.generate_token.outputs.token }}
+      - name: Add PR or issue to Modern GitOps Stack project board
+        uses: actions/add-to-project@v1.0.1
+        with:
+          project-url: https://github.com/users/GersonRS/projects/1
+          github-token: ${{ steps.generate_token.outputs.token }}

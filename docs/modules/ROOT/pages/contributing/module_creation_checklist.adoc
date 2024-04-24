@@ -3,7 +3,7 @@
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-template-repo: https://github.com/GersonRS/modern-gitops-stack-module-template
 
-When first creating a module for the DevOps Stack, there are a few steps to follow:
+When first creating a module for the Modern Gitops Stack, there are a few steps to follow:
 
 1. Create a new repository in the https://github.com/camptocamp/[Camptocamp GitHub organization], using the {url-template-repo}[repository template].
 +
@@ -25,7 +25,7 @@ image::guides_tutorials/module_checklist/branch_protection_rule.png[Branch Prote
 
 5. Finally, still on the settings of the repository, under _Secrets and variables_, go to _Actions_ and add the secret `PROJECT_APP_PRIVATE_KEY`, which is needed to automatically add Issues and PRs to our project board. Check with the team where you can find this secret.
 
-6. Go the the _Projects_ tab of the repository and add the https://github.com/orgs/camptocamp/projects/3/[DevOps Stack project] (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/adding-your-project-to-a-repository[documentation]).
+6. Go the the _Projects_ tab of the repository and add the https://github.com/orgs/camptocamp/projects/3/[Modern Gitops Stack project] (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/adding-your-project-to-a-repository[documentation]).
 
 7. Request that an administrator of our GitHub organization adds the newly created repository to the app that automatically adds Issues and PRs to our project board (check the xref:ROOT:contributing/project_board.adoc[Project Board] page for more information).
 

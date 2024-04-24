@@ -4,10 +4,10 @@ An example of a local deployment on KinD is provided https://github.com/GersonRS
 In the repository, as in a standard https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[Terraform module], you will find the following files:
 
 * *`terraform.tf`* - declaration of the Terraform providers used in this project as well as their configuration;
-* *`locals.tf`* - local variables used by the DevOps Stack modules;
+* *`locals.tf`* - local variables used by the Modern Gitops Stack modules;
 * *`main.tf`* - definition of all the deployed modules;
 * *`s3_bucket.tf`* - configuration of the MinIO bucket, used as backend for Loki and Thanos;
-* *`outputs.tf`* - the output variables of the DevOps Stack, e.g. credentials and the `.kubeconfig` file to use with `kubectl`;
+* *`outputs.tf`* - the output variables of the Modern Gitops Stack, e.g. credentials and the `.kubeconfig` file to use with `kubectl`;
 
 == Requirements
 
@@ -25,15 +25,15 @@ https://metallb.universe.tf/[MetalLB] is used as a load balancer for the cluster
 
 === OIDC authentication
 
-IMPORTANT: The DevOps Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the DevOps Stack applications.
+IMPORTANT: The Modern Gitops Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the Modern Gitops Stack applications.
 
-TIP: You can have a local containing the OIDC configuration properly structured for the DevOps Stack applications and simply use an external OIDC provider instead of using Keycloak. Check https://github.com/GersonRS/modern-gitops-stack-module-keycloak/blob/main/oidc_bootstrap/locals.tf[this `locals.tf` on the Keycloak module] for an example.
+TIP: You can have a local containing the OIDC configuration properly structured for the Modern Gitops Stack applications and simply use an external OIDC provider instead of using Keycloak. Check https://github.com/GersonRS/modern-gitops-stack-module-keycloak/blob/main/oidc_bootstrap/locals.tf[this `locals.tf` on the Keycloak module] for an example.
 
 To quickly deploy a testing environment on KinD you can use the Keycloak module, as shown in the example.
 
 After deploying Keycloak, you can use the OIDC bootstrap module to create the Keycloak realm, groups, users, etc.
 
-The `user_map` variable of that module allows you to create OIDC users used to authenticate to the DevOps Stack applications. The module will generate a password for each user, which you can check later after the deployment.
+The `user_map` variable of that module allows you to create OIDC users used to authenticate to the Modern Gitops Stack applications. The module will generate a password for each user, which you can check later after the deployment.
 
 TIP: If you do not provide a value for the `user_map` variable, the module will create a user named `moderngitopsadmin` with a random password.
 
@@ -80,9 +80,9 @@ IMPORTANT: This flag needs to be set as `false` for the first bootstrap of the c
 +
 NOTE: You can either set the flag as `true` in the `locals.tf` file or you can simply delete the line on the modules' declarations, since this variable is set as `true` by default on each module.
 +
-TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the DevOps Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
+TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the Modern Gitops Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
 
-== Access the cluster and the DevOps Stack applications
+== Access the cluster and the Modern Gitops Stack applications
 
 Typically the KinD Terraform provider used in our code already appends the credentials to your default Kubeconfig, so you should be good to go to access the cluster.
 
@@ -95,7 +95,7 @@ Then you can use the `kubectl` or `k9s` command to interact with the cluster:
 k9s --kubeconfig <PATH_TO_TERRAFORM_PROJECT>/<CLUSTER_NAME>-config
 ----
 
-As for the DevOps Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
+As for the Modern Gitops Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
 
 [source,shell]
 ----
@@ -181,7 +181,7 @@ rm terraform.state
 
 == Conclusion
 
-That's it, you have deployed the DevOps Stack locally! For more information, keep on reading the https://modern-gitops-stack.io/docs/latest/[documentation]. **You can explore the possibilities of each module and get the link to the source code on their respective documentation pages.**
+That's it, you have deployed the Modern Gitops Stack locally! For more information, keep on reading the https://modern-gitops-stack.io/docs/latest/[documentation]. **You can explore the possibilities of each module and get the link to the source code on their respective documentation pages.**
 
 == Troubleshooting
 

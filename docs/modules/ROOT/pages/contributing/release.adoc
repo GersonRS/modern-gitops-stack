@@ -12,7 +12,7 @@ In the subsections below we will go through the release process in more detail a
 
 The Release Please tool can be found on https://github.com/googleapis/release-please[this repository] and the GitHub Action we use is available on a https://github.com/google-github-actions/release-please-action[another repository]. Both are maintained by Google.
 
-Every DevOps Stack module contains a GitHub workflow that simply calls a centralized workflow.
+Every Modern Gitops Stack module contains a GitHub workflow that simply calls a centralized workflow.
 
 === Centralized workflow
 

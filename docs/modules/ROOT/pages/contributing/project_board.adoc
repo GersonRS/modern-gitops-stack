@@ -3,11 +3,11 @@
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 
-In order to ease up the burden of the project maintainers, there is an internal Project Board on GitHub used to track the progress of the PRs and issues. The board is available only to the https://github.com/orgs/camptocamp/teams/is-modern-gitops-stack/[`@camptocamp/is-modern-gitops-stack` team] and is available https://github.com/orgs/camptocamp/projects/3/[here]. All the repositories of the DevOps Stack are also connected to this project upon creation.
+In order to ease up the burden of the project maintainers, there is an internal Project Board on GitHub used to track the progress of the PRs and issues. The board is available only to the https://github.com/orgs/camptocamp/teams/is-modern-gitops-stack/[`@camptocamp/is-modern-gitops-stack` team] and is available https://github.com/orgs/camptocamp/projects/3/[here]. All the repositories of the Modern Gitops Stack are also connected to this project upon creation.
 
 The way this is accomplished is somewhat convoluted, hence the reason for this documentation page.
 
-== DevOps Stack Project
+== Modern Gitops Stack Project
 
 The project itself has been manually created on the https://github.com/orgs/camptocamp/[`@camptocamp`] organization, using the GitHub web interface (https://docs.github.com/en/issues/planning-and-tracking-with-projects/creating-projects/creating-a-project[documentation]). *The project is private (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-visibility-of-your-projects[documentation]) and only accessible to the `@camptocamp/is-modern-gitops-stack` team* (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-access-to-your-projects[documentation]).
 
@@ -19,15 +19,15 @@ Since there are some limits on how many repositories we can add to a project usi
 
 Although the official documentation explicitly calls the API with `gh` commands, we opted to use an official GitHub Action (https://github.com/actions/add-to-project[`actions/add-to-project`]) to accomplish this. Moreover, in order to allow the workflows to modify the project we needed to create a GitHub app that the sole purpose is providing the necessary permissions to the workflows.
 
-=== DevOps Stack Project App
+=== Modern Gitops Stack Project App
 
-The app is called `DevOps Stack Project` and is available https://github.com/apps/modern-gitops-stack-project[here].
+The app is called `Modern Gitops Stack Project` and is available https://github.com/apps/modern-gitops-stack-project[here].
 
 This app was created on our organization by an administrator and is configured with a limited scope of permissions: it can only access the projects of the organization where it is installed as well as the PRs and Issues of repositories on which it is installed (https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/creating-a-github-app[official documentation] on how to create a GitHub app).
 
-After the app creation, an administrator was needed to install it on the organization and all the repositories of the DevOps Stack. This was done by going to the app page and clicking on the `Install` button then configuring the proper settings after installation (all this is done on the organization settings, check the https://docs.github.com/en/apps/maintaining-github-apps/installing-github-apps#installing-your-private-github-app-on-your-repository[official documentation]).
+After the app creation, an administrator was needed to install it on the organization and all the repositories of the Modern Gitops Stack. This was done by going to the app page and clicking on the `Install` button then configuring the proper settings after installation (all this is done on the organization settings, check the https://docs.github.com/en/apps/maintaining-github-apps/installing-github-apps#installing-your-private-github-app-on-your-repository[official documentation]).
 
-IMPORTANT: The reason to not install the app on all the repositories by default was to further limit the scope of the app, although *this adds the burden of installing it on each repository manually every time a new repository of the DevOps Stack is created*.
+IMPORTANT: The reason to not install the app on all the repositories by default was to further limit the scope of the app, although *this adds the burden of installing it on each repository manually every time a new repository of the Modern Gitops Stack is created*.
 
 === Centralized workflow
 
@@ -38,4 +38,4 @@ The workflow definition is available in the {url-main-repo}/blob/main/.github/wo
 include::example$github_workflows/pr-issues-project.yaml[]
 ----
 
-NOTE: It is the step _Generate authentication token from GitHub App_ that uses the GitHub app created above in order to generate a token with the proper permissions that is then passed to the _Add PR or issue to DevOps Stack project board_ step.
+NOTE: It is the step _Generate authentication token from GitHub App_ that uses the GitHub app created above in order to generate a token with the proper permissions that is then passed to the _Add PR or issue to Modern Gitops Stack project board_ step.

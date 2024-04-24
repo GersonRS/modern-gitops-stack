@@ -1,19 +1,19 @@
-= DevOps Stack Modules
+= Modern Gitops Stack Modules
 
 :documentation-page: xref:ROOT:contributing/documentation.adoc[Documentation]
 :release-page: xref:ROOT:contributing/release.adoc[Release]
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-template-repo: https://github.com/GersonRS/modern-gitops-stack-module-template
 
-The DevOps Stack is separated into multiple Terraform modules, each of them containing a set of related resources. 
+The Modern Gitops Stack is separated into multiple Terraform modules, each of them containing a set of related resources. 
 
-In order to improve the readability and maintenance of the code, this page contains some guidelines and explanations behind the creation and development of DevOps Stack modules. There is also a {url-template-repo}[repository template on GitHub] that can be used as a starting point for new modules and you can refer to it while reading this page.
+In order to improve the readability and maintenance of the code, this page contains some guidelines and explanations behind the creation and development of Modern Gitops Stack modules. There is also a {url-template-repo}[repository template on GitHub] that can be used as a starting point for new modules and you can refer to it while reading this page.
 
 == Basic modules
 
 These kinds of modules are typically the ones that provision clusters and related resources. Good examples of this are the xref:eks:ROOT:README.adoc[Amazon EKS module] and xref:kind:ROOT:README.adoc[KinD module].
 
-A basic DevOps Stack module will contain the following files and folders:
+A basic Modern Gitops Stack module will contain the following files and folders:
 
 ----
 modern-gitops-stack-module-template
@@ -58,7 +58,7 @@ NOTE: Take care to properly describe each entry on the `variables.tf` and `outpu
 
 == Modules with embedded Helm charts
 
-These are the more typical modules of the DevOps Stack and are used to deploy the remaining components of the stack. Good examples of this are the xref:argocd:ROOT:README.adoc[Argo CD module] and xref:cert-manager:ROOT:README.adoc[cert-manager module].
+These are the more typical modules of the Modern Gitops Stack and are used to deploy the remaining components of the stack. Good examples of this are the xref:argocd:ROOT:README.adoc[Argo CD module] and xref:cert-manager:ROOT:README.adoc[cert-manager module].
 
 NOTE: The Argo CD module is a special case, as it is used to deploy the other modules. A bootstrap Argo CD is deployed using resources of the type `helm_release`. This Argo CD is then responsible to deploy the remaining modules, which use resources of the type `argocd_project` and `argocd_application`.
 

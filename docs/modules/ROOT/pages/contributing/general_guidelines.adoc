@@ -3,9 +3,9 @@
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 
-This document describes the general guidelines for contributing to the DevOps Stack.
+This document describes the general guidelines for contributing to the Modern Gitops Stack.
 
-The DevOps Stack is a collection of modules, each of them having its own release cycle, in order to ease the development and maintenance of each module.
+The Modern Gitops Stack is a collection of modules, each of them having its own release cycle, in order to ease the development and maintenance of each module.
 
 TIP: A private GitHub project owned by the https://github.com/orgs/camptocamp/teams/is-modern-gitops-stack/[`@camptocamp/is-modern-gitops-stack` team] is available https://github.com/orgs/camptocamp/projects/3/[here]. It is a useful way to follow the progress of the PRs and Issues of all the repositories. For more information on how it is implemented, check the xref:ROOT:contributing/project_board.adoc[Project Board] page.
 
@@ -17,7 +17,7 @@ When a new feature or fix is required, the typical workflow is the following:
 2. Work and test on your branch;
 3. When you think you feature/fix is ready, create a Pull Request to merge your branch into the `main` branch.
 
-The following subsections describe some of the best practices to follow when working on the DevOps Stack.
+The following subsections describe some of the best practices to follow when working on the Modern Gitops Stack.
 
 === Branches
 
@@ -67,10 +67,10 @@ IMPORTANT: If you do a `Squash and Merge` on a Pull Request, *the commit message
 
 === Issues
 
-* If you find some issue on the DevOps Stack, you could create an issue on the repository in which you find the issue. An issue could be a bug or a feature request/proposition.
+* If you find some issue on the Modern Gitops Stack, you could create an issue on the repository in which you find the issue. An issue could be a bug or a feature request/proposition.
 
 * If it is a bug, take care to properly describe the issue and provide as much context as possible.
 
 * If it is a feature request/proposition, describe why the feature is needed and what problem it will solve for you.
 
-* *The issues are more useful for external users of the DevOps Stack*, if possible we can discuss the issue on our weekly meeting and then decide if it is something that we want to implement or not. In that case, we can then create a Jira ticket, to keep track of the work that needs to be done.
+* *The issues are more useful for external users of the Modern Gitops Stack*, if possible we can discuss the issue on our weekly meeting and then decide if it is something that we want to implement or not. In that case, we can then create a Jira ticket, to keep track of the work that needs to be done.

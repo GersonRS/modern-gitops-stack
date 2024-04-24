@@ -14,7 +14,7 @@ Antora builds this documentation website from the configurations in an https://d
 
 === Content sources
 
-*Our playbook is stored on the root of the {url-main-repo}[main repository] of the DevOps Stack project, in the {url-main-repo}/blob/main/antora-playbook.yml[`antora-playbook.yml` file].* It is this file that defines the content sources (in our case each module of the DevOps Stack project) as well as the tags to take into account when building the documentation.
+*Our playbook is stored on the root of the {url-main-repo}[main repository] of the Modern Gitops Stack project, in the {url-main-repo}/blob/main/antora-playbook.yml[`antora-playbook.yml` file].* It is this file that defines the content sources (in our case each module of the Modern Gitops Stack project) as well as the tags to take into account when building the documentation.
 
 In this file you'll see a source for the main documentation (that is, the more generic pages stored in the {url-main-repo}[main repository]) and sources for each module on a list under `content.sources`. Each source is defined by a `url` to its repo and a `start_path` that tells Antora where the respective documentation is stored.
 

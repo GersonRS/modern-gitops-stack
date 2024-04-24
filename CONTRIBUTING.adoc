@@ -1,4 +1,4 @@
-= Contributing to the DevOps Stack
+= Contributing to the Modern Gitops Stack
 
 Our https://modern-gitops-stack.io/docs/latest[documentation pages] include our Contribution Guidelines, which we encourage you to read before contributing to the project.
 

@@ -1,6 +1,6 @@
 baseURL = "https://modern-gitops-stack.io/"
 languageCode = "en-us"
-title = "DevOps Stack"
+title = "Modern Gitops Stack"
 theme = "bigspring"
 
 [params]
