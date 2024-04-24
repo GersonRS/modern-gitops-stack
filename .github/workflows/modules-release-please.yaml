@@ -20,8 +20,8 @@ jobs:
         id: release-please
         with:
           release-type: simple
-          labels: "autorelease-pending"
-          release-labels: "autorelease-tagged"
+          label: "autorelease-pending"
+          release-label: "autorelease-tagged"
           pull-request-title-pattern: "chore: release ${version}"
           bump-minor-pre-major: true
           extra-files: |
