@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.2.2...v1.3.0) (2024-04-24)
+
+
+### Features
+
+* updated examples ([8b7e897](https://github.com/GersonRS/modern-gitops-stack/commit/8b7e8976f032b304553c9c03510a7dea4836d163))
+
 ## [1.2.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.2.1...v1.2.2) (2024-04-24)
 
 
