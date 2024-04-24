@@ -4,7 +4,7 @@
 
 Since about 2006, the IT industry has been totally disrupted by the conjunction of several factors, including the virtualization of resources and the possibility of obtaining them on-demand. This new way of managing IT resources is widely known as "Cloud Computing". It has become a kind of standard, or at least an objective pursued also by people wishing to maintain on-premises infrastructures. The long-awaited dream of finally being able to consider IT as a simple commodity. Well that's what many believed.
 
-The concrete consequences of this revolution for IT companies like Camptocamp have mainly been the incredible growth in the number of resources to be provisioned and managed. Extensive process automation engaged by our teams allowed us to cope with such a growth without lowering our quality standards, therefore remaining competitive.
+The concrete consequences of this revolution for IT companies like GersonRS have mainly been the incredible growth in the number of resources to be provisioned and managed. Extensive process automation engaged by our teams allowed us to cope with such a growth without lowering our quality standards, therefore remaining competitive.
 
 We had no respite in this automation journey and made the best out of a thriving ecosystem of open source projects that address all the needs related to this paradigm shift.
 

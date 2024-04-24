@@ -12,11 +12,11 @@ Welcome and thanks for helping us make safe solutions for everyone.
 
 == Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in any *Camptocamp*-owned repository, please report it to us through coordinated disclosure.
+If you believe you have found a security vulnerability in any *GersonRS*-owned repository, please report it to us through coordinated disclosure.
 
 *Please do not report security vulnerabilities through public GitHub issues, discussions, or pull requests.*
 
-Instead, please send an email to security.inf@camptocamp.com.
+Instead, please send an email to security.inf@GersonRS.com.
 
 Please include as much of the information listed below as you can to help us better understand and resolve the issue:
 
@@ -32,4 +32,4 @@ This information will help us triage your report more quickly.
 
 == Security
 
-*Camptocamp* takes the security of our software products and services seriously, including all of the open source code repositories managed through our GitHub organizations, such as https://github.com/camptocamp[Camptocamp].
+*GersonRS* takes the security of our software products and services seriously, including all of the open source code repositories managed through our GitHub organizations, such as https://github.com/GersonRS[GersonRS].

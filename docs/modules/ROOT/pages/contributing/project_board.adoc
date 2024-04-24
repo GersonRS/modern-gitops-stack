@@ -3,13 +3,13 @@
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 
-In order to ease up the burden of the project maintainers, there is an internal Project Board on GitHub used to track the progress of the PRs and issues. The board is available only to the https://github.com/orgs/camptocamp/teams/is-modern-gitops-stack/[`@camptocamp/is-modern-gitops-stack` team] and is available https://github.com/orgs/camptocamp/projects/3/[here]. All the repositories of the Modern Gitops Stack are also connected to this project upon creation.
+In order to ease up the burden of the project maintainers, there is an internal Project Board on GitHub used to track the progress of the PRs and issues. The board is available only to the https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack` team] and is available https://github.com/orgs/GersonRS/projects/3/[here]. All the repositories of the Modern Gitops Stack are also connected to this project upon creation.
 
 The way this is accomplished is somewhat convoluted, hence the reason for this documentation page.
 
 == Modern Gitops Stack Project
 
-The project itself has been manually created on the https://github.com/orgs/camptocamp/[`@camptocamp`] organization, using the GitHub web interface (https://docs.github.com/en/issues/planning-and-tracking-with-projects/creating-projects/creating-a-project[documentation]). *The project is private (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-visibility-of-your-projects[documentation]) and only accessible to the `@camptocamp/is-modern-gitops-stack` team* (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-access-to-your-projects[documentation]).
+The project itself has been manually created on the https://github.com/orgs/GersonRS/[`@GersonRS`] organization, using the GitHub web interface (https://docs.github.com/en/issues/planning-and-tracking-with-projects/creating-projects/creating-a-project[documentation]). *The project is private (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-visibility-of-your-projects[documentation]) and only accessible to the `@GersonRS/is-modern-gitops-stack` team* (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-access-to-your-projects[documentation]).
 
 All the boards and tables have also been created manually. In the settings of the project, there are automation workflows (https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations[documentation]) that move the Issues and PRs around depending on their status (open, closed, merged, etc.).
 

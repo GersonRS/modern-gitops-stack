@@ -18,7 +18,7 @@ On your local machine, you need to have the following tools installed:
 * https://www.terraform.io/[Terraform] to provision the whole stack;
 * https://kubernetes.io/docs/reference/kubectl/[`kubectl`] or https://github.com/derailed/k9s[`k9s`]to interact with your cluster;
 * https://community.exoscale.com/documentation/tools/exoscale-command-line-interface/[Exoscale CLI] to interact with your Exoscale account;
-* https://dev.to/camptocamp-ops/simple-secret-sharing-with-gopass-and-summon-40jk[`gopass` and `summon`] to easily pass the IAM secrets as environment variables when running `terraform` commands;
+* https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[`gopass` and `summon`] to easily pass the IAM secrets as environment variables when running `terraform` commands;
 
 Other than that, you will require the following:
 
@@ -31,7 +31,7 @@ Other than that, you will require the following:
 
 === `secrets.yml`
 
-TIP: Check https://dev.to/camptocamp-ops/simple-secret-sharing-with-gopass-and-summon-40jk[this blog post] for more information on how to configure `gopass` and `summon` to work together.
+TIP: Check https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[this blog post] for more information on how to configure `gopass` and `summon` to work together.
 
 For simplicity and ease of use, as well as security, the example uses `gopass` and `summon` to pass the IAM credentials to the Terraform commands. The `secrets.yml` file contains the path to the the secret values on the `gopass` password store. On execution, the `summon` command will then read the `secrets.yml` file and pass the credentials as environment variables to the Terraform commands.
 

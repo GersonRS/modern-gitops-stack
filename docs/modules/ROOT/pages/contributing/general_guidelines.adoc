@@ -7,7 +7,7 @@ This document describes the general guidelines for contributing to the Modern Gi
 
 The Modern Gitops Stack is a collection of modules, each of them having its own release cycle, in order to ease the development and maintenance of each module.
 
-TIP: A private GitHub project owned by the https://github.com/orgs/camptocamp/teams/is-modern-gitops-stack/[`@camptocamp/is-modern-gitops-stack` team] is available https://github.com/orgs/camptocamp/projects/3/[here]. It is a useful way to follow the progress of the PRs and Issues of all the repositories. For more information on how it is implemented, check the xref:ROOT:contributing/project_board.adoc[Project Board] page.
+TIP: A private GitHub project owned by the https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack` team] is available https://github.com/orgs/GersonRS/projects/3/[here]. It is a useful way to follow the progress of the PRs and Issues of all the repositories. For more information on how it is implemented, check the xref:ROOT:contributing/project_board.adoc[Project Board] page.
 
 == Development workflow
 
@@ -22,7 +22,7 @@ The following subsections describe some of the best practices to follow when wor
 === Branches
 
 * Keep the `main` branch clean, and only merge Pull Requests into it.
-* Create a new branch for each Pull Request. *The name of the branch should be the Jira ticket number, followed by a short description of the work done in the branch*, for example `ISDEVOPS-185-v1-docs`. This will allow the Jira ticket to be automatically linked to the branch and the Pull Request.
+* Create a new branch for each Pull Request. *The name of the branch should be the Jira ticket number, followed by a short description of the work done in the branch*, for example `ISMODERN-GITOPS-185-v1-docs`. This will allow the Jira ticket to be automatically linked to the branch and the Pull Request.
 
 === Commit messages
 
@@ -36,7 +36,7 @@ The following subsections describe some of the best practices to follow when wor
 ** *`style`* - changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
 ** *`refactor`* - a code change that neither fixes a bug nor adds a feature
 ** *`ci`* - changes to the CI configuration files and scripts
-** *`chore`* - other changes that don't really modify the code (could be a merge commit, for example, `chore: rebase 'main' into 'ISDEVOPS-184-v1-docs' before merging PR`)
+** *`chore`* - other changes that don't really modify the code (could be a merge commit, for example, `chore: rebase 'main' into 'ISMODERN-GITOPS-184-v1-docs' before merging PR`)
 
 * *If your commit adds a breaking change, you should add a `!` after the commit type*, for example `feat!: add a breaking change`.
 +

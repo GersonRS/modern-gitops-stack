@@ -5,7 +5,7 @@
 
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
-:url-c2c: https://www.camptocamp.com
+:url-c2c: https://www.GersonRS.com
 
 image::modern-gitops-stack-logo_large.png[Modern Gitops Stack]
 
@@ -15,7 +15,7 @@ TIP: The easiest way to get started with the Modern Gitops Stack is to follow th
 
 == Project Sponsor
 
-This project is mainly developed and sponsored by {url-c2c}[Camptocamp]. *It is an internal work created to standardize and maintain our Kubernetes deployments for our clients*. However, the source code is open and distributed under the Apache 2 license.
+This project is mainly developed and sponsored by {url-c2c}[GersonRS]. *It is an internal work created to standardize and maintain our Kubernetes deployments for our clients*. However, the source code is open and distributed under the Apache 2 license.
 
 == Quick Explanation
 
@@ -33,7 +33,7 @@ The main documentation contains information pertaining to the Modern Gitops Stac
 
 This documentation as well as some examples are stored on the {url-main-repo}[main repository on GitHub].
 
-Since this is an internal project of {url-c2c}[Camptocamp], *some of the documentation pages may be more geared towards our employees and teams*.
+Since this is an internal project of {url-c2c}[GersonRS], *some of the documentation pages may be more geared towards our employees and teams*.
 
 == Contributing
 
