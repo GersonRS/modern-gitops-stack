@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.2...v1.4.3) (2024-04-24)
+
+
+### Bug Fixes
+
+* adjust modules ref ([3ce4f5e](https://github.com/GersonRS/modern-gitops-stack/commit/3ce4f5e1fd29df6cc118bd8f7384bc0ff25f2730))
+
 ## [1.4.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.1...v1.4.2) (2024-04-24)
 
 
