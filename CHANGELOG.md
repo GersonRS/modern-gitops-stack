@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.3...v1.4.4) (2024-04-25)
+
+
+### Bug Fixes
+
+* adjust add0to-project workflow ([07edd97](https://github.com/GersonRS/modern-gitops-stack/commit/07edd97bc19e45268444f7fac55f9b33b79c94b8))
+
 ## [1.4.3](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.2...v1.4.3) (2024-04-24)
 
 
