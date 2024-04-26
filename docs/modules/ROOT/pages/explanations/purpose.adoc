@@ -67,7 +67,7 @@ In the end, the Modern Gitops Stack provides:
 
 With the following main features:
 
-* Supports multiple Kubernetes distributions (AWS EKS, Azure AKS, Exoscale SKS and KinD for locals development and testing purposes);
+* Supports multiple Kubernetes distributions (AWS EKS, Azure AKS and KinD for locals development and testing purposes);
 * Supports blue/green or prod/qa/int/dev patterns;
 * Infrastructure as Code with Terraform;
 * Automatic deployment of "core apps" (cert-manager, Prometheus, AlertManager, Grafana, Loki, Traefik. etc.) in GitOps spirit with Argo CD;
