@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.7](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.6...v1.4.7) (2024-04-26)
+
+
+### Bug Fixes
+
+* adjust ref links ([2208067](https://github.com/GersonRS/modern-gitops-stack/commit/2208067aa7d711f78ec949371adcf98af1e5f3d8))
+
 ## [1.4.6](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.5...v1.4.6) (2024-04-26)
 
 
