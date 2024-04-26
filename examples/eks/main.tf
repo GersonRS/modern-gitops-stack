@@ -99,7 +99,7 @@ module "metrics-server" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//eks?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//eks?ref=v1.3.0"
 
   argocd_project = module.eks.cluster_name
 
