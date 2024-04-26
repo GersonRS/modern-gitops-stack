@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.5](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.4...v1.4.5) (2024-04-25)
+
+
+### Bug Fixes
+
+* re-add submodule ([6456a26](https://github.com/GersonRS/modern-gitops-stack/commit/6456a2634c82e01f1115c0656bf6b99b68a56e81))
+* remove gitsubmodule file ([7ab47e6](https://github.com/GersonRS/modern-gitops-stack/commit/7ab47e6582e6838d4640552ee886ea9130fdcc90))
+
 ## [1.4.4](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.3...v1.4.4) (2024-04-25)
 
 
