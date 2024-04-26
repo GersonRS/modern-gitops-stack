@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.6](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.5...v1.4.6) (2024-04-26)
+
+
+### Bug Fixes
+
+* adjust ui bundle ([3c17a76](https://github.com/GersonRS/modern-gitops-stack/commit/3c17a767cae3b5e5c84b4e1b6e1512b111d3baa9))
+
 ## [1.4.5](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.4...v1.4.5) (2024-04-25)
 
 
