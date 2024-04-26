@@ -15,4 +15,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
 
       - name: "Check commit messages"
-        uses: docker://aevea/commitsar
+        uses: aevea/commitsar@v0.20.2
+
+      - name: "Check commit messages 2"
+        uses: taskmedia/action-conventional-commits@v1.1.16
