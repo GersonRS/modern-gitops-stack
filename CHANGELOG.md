@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.8](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.7...v1.4.8) (2024-04-26)
+
+
+### Bug Fixes
+
+* fix check commit workflow ([c595b0f](https://github.com/GersonRS/modern-gitops-stack/commit/c595b0f75f6ce202284fcac011d81c800644ea64))
+
 ## [1.4.7](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.6...v1.4.7) (2024-04-26)
 
 
