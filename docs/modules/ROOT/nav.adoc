@@ -23,7 +23,7 @@
 .*Cluster Modules*
 * xref:aks:ROOT:README.adoc[Azure AKS]
 * xref:eks:ROOT:README.adoc[Amazon EKS]
-* xref:kind:ROOT:README.adoc[KinD]
+* xref:kind:ROOT:index.adoc[KinD]
 
 .*Chart Modules*
 * xref:argocd:ROOT:README.adoc[Argo CD]
