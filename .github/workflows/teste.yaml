@@ -13,8 +13,10 @@ jobs:
           app-id: 882683
           private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
 
-      - name: Use the token
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-          echo $GH_TOKEN
+      - name: Add PR or issue to Modern GitOps Stack project board
+        uses: actions/add-to-project@v1.0.1
+        with:
+          project-url: https://github.com/users/GersonRS/projects/2
+          github-token: ${{ steps.generate_token.outputs.token }}
+          labeled: bug, needs-triage
+          label-operator: NOT
