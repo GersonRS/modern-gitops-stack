@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.8...v1.5.0) (2024-04-27)
+
+
+### Features
+
+* pre-commit adjust and update docs antora ([b4c0a97](https://github.com/GersonRS/modern-gitops-stack/commit/b4c0a97884a3d3463b116252fa7dbd8fd3560c17))
+* update documentation with more information and adjust pr issues projeto workflow ([8b7e2e4](https://github.com/GersonRS/modern-gitops-stack/commit/8b7e2e473d26ee42d9d23fb8d1b7e71e49ed99b6))
+* update pre-commit ([d2edf47](https://github.com/GersonRS/modern-gitops-stack/commit/d2edf477e4ec9c8249c674b758c48522256da34f))
+
 ## [1.4.8](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.7...v1.4.8) (2024-04-26)
 
 
