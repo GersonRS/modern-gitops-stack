@@ -18,4 +18,3 @@ jobs:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           echo $GH_TOKEN
-          gh api octocat
