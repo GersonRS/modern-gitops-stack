@@ -18,5 +18,3 @@ jobs:
         with:
           project-url: https://github.com/users/GersonRS/projects/2
           github-token: ${{ steps.generate-token.outputs.token }}
-          labeled: bug, needs-triage
-          label-operator: NOT
