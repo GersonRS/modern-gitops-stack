@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - develop
 jobs:
   demo_app_authentication:
     runs-on: ubuntu-latest
