@@ -27,6 +27,7 @@
 
 .*Chart Modules*
 * xref:argocd:ROOT:README.adoc[Argo CD]
+* xref:oidc-aws-cognito:ROOT:README.adoc[AWS Cognito OIDC]
 * xref:cert-manager:ROOT:README.adoc[cert-manager]
 * xref:keycloak:ROOT:README.adoc[Keycloak]
 * xref:kube-prometheus-stack:ROOT:README.adoc[kube-prometheus-stack]
