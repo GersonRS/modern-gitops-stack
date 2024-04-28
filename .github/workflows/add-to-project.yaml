@@ -15,4 +15,4 @@ jobs:
   add-to-project:
     uses: GersonRS/modern-gitops-stack/.github/workflows/pr-issues-project.yaml@main
     secrets:
-      PAT: ${{ secrets.PAT }}
+      PROJECT_APP_PRIVATE_KEY: ${{ secrets.PAT }}

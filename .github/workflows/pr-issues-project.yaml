@@ -10,7 +10,7 @@ name: "pr-issues-project"
 on:
   workflow_call:
     secrets:
-      PAT:
+      PROJECT_APP_PRIVATE_KEY:
         description: "GitHub token for the Modern Gitops Stack Project"
         required: true
 
@@ -22,6 +22,6 @@ jobs:
         uses: actions/add-to-project@v1.0.1
         with:
           project-url: https://github.com/users/GersonRS/projects/2
-          github-token: ${{ secrets.PAT }}
+          github-token: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
           labeled: bug, needs-triage
           label-operator: NOT
