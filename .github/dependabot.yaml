@@ -27,6 +27,8 @@ updates:
       interval: "daily"
 
     commit-message:
-      prefix: "build:"
-      prefix-development: "build(dev):"
+      prefix: "build"
+      prefix-development: "build"
       include: "scope"
+    reviewers:
+      - "GersonRS"

@@ -16,3 +16,5 @@ jobs:
 
       - name: "Check commit messages"
         uses: aevea/commitsar@v0.20.2
+        env:
+          COMMITSAR_CONFIG_PATH: ./.github
