@@ -1,5 +1,5 @@
 module "kind" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git?ref=v1.1.1"
 
   cluster_name       = local.cluster_name
   kubernetes_version = local.kubernetes_version
