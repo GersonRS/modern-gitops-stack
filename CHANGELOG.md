@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.7.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.6.0...v1.7.0) (2024-04-28)
+
+
+### Features
+
+* adjust workflows ([ec69266](https://github.com/GersonRS/modern-gitops-stack/commit/ec692668d48b3da0da886d20aafd1882db78a50b))
+* update and adjust add PR workflow ([fdc9d4e](https://github.com/GersonRS/modern-gitops-stack/commit/fdc9d4e7c68ca52df7de09766131f40b18ffe963))
+* update dependabot config ([496fa42](https://github.com/GersonRS/modern-gitops-stack/commit/496fa4208c88070e93d4f0ea63a7470906e7a5c3))
+
+
+### Bug Fixes
+
+* fix dependabot configuration ([868c2e3](https://github.com/GersonRS/modern-gitops-stack/commit/868c2e3343d6ef5abda6b14042d0ab4fedb1fb5b))
+* fix release-please inpust ([dd6433e](https://github.com/GersonRS/modern-gitops-stack/commit/dd6433e54e2b8f4cea7f39a4f48c3e63db2353a6))
+
 ## [1.6.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.5.0...v1.6.0) (2024-04-28)
 
 
