@@ -1,7 +1,0 @@
-verbose: true
-commits:
-  strict: false
-  limit: 100
-  all: true
-pull_request:
-  conventional: false
