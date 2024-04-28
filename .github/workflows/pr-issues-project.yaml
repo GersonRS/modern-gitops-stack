@@ -10,31 +10,14 @@ name: "pr-issues-project"
 on:
   workflow_call:
     secrets:
-      PROJECT_APP_PRIVATE_KEY:
-        description: "GitHub App private key for the Modern Gitops Stack Project app"
+      PAT:
+        description: "GitHub token for the Modern Gitops Stack Project"
         required: true
-
-  issues:
-    types:
-      - opened
-      - reopened
-
-  pull_request:
-    types:
-      - opened
-      - reopened
 
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate authentication token from GitHub App
-        id: generate_token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: 882683
-          private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
-
       - name: Add PR or issue to Modern GitOps Stack project board
         uses: actions/add-to-project@v1.0.1
         with:
