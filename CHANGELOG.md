@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.7.0...v1.8.0) (2024-04-28)
+
+
+### Features
+
+* config pre-commit to no commit to branch main ([eb22587](https://github.com/GersonRS/modern-gitops-stack/commit/eb22587423ebd10d212dbd3aa8fb89779e8d0d4c))
+
+
+### Bug Fixes
+
+* adjust commitsar.yml file ([0c4cdb2](https://github.com/GersonRS/modern-gitops-stack/commit/0c4cdb2fb8b92e173522d90345f72e81f88f4d27))
+
 ## [1.7.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.6.0...v1.7.0) (2024-04-28)
 
 
