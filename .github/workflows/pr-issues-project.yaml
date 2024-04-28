@@ -39,6 +39,6 @@ jobs:
         uses: actions/add-to-project@v1.0.1
         with:
           project-url: https://github.com/users/GersonRS/projects/2
-          github-token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           labeled: bug, needs-triage
           label-operator: NOT
