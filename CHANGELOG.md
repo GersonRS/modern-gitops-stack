@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.8.0...v1.9.0) (2024-04-28)
+
+
+### Features
+
+* adjust worflows modules and commit check ([ffeec17](https://github.com/GersonRS/modern-gitops-stack/commit/ffeec1781ca04e1b2304bf685b1b2412608710f0))
+
+
+### Bug Fixes
+
+* commit check ([be516c4](https://github.com/GersonRS/modern-gitops-stack/commit/be516c4df6f8b94a5f524ca9115d4493c66d9e5c))
+
 ## [1.8.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.7.0...v1.8.0) (2024-04-28)
 
 
