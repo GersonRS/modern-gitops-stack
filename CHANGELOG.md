@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.5.0...v1.6.0) (2024-04-28)
+
+
+### Features
+
+* remove test ([f596cfc](https://github.com/GersonRS/modern-gitops-stack/commit/f596cfc9ed001b9818a42926e4af81b27ba1f736))
+* try again ([bd93a04](https://github.com/GersonRS/modern-gitops-stack/commit/bd93a0489611a53c56b323bf141450ff497aedbb))
+
+
+### Bug Fixes
+
+* adjust workflow ([0daa9fc](https://github.com/GersonRS/modern-gitops-stack/commit/0daa9fc1caadb2f316108903dc567c0e227ce591))
+* test with two actions ([a710ded](https://github.com/GersonRS/modern-gitops-stack/commit/a710ded4401d315cd0d20240373eb7b892d84bbe))
+
 ## [1.5.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.4.8...v1.5.0) (2024-04-27)
 
 
