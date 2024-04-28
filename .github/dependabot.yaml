@@ -25,3 +25,8 @@ updates:
     schedule:
       # Check for updated Terraform modules daily
       interval: "daily"
+
+    commit-message:
+      prefix: "build:"
+      prefix-development: "build(dev):"
+      include: "scope"
