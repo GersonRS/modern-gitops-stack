@@ -30,5 +30,3 @@ updates:
       prefix: "build"
       prefix-development: "build"
       include: "scope"
-    reviewers:
-      - "GersonRS"
