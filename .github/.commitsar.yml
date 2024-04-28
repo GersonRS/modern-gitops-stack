@@ -3,6 +3,5 @@ commits:
   strict: false
   limit: 100
   all: true
-  upstreamBranch: origin/main
 pull_request:
   conventional: false
