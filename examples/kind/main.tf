@@ -145,7 +145,7 @@ module "loki-stack" {
 }
 
 module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v1.1.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
