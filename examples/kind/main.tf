@@ -12,7 +12,7 @@ module "metallb" {
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.2.0"
 
   argocd_projects = {
     "${local.cluster_name}" = {
@@ -87,15 +87,6 @@ module "oidc" {
   base_domain    = local.base_domain
   subdomain      = local.subdomain
   cluster_issuer = local.cluster_issuer
-
-  user_map = {
-    YOUR_USERNAME = {
-      username   = "YOUR_USERNAME"
-      email      = "YOUR_EMAIL"
-      first_name = "YOUR_FIRST_NAME"
-      last_name  = "YOUR_LAST_NAME"
-    },
-  }
 
   dependency_ids = {
     keycloak = module.keycloak.id
@@ -213,7 +204,7 @@ module "kube-prometheus-stack" {
 }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.2.0"
 
   base_domain              = local.base_domain
   cluster_name             = local.cluster_name
