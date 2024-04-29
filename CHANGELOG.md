@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.10.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.9.0...v1.10.0) (2024-04-29)
+
+
+### Features
+
+* adjust examples and fix ref in code ([80f0b75](https://github.com/GersonRS/modern-gitops-stack/commit/80f0b751b3640be415fe079485ff99122a6c8506))
+* adjust examples and fix ref in code ([6c567e1](https://github.com/GersonRS/modern-gitops-stack/commit/6c567e10e4e430bc735a7ff7b11b73b1ae023677))
+
 ## [1.9.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.8.0...v1.9.0) (2024-04-28)
 
 
