@@ -24,7 +24,7 @@ module "argocd_bootstrap" {
 }
 
 module "metrics-server" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v1.1.0"
 
   argocd_project = local.cluster_name
 
