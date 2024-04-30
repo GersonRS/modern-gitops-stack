@@ -24,7 +24,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-eks.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-eks.git?ref=v1.1.0"
 
   cluster_name       = local.cluster_name
   kubernetes_version = local.kubernetes_version
