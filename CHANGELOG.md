@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.12.0...v1.13.0) (2024-04-30)
+
+
+### Features
+
+* adjust module chart update workflow ([cb58704](https://github.com/GersonRS/modern-gitops-stack/commit/cb5870486219291b7b1be83d8158829f53e3ce87))
+
 ## [1.12.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.11.0...v1.12.0) (2024-04-30)
 
 
