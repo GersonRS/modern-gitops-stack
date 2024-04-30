@@ -1,13 +1,7 @@
 ---
 site:
   title: Modern GitOps Stack
-  # keys:
-  #   google_analytics: "G-GDBX9466LL"
   start_page: ROOT::index.adoc
-
-antora:
-  extensions:
-    - "@antora/lunr-extension"
 
 urls:
   latest_version_segment: latest # Define each component's latest version as the latest in the URL
