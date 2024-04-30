@@ -76,6 +76,7 @@ jobs:
           branch: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}-${{ matrix.chart-name }}"
           labels: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}"
         with:
+          base: ${{ github.head_ref }}
           commit-message: ${{ env.pr-title }}
           author: ${{ env.author }}
           committer: ${{ env.author }}
@@ -101,6 +102,7 @@ jobs:
           # unlike the previous step, which can either be a patch, minor or major update.
           pr-title: "feat(chart)!: major update of dependencies on ${{ matrix.chart-name }} chart"
         with:
+          base: ${{ github.head_ref }}
           commit-message: ${{ env.pr-title }}
           author: ${{ env.author }}
           committer: ${{ env.author }}
