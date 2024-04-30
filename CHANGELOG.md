@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.11.0...v1.12.0) (2024-04-30)
+
+
+### Features
+
+* adjust deploy antora documentation ([c01734b](https://github.com/GersonRS/modern-gitops-stack/commit/c01734b671352cccb70ecf340a507c9bace9b6d8))
+* rename secret name in add to project workflow ([b01ff38](https://github.com/GersonRS/modern-gitops-stack/commit/b01ff3880ab17dc52ae6003886f630390307fc60))
+
 ## [1.11.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.10.0...v1.11.0) (2024-04-30)
 
 
