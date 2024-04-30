@@ -6,7 +6,7 @@ module "kind" {
 }
 
 module "metallb" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v1.1.0"
 
   subnet = module.kind.kind_subnet
 }
