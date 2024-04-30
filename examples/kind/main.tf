@@ -6,13 +6,13 @@ module "kind" {
 }
 
 module "metallb" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v1.1.0"
 
   subnet = module.kind.kind_subnet
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.3.0"
 
   argocd_projects = {
     "${local.cluster_name}" = {
@@ -24,7 +24,7 @@ module "argocd_bootstrap" {
 }
 
 module "metrics-server" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v1.1.0"
 
   argocd_project = local.cluster_name
 
@@ -117,7 +117,7 @@ module "minio" {
 }
 
 module "loki-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v1.1.0"
 
   argocd_project = local.cluster_name
 
@@ -204,7 +204,7 @@ module "kube-prometheus-stack" {
 }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.3.0"
 
   base_domain              = local.base_domain
   cluster_name             = local.cluster_name

@@ -54,7 +54,7 @@ module "aks" {
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.3.0"
 
   argocd_projects = {
     "${module.aks.cluster_name}" = {
@@ -81,7 +81,7 @@ module "traefik" {
 }
 
 module "cert-manager" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//aks?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//aks?ref=v1.1.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -192,7 +192,7 @@ module "kube-prometheus-stack" {
 }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.3.0"
 
   cluster_name   = module.aks.cluster_name
   base_domain    = module.aks.base_domain

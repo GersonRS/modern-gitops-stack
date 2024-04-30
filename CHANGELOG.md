@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.11.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.10.0...v1.11.0) (2024-04-30)
+
+
+### Features
+
+* fix modules release-please workflow and update example kind ([d480381](https://github.com/GersonRS/modern-gitops-stack/commit/d480381cdccdd10ca9c46477892218c5b1f4a6c8))
+* fix modules release-please workflow and update example kind ([bd00dd5](https://github.com/GersonRS/modern-gitops-stack/commit/bd00dd59e2e494f0231fb60e0bb992139c91ebad))
+
 ## [1.10.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.9.0...v1.10.0) (2024-04-29)
 
 
