@@ -84,7 +84,7 @@ jobs:
           title: ${{ env.pr-title }}
           labels: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}"
           signoff: true
-          assignees: ["GersonRS"]
+          reviewers: ["GersonRS"]
           body: |
             :robot: I have updated the chart *beep* *boop*
             ---
@@ -112,7 +112,7 @@ jobs:
           title: ${{ env.pr-title }}
           labels: "chart-autoupdate-major"
           signoff: true
-          assignees: ["GersonRS"]
+          reviewers: ["GersonRS"]
           body: |
             :robot: I have updated the chart *beep* *boop*
             ---
