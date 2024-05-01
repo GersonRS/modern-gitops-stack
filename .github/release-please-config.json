@@ -4,11 +4,12 @@
       "changelog-path": "CHANGELOG.md",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
+      "pull-request-title-pattern": "chore: release ${version}",
       "draft": false,
       "prerelease": false,
       "release-type": "simple",
       "extra-files": [
-        "variable.tf"
+        "variables.tf"
       ],
       "changelog-sections": [
         {

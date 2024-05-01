@@ -9,6 +9,10 @@ name: "modules-chart-update"
 
 on:
   workflow_call:
+    secrets:
+      PAT:
+        description: "GitHub token for the Modern Gitops Stack Project"
+        required: true
     inputs:
       update-strategy:
         description: "Upgrade strategy to use. Valid values are 'major', 'minor' or 'patch'"
@@ -76,6 +80,7 @@ jobs:
           branch: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}-${{ matrix.chart-name }}"
           labels: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}"
         with:
+          token: ${{ secrets.PAT }}
           base: ${{ github.head_ref }}
           commit-message: ${{ env.pr-title }}
           author: ${{ env.author }}
@@ -84,7 +89,9 @@ jobs:
           title: ${{ env.pr-title }}
           labels: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}"
           signoff: true
-          reviewers: ["GersonRS"]
+          assignees: GersonRS
+          reviewers: GersonRS
+          delete-branch: true
           body: |
             :robot: I have updated the chart *beep* *boop*
             ---
@@ -104,6 +111,7 @@ jobs:
           # unlike the previous step, which can either be a patch, minor or major update.
           pr-title: "feat(chart)!: major update of dependencies on ${{ matrix.chart-name }} chart"
         with:
+          token: ${{ secrets.PAT }}
           base: ${{ github.head_ref }}
           commit-message: ${{ env.pr-title }}
           author: ${{ env.author }}
@@ -112,7 +120,9 @@ jobs:
           title: ${{ env.pr-title }}
           labels: "chart-autoupdate-major"
           signoff: true
-          reviewers: ["GersonRS"]
+          assignees: GersonRS
+          reviewers: GersonRS
+          delete-branch: true
           body: |
             :robot: I have updated the chart *beep* *boop*
             ---
