@@ -19,5 +19,5 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         id: release-please
         with:
-          config-file: GersonRS/modern-gitops-stack/main/.github/release-please-config.json@main
-          manifest-file: GersonRS/modern-gitops-stack/main/.github/release-please-manifest.json@main
+          config-file: .github/release-please-config.json
+          manifest-file: .github/release-please-manifest.json
