@@ -4,6 +4,6 @@ The Modern Gitops Stack provides a standard Kubernetes Platform, bringing togeth
 
 == Documentation
 
-The documentation is published here: https://modern-gitops-stack.io/docs/latest
+The documentation is published here: https://gersonrs.github.io/modern-gitops-stack/
 
 There you will find everything you need to know to get started with the Modern Gitops Stack as well as how our contribution guidelines.
