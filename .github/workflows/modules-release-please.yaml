@@ -10,10 +10,6 @@ name: "modules-release-please"
 on:
   workflow_call:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   release-please:
     runs-on: ubuntu-latest
@@ -22,3 +18,6 @@ jobs:
     steps:
       - uses: google-github-actions/release-please-action@v4
         id: release-please
+        with:
+          config-file: .github/release-please-config.json
+          manifest-file: .github/.release-please-manifest.json
