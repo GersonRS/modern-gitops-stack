@@ -101,7 +101,7 @@ module "cert-manager" {
 }
 
 module "loki-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//aks?ref=v1.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//aks?ref=v2.4.0"
 
   argocd_project = module.aks.cluster_name
 
