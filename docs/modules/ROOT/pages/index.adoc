@@ -6,6 +6,7 @@
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 :url-c2c: https://gersonrs.github.io
+:url-devops-stack-repo: https://github.com/camptocamp/devops-stack
 
 image::modern-gitops-stack-logo_large.png[Modern Gitops Stack]
 
@@ -15,7 +16,7 @@ TIP: The easiest way to get started with the Modern Gitops Stack is to follow th
 
 == Project
 
-This project is mainly developed and sponsored by {url-c2c}[GersonRS]. *It is an internal work created to standardize and maintain our Kubernetes deployments for our clients*. However, the source code is open and distributed under the Apache 2 license.
+This project is an extension of the {url-devops-stack-repo}[DevOps Stack] project. *It is an extension focused on GitOps and MLOps for developing and deploying Machine Learning Models*. Its source code is open and distributed under the Apache 2 license.
 
 == Quick Explanation
 
