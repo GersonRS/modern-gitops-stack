@@ -5,7 +5,7 @@
 
 // These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
-:url-c2c: https://www.GersonRS.com
+:url-c2c: https://gersonrs.github.io
 
 image::modern-gitops-stack-logo_large.png[Modern Gitops Stack]
 
@@ -13,7 +13,7 @@ The Modern Gitops Stack provides a standardized deployment Kubernetes Platform, 
 
 TIP: The easiest way to get started with the Modern Gitops Stack is to follow the tutorial on the xref:ROOT:tutorials/deploy_kind.adoc[Deployment on KinD] page. This tutorial you will leave you with a fully operational https://kind.sigs.k8s.io/[KinD] playground on your local machine.
 
-== Project Sponsor
+== Project
 
 This project is mainly developed and sponsored by {url-c2c}[GersonRS]. *It is an internal work created to standardize and maintain our Kubernetes deployments for our clients*. However, the source code is open and distributed under the Apache 2 license.
 

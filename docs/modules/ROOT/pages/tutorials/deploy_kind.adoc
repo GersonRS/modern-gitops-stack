@@ -64,7 +64,7 @@ terraform init
 +
 [source,terraform]
 ----
-include::example$deploy_examples/kind/locals.tf[]
+include::examples$deploy_examples/kind/locals.tf[]
 ----
 
 6. Finally, run `terraform apply` and accept the proposed changes to create the Kubernetes nodes as Docker containers, and populate them with our services;
