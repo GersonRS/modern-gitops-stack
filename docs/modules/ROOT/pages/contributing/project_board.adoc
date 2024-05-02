@@ -35,7 +35,7 @@ The workflow definition is available in the {url-main-repo}/blob/main/.github/wo
 
 [source,yaml]
 ----
-include::example$github_workflows/pr-issues-project.yaml[]
+include::examples$github_workflows/pr-issues-project.yaml[]
 ----
 
 NOTE: It is the step _Generate authentication token from GitHub App_ that uses the GitHub app created above in order to generate a token with the proper permissions that is then passed to the _Add PR or issue to Modern Gitops Stack project board_ step.

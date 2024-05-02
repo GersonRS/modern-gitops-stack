@@ -3,6 +3,10 @@ site:
   title: Modern GitOps Stack
   start_page: ROOT::index.adoc
 
+antora:
+  extensions:
+    - "@antora/lunr-extension"
+
 urls:
   latest_version_segment: latest # Define each component's latest version as the latest in the URL
 content:
@@ -15,24 +19,25 @@ content:
       branches: []
       tags:
         # Build all version tags
-        - "v@({1..9})*({0..9}).+({4..9}).+({7..9})"
+        - "v@({1..9})*({0..9}).+({0..9}).*"
 
         # Exclude versions without proper folder structure or with generation errors
         # - "!v{1..3}.{0..9}.{1..9}"
+        - "!v1.0.1"
 
     # Modules Repositories
     - url: https://github.com/GersonRS/modern-gitops-stack-module-argocd.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v2.0.0"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
         # - "!v1.0.0-alpha.*"
@@ -41,21 +46,21 @@ content:
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-cluster-eks.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0*"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0*"
         - "!v1.1.0*"
@@ -64,14 +69,14 @@ content:
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
         - "!v1.1.0"
@@ -79,14 +84,14 @@ content:
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-metallb.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
         # - "!v1.0.0-alpha.*"
@@ -94,14 +99,14 @@ content:
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-minio.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         # - "!v1.0.0-alpha.*"
         - "!v1.0.0"
@@ -110,14 +115,14 @@ content:
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         # - "!v1.0.0-alpha.*"
     - url: https://github.com/GersonRS/modern-gitops-stack-module-traefik.git
       start_path: docs
       branches: []
       tags:
-        - "v@({1..9})*({0..9}).+({0..9}).*"
+        - "v@({2..9})*({0..9}).+({0..9}).*"
         # # Exclude versions without proper folder structure or with generation errors
         - "!v1.0.0"
         - "!v1.1.0"
@@ -131,5 +136,5 @@ content:
         # - "!v1.0.0-alpha.*"
 ui:
   bundle:
-    url: https://github.com/GersonRS/modern-gitops-stack-antora-ui/releases/download/main-latest/ui-bundle.zip
+    url: https://github.com/camptocamp/devops-stack-antora-ui/releases/download/main-latest/ui-bundle.zip
     snapshot: true

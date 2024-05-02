@@ -90,7 +90,7 @@ TIP: The xref:eks:ROOT:README.adoc[cluster module documentation] can help you kn
 +
 [source,terraform]
 ----
-include::example$deploy_examples/eks/locals.tf[]
+include::examples$deploy_examples/eks/locals.tf[]
 ----
 
 7. Finally, run `terraform apply` and accept the proposed changes to create the Kubernetes nodes on Amazon EKS and populate them with our services;

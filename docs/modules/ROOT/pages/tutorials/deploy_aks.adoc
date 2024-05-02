@@ -98,7 +98,7 @@ TIP: The xref:eks:ROOT:README.adoc[cluster module documentation] can help you kn
 +
 [source,terraform]
 ----
-include::example$deploy_examples/aks/locals.tf[]
+include::examples$deploy_examples/aks/locals.tf[]
 ----
 
 6. Finally, run `terraform apply` and accept the proposed changes to create the Kubernetes nodes on Azure AKS and populate them with our services;
