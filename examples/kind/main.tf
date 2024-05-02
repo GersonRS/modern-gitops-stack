@@ -94,7 +94,7 @@ module "oidc" {
 }
 
 module "minio" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v1.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v2.5.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
