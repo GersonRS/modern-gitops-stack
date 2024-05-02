@@ -1,5 +1,227 @@
 # Changelog
 
+## [1.14.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.13.0...v1.14.0) (2024-05-02)
+
+
+### 🚀 New Features
+
+* adjust link ref on release-please workflow ([8c1cc78](https://github.com/GersonRS/modern-gitops-stack/commit/8c1cc786669e9b1521d17ef8734508d6078a853e))
+* adjust module chart update workflow ([38c9c7b](https://github.com/GersonRS/modern-gitops-stack/commit/38c9c7b621984564c647b7c0febf078d8fffe188))
+* adjust module-release-please config ([cd99211](https://github.com/GersonRS/modern-gitops-stack/commit/cd99211c4a462d60590eb501ea62c90269f66f84))
+* adjust module-release-please config ([aad6fca](https://github.com/GersonRS/modern-gitops-stack/commit/aad6fca97b87150425d0839c2e7fe2bc0403137d))
+* adjust module-release-please config ([46e51d4](https://github.com/GersonRS/modern-gitops-stack/commit/46e51d4583a18bf2cc526cba2b79e4f3ef711d03))
+* adjust release-please config ([a9b898d](https://github.com/GersonRS/modern-gitops-stack/commit/a9b898dd6d8102e4749379ad3e8f82e1d8d1262d))
+* adjust release-please config ([f060760](https://github.com/GersonRS/modern-gitops-stack/commit/f06076058d75be6ec24265075e29d5d0a0415e6d))
+* adjust release-please config ([a37a2e6](https://github.com/GersonRS/modern-gitops-stack/commit/a37a2e6f0467aecdadb49ef30136ef255fb7b7f3))
+* adjust release-please config ([463a164](https://github.com/GersonRS/modern-gitops-stack/commit/463a1644e53c7a9ea12e3229868baabb008de097))
+* adjust release-please config ([64d148c](https://github.com/GersonRS/modern-gitops-stack/commit/64d148c3856efa994c0f221887b9415b830fd433))
+* adjust release-please config ([f541276](https://github.com/GersonRS/modern-gitops-stack/commit/f5412760df3388678071483597d0be01156438a4))
+* change assignees to reviewers ([7078889](https://github.com/GersonRS/modern-gitops-stack/commit/7078889ef55d5f809e1e26d81d86f9dbd400b03f))
+* update public antora workflow ([5b8da4f](https://github.com/GersonRS/modern-gitops-stack/commit/5b8da4f1cec02718721c427c670e9158b17ae07d))
+
+
+### 🔥 Bug Fixes
+
+* adjust module-release-please config ([22455d0](https://github.com/GersonRS/modern-gitops-stack/commit/22455d0ffcec6014ec382ab95062b30157b0d22d))
+* fix config file and manifest file ref ([bd4c9ac](https://github.com/GersonRS/modern-gitops-stack/commit/bd4c9ac3c58adb01e1e4db399df67c67547266f8))
+* fix config file and manifest file ref ([88f4860](https://github.com/GersonRS/modern-gitops-stack/commit/88f4860f50fad472ab3522abde50887ba1884870))
+* fix config file and manifest file ref ([f4b4014](https://github.com/GersonRS/modern-gitops-stack/commit/f4b40146195a0c362251db6040e2399da3c0abf6))
+* fix module-release-please config ([0aa6145](https://github.com/GersonRS/modern-gitops-stack/commit/0aa614580c81d7f44c99ee42e007fbc793e44ec6))
+* fix module-release-please config ([3f04b1e](https://github.com/GersonRS/modern-gitops-stack/commit/3f04b1e2751d7b561e10e24d3ebdfb1441501eff))
+
+
+### 📚 Documentation
+
+* adjust documentation ([bfb70b2](https://github.com/GersonRS/modern-gitops-stack/commit/bfb70b26fa120098afe337e261cecb5223029dd8))
+* update README ([29eeab8](https://github.com/GersonRS/modern-gitops-stack/commit/29eeab81408bc40ca76453e3a6cba92fde89c818))
+
+
+### ⚙️ Chores
+
+* release 1.11.0 ([36608ca](https://github.com/GersonRS/modern-gitops-stack/commit/36608cabf76b7de3edceeeddd35374394e41cd95))
+* release 1.12.0 ([6ad5585](https://github.com/GersonRS/modern-gitops-stack/commit/6ad55856b7f7885620ea111bcc186b043fa01376))
+* release 1.13.0 ([7ba9b7c](https://github.com/GersonRS/modern-gitops-stack/commit/7ba9b7c4b98a409671b1842509d6539a0ac3f20c))
+
+
+### ⌨️ Code Refactoring
+
+* remove variable.tf file ([0909af3](https://github.com/GersonRS/modern-gitops-stack/commit/0909af3171bc83015cd7d6495f9cdc631b43b54c))
+
+## [1.13.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.12.0...v1.13.0) (2024-05-02)
+
+
+### 🚀 New Features
+
+* adjust link ref on release-please workflow ([8c1cc78](https://github.com/GersonRS/modern-gitops-stack/commit/8c1cc786669e9b1521d17ef8734508d6078a853e))
+* adjust module chart update workflow ([38c9c7b](https://github.com/GersonRS/modern-gitops-stack/commit/38c9c7b621984564c647b7c0febf078d8fffe188))
+* adjust module chart update workflow ([0a86fd3](https://github.com/GersonRS/modern-gitops-stack/commit/0a86fd3c62613948c5dd1d777eb325f6df868cb7))
+* adjust module chart update workflow ([cb58704](https://github.com/GersonRS/modern-gitops-stack/commit/cb5870486219291b7b1be83d8158829f53e3ce87))
+* adjust module-release-please config ([cd99211](https://github.com/GersonRS/modern-gitops-stack/commit/cd99211c4a462d60590eb501ea62c90269f66f84))
+* adjust module-release-please config ([aad6fca](https://github.com/GersonRS/modern-gitops-stack/commit/aad6fca97b87150425d0839c2e7fe2bc0403137d))
+* adjust module-release-please config ([46e51d4](https://github.com/GersonRS/modern-gitops-stack/commit/46e51d4583a18bf2cc526cba2b79e4f3ef711d03))
+* adjust release-please config ([a9b898d](https://github.com/GersonRS/modern-gitops-stack/commit/a9b898dd6d8102e4749379ad3e8f82e1d8d1262d))
+* adjust release-please config ([f060760](https://github.com/GersonRS/modern-gitops-stack/commit/f06076058d75be6ec24265075e29d5d0a0415e6d))
+* adjust release-please config ([a37a2e6](https://github.com/GersonRS/modern-gitops-stack/commit/a37a2e6f0467aecdadb49ef30136ef255fb7b7f3))
+* adjust release-please config ([463a164](https://github.com/GersonRS/modern-gitops-stack/commit/463a1644e53c7a9ea12e3229868baabb008de097))
+* adjust release-please config ([64d148c](https://github.com/GersonRS/modern-gitops-stack/commit/64d148c3856efa994c0f221887b9415b830fd433))
+* adjust release-please config ([f541276](https://github.com/GersonRS/modern-gitops-stack/commit/f5412760df3388678071483597d0be01156438a4))
+* change assignees to reviewers ([7078889](https://github.com/GersonRS/modern-gitops-stack/commit/7078889ef55d5f809e1e26d81d86f9dbd400b03f))
+* update public antora workflow ([5b8da4f](https://github.com/GersonRS/modern-gitops-stack/commit/5b8da4f1cec02718721c427c670e9158b17ae07d))
+
+
+### 🔥 Bug Fixes
+
+* adjust module-release-please config ([22455d0](https://github.com/GersonRS/modern-gitops-stack/commit/22455d0ffcec6014ec382ab95062b30157b0d22d))
+* fix config file and manifest file ref ([bd4c9ac](https://github.com/GersonRS/modern-gitops-stack/commit/bd4c9ac3c58adb01e1e4db399df67c67547266f8))
+* fix config file and manifest file ref ([88f4860](https://github.com/GersonRS/modern-gitops-stack/commit/88f4860f50fad472ab3522abde50887ba1884870))
+* fix config file and manifest file ref ([f4b4014](https://github.com/GersonRS/modern-gitops-stack/commit/f4b40146195a0c362251db6040e2399da3c0abf6))
+* fix module-release-please config ([0aa6145](https://github.com/GersonRS/modern-gitops-stack/commit/0aa614580c81d7f44c99ee42e007fbc793e44ec6))
+* fix module-release-please config ([3f04b1e](https://github.com/GersonRS/modern-gitops-stack/commit/3f04b1e2751d7b561e10e24d3ebdfb1441501eff))
+
+
+### 📚 Documentation
+
+* adjust documentation ([bfb70b2](https://github.com/GersonRS/modern-gitops-stack/commit/bfb70b26fa120098afe337e261cecb5223029dd8))
+* update README ([29eeab8](https://github.com/GersonRS/modern-gitops-stack/commit/29eeab81408bc40ca76453e3a6cba92fde89c818))
+
+
+### ⚙️ Chores
+
+* **main:** release 1.13.0 ([b1fa35d](https://github.com/GersonRS/modern-gitops-stack/commit/b1fa35d798c98281b8b380c92a2843fd6926849c))
+* release 1.11.0 ([36608ca](https://github.com/GersonRS/modern-gitops-stack/commit/36608cabf76b7de3edceeeddd35374394e41cd95))
+* release 1.12.0 ([6ad5585](https://github.com/GersonRS/modern-gitops-stack/commit/6ad55856b7f7885620ea111bcc186b043fa01376))
+
+
+### ⌨️ Code Refactoring
+
+* remove variable.tf file ([0909af3](https://github.com/GersonRS/modern-gitops-stack/commit/0909af3171bc83015cd7d6495f9cdc631b43b54c))
+
+## [1.12.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.11.0...v1.12.0) (2024-05-02)
+
+
+### 🚀 New Features
+
+* adjust deploy antora documentation ([c01734b](https://github.com/GersonRS/modern-gitops-stack/commit/c01734b671352cccb70ecf340a507c9bace9b6d8))
+* adjust link ref on release-please workflow ([8c1cc78](https://github.com/GersonRS/modern-gitops-stack/commit/8c1cc786669e9b1521d17ef8734508d6078a853e))
+* adjust module chart update workflow ([38c9c7b](https://github.com/GersonRS/modern-gitops-stack/commit/38c9c7b621984564c647b7c0febf078d8fffe188))
+* adjust module chart update workflow ([0a86fd3](https://github.com/GersonRS/modern-gitops-stack/commit/0a86fd3c62613948c5dd1d777eb325f6df868cb7))
+* adjust module chart update workflow ([cb58704](https://github.com/GersonRS/modern-gitops-stack/commit/cb5870486219291b7b1be83d8158829f53e3ce87))
+* adjust module-release-please config ([cd99211](https://github.com/GersonRS/modern-gitops-stack/commit/cd99211c4a462d60590eb501ea62c90269f66f84))
+* adjust module-release-please config ([aad6fca](https://github.com/GersonRS/modern-gitops-stack/commit/aad6fca97b87150425d0839c2e7fe2bc0403137d))
+* adjust module-release-please config ([46e51d4](https://github.com/GersonRS/modern-gitops-stack/commit/46e51d4583a18bf2cc526cba2b79e4f3ef711d03))
+* adjust release-please config ([a9b898d](https://github.com/GersonRS/modern-gitops-stack/commit/a9b898dd6d8102e4749379ad3e8f82e1d8d1262d))
+* adjust release-please config ([f060760](https://github.com/GersonRS/modern-gitops-stack/commit/f06076058d75be6ec24265075e29d5d0a0415e6d))
+* adjust release-please config ([a37a2e6](https://github.com/GersonRS/modern-gitops-stack/commit/a37a2e6f0467aecdadb49ef30136ef255fb7b7f3))
+* adjust release-please config ([463a164](https://github.com/GersonRS/modern-gitops-stack/commit/463a1644e53c7a9ea12e3229868baabb008de097))
+* adjust release-please config ([64d148c](https://github.com/GersonRS/modern-gitops-stack/commit/64d148c3856efa994c0f221887b9415b830fd433))
+* adjust release-please config ([f541276](https://github.com/GersonRS/modern-gitops-stack/commit/f5412760df3388678071483597d0be01156438a4))
+* change assignees to reviewers ([7078889](https://github.com/GersonRS/modern-gitops-stack/commit/7078889ef55d5f809e1e26d81d86f9dbd400b03f))
+* rename secret name in add to project workflow ([b01ff38](https://github.com/GersonRS/modern-gitops-stack/commit/b01ff3880ab17dc52ae6003886f630390307fc60))
+* update public antora workflow ([5b8da4f](https://github.com/GersonRS/modern-gitops-stack/commit/5b8da4f1cec02718721c427c670e9158b17ae07d))
+
+
+### 🔥 Bug Fixes
+
+* adjust module-release-please config ([22455d0](https://github.com/GersonRS/modern-gitops-stack/commit/22455d0ffcec6014ec382ab95062b30157b0d22d))
+* fix config file and manifest file ref ([bd4c9ac](https://github.com/GersonRS/modern-gitops-stack/commit/bd4c9ac3c58adb01e1e4db399df67c67547266f8))
+* fix config file and manifest file ref ([88f4860](https://github.com/GersonRS/modern-gitops-stack/commit/88f4860f50fad472ab3522abde50887ba1884870))
+* fix config file and manifest file ref ([f4b4014](https://github.com/GersonRS/modern-gitops-stack/commit/f4b40146195a0c362251db6040e2399da3c0abf6))
+* fix module-release-please config ([0aa6145](https://github.com/GersonRS/modern-gitops-stack/commit/0aa614580c81d7f44c99ee42e007fbc793e44ec6))
+* fix module-release-please config ([3f04b1e](https://github.com/GersonRS/modern-gitops-stack/commit/3f04b1e2751d7b561e10e24d3ebdfb1441501eff))
+
+
+### 📚 Documentation
+
+* adjust documentation ([bfb70b2](https://github.com/GersonRS/modern-gitops-stack/commit/bfb70b26fa120098afe337e261cecb5223029dd8))
+* update README ([29eeab8](https://github.com/GersonRS/modern-gitops-stack/commit/29eeab81408bc40ca76453e3a6cba92fde89c818))
+
+
+### ⚙️ Chores
+
+* **main:** release 1.12.0 ([2317874](https://github.com/GersonRS/modern-gitops-stack/commit/231787428b1d2f73a98ee1c04eaf9773d0eff278))
+* **main:** release 1.13.0 ([b1fa35d](https://github.com/GersonRS/modern-gitops-stack/commit/b1fa35d798c98281b8b380c92a2843fd6926849c))
+* release 1.11.0 ([36608ca](https://github.com/GersonRS/modern-gitops-stack/commit/36608cabf76b7de3edceeeddd35374394e41cd95))
+
+
+### ⌨️ Code Refactoring
+
+* remove variable.tf file ([0909af3](https://github.com/GersonRS/modern-gitops-stack/commit/0909af3171bc83015cd7d6495f9cdc631b43b54c))
+
+## [1.11.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.10.0...v1.11.0) (2024-05-02)
+
+
+### 🚀 New Features
+
+* adjust deploy antora documentation ([c01734b](https://github.com/GersonRS/modern-gitops-stack/commit/c01734b671352cccb70ecf340a507c9bace9b6d8))
+* adjust link ref on release-please workflow ([8c1cc78](https://github.com/GersonRS/modern-gitops-stack/commit/8c1cc786669e9b1521d17ef8734508d6078a853e))
+* adjust module chart update workflow ([38c9c7b](https://github.com/GersonRS/modern-gitops-stack/commit/38c9c7b621984564c647b7c0febf078d8fffe188))
+* adjust module chart update workflow ([0a86fd3](https://github.com/GersonRS/modern-gitops-stack/commit/0a86fd3c62613948c5dd1d777eb325f6df868cb7))
+* adjust module chart update workflow ([cb58704](https://github.com/GersonRS/modern-gitops-stack/commit/cb5870486219291b7b1be83d8158829f53e3ce87))
+* adjust module-release-please config ([cd99211](https://github.com/GersonRS/modern-gitops-stack/commit/cd99211c4a462d60590eb501ea62c90269f66f84))
+* adjust module-release-please config ([aad6fca](https://github.com/GersonRS/modern-gitops-stack/commit/aad6fca97b87150425d0839c2e7fe2bc0403137d))
+* adjust module-release-please config ([46e51d4](https://github.com/GersonRS/modern-gitops-stack/commit/46e51d4583a18bf2cc526cba2b79e4f3ef711d03))
+* adjust release-please config ([a9b898d](https://github.com/GersonRS/modern-gitops-stack/commit/a9b898dd6d8102e4749379ad3e8f82e1d8d1262d))
+* adjust release-please config ([f060760](https://github.com/GersonRS/modern-gitops-stack/commit/f06076058d75be6ec24265075e29d5d0a0415e6d))
+* adjust release-please config ([a37a2e6](https://github.com/GersonRS/modern-gitops-stack/commit/a37a2e6f0467aecdadb49ef30136ef255fb7b7f3))
+* adjust release-please config ([463a164](https://github.com/GersonRS/modern-gitops-stack/commit/463a1644e53c7a9ea12e3229868baabb008de097))
+* adjust release-please config ([64d148c](https://github.com/GersonRS/modern-gitops-stack/commit/64d148c3856efa994c0f221887b9415b830fd433))
+* adjust release-please config ([f541276](https://github.com/GersonRS/modern-gitops-stack/commit/f5412760df3388678071483597d0be01156438a4))
+* change assignees to reviewers ([7078889](https://github.com/GersonRS/modern-gitops-stack/commit/7078889ef55d5f809e1e26d81d86f9dbd400b03f))
+* fix modules release-please workflow and update example kind ([d480381](https://github.com/GersonRS/modern-gitops-stack/commit/d480381cdccdd10ca9c46477892218c5b1f4a6c8))
+* fix modules release-please workflow and update example kind ([bd00dd5](https://github.com/GersonRS/modern-gitops-stack/commit/bd00dd59e2e494f0231fb60e0bb992139c91ebad))
+* remove home website and submodule ([c2d17e2](https://github.com/GersonRS/modern-gitops-stack/commit/c2d17e28b8e430027f112d86170e537ee55926e8))
+* rename secret name in add to project workflow ([b01ff38](https://github.com/GersonRS/modern-gitops-stack/commit/b01ff3880ab17dc52ae6003886f630390307fc60))
+* rename secret name in pr issues project workflow ([b447b92](https://github.com/GersonRS/modern-gitops-stack/commit/b447b923ca227e6fb4203ff6f34fd4d36a56e828))
+* update google-github-actions/release-please-action from 3 to 4 and add file configs ([36bf7ca](https://github.com/GersonRS/modern-gitops-stack/commit/36bf7cae59decddb307df2d113eb4c035c2fa18f))
+* update module release-please ([a5825f8](https://github.com/GersonRS/modern-gitops-stack/commit/a5825f82a8d5e37873669c85bdf669fba9a17b02))
+* update public antora workflow ([5b8da4f](https://github.com/GersonRS/modern-gitops-stack/commit/5b8da4f1cec02718721c427c670e9158b17ae07d))
+
+
+### 🔥 Bug Fixes
+
+* adjust module-release-please config ([22455d0](https://github.com/GersonRS/modern-gitops-stack/commit/22455d0ffcec6014ec382ab95062b30157b0d22d))
+* fix config file and manifest file ref ([bd4c9ac](https://github.com/GersonRS/modern-gitops-stack/commit/bd4c9ac3c58adb01e1e4db399df67c67547266f8))
+* fix config file and manifest file ref ([88f4860](https://github.com/GersonRS/modern-gitops-stack/commit/88f4860f50fad472ab3522abde50887ba1884870))
+* fix config file and manifest file ref ([f4b4014](https://github.com/GersonRS/modern-gitops-stack/commit/f4b40146195a0c362251db6040e2399da3c0abf6))
+* fix module-release-please config ([0aa6145](https://github.com/GersonRS/modern-gitops-stack/commit/0aa614580c81d7f44c99ee42e007fbc793e44ec6))
+* fix module-release-please config ([3f04b1e](https://github.com/GersonRS/modern-gitops-stack/commit/3f04b1e2751d7b561e10e24d3ebdfb1441501eff))
+
+
+### 📚 Documentation
+
+* adjust documentation ([bfb70b2](https://github.com/GersonRS/modern-gitops-stack/commit/bfb70b26fa120098afe337e261cecb5223029dd8))
+* update README ([29eeab8](https://github.com/GersonRS/modern-gitops-stack/commit/29eeab81408bc40ca76453e3a6cba92fde89c818))
+
+
+### ⚙️ Chores
+
+* **main:** release 1.11.0 ([d5c61a2](https://github.com/GersonRS/modern-gitops-stack/commit/d5c61a24aedd0938bd98e17eb5bcd0e19d83324b))
+* **main:** release 1.12.0 ([2317874](https://github.com/GersonRS/modern-gitops-stack/commit/231787428b1d2f73a98ee1c04eaf9773d0eff278))
+* **main:** release 1.13.0 ([b1fa35d](https://github.com/GersonRS/modern-gitops-stack/commit/b1fa35d798c98281b8b380c92a2843fd6926849c))
+
+
+### ⌨️ Code Refactoring
+
+* remove variable.tf file ([0909af3](https://github.com/GersonRS/modern-gitops-stack/commit/0909af3171bc83015cd7d6495f9cdc631b43b54c))
+
+
+### 🛠️ Build System
+
+* Bump argocd_bootstrap::modern-gitops-stack-module-argocd ([21daaed](https://github.com/GersonRS/modern-gitops-stack/commit/21daaed47a413514143f42a9fdb5a06453aa3637))
+* Bump argocd_bootstrap::modern-gitops-stack-module-argocd ([ae7afdc](https://github.com/GersonRS/modern-gitops-stack/commit/ae7afdcc43685d7c4d22b5a411ded0096e4c0986))
+* Bump argocd::modern-gitops-stack-module-argocd in /examples/eks ([f9f0b92](https://github.com/GersonRS/modern-gitops-stack/commit/f9f0b9207ab786df6dee3aed06ee7e219f321439))
+* Bump argocd::modern-gitops-stack-module-argocd in /examples/kind ([bfd539f](https://github.com/GersonRS/modern-gitops-stack/commit/bfd539f4f5f125984154bda34b4105a550ca6513))
+* Bump eks::modern-gitops-stack-module-cluster-eks in /examples/eks ([075f260](https://github.com/GersonRS/modern-gitops-stack/commit/075f2602d8dc602ba724fcdf4466e25da9a0a211))
+* Bump google-github-actions/release-please-action from 3 to 4 ([66f81b8](https://github.com/GersonRS/modern-gitops-stack/commit/66f81b89447e165df622e23d27d977735bd885ed))
+* Bump loki-stack::modern-gitops-stack-module-loki-stack ([60387fa](https://github.com/GersonRS/modern-gitops-stack/commit/60387facdd68c912b5570239abf1b9dcc9124244))
+* Bump loki-stack::modern-gitops-stack-module-loki-stack ([1b4aa01](https://github.com/GersonRS/modern-gitops-stack/commit/1b4aa01001a15fd0003d86c082dc553dbdea7f91))
+* Bump metallb::modern-gitops-stack-module-metallb ([900fba1](https://github.com/GersonRS/modern-gitops-stack/commit/900fba1261338fb4d9e4c3a0f66cc6f9cac65515))
+* Bump metrics-server::modern-gitops-stack-module-metrics-server ([d79eaea](https://github.com/GersonRS/modern-gitops-stack/commit/d79eaeaa1ff193249ee68807ea424dbec9feb096))
+* Bump metrics-server::modern-gitops-stack-module-metrics-server ([d6426d4](https://github.com/GersonRS/modern-gitops-stack/commit/d6426d4d6be02d118efd8e14269fa5dabe2ddae6))
+* **deps:** Bump argocd_bootstrap::modern-gitops-stack-module-argocd ([fe9b5fc](https://github.com/GersonRS/modern-gitops-stack/commit/fe9b5fc88b3692808302e235b291619321ad7ed8))
+* **deps:** Bump argocd::modern-gitops-stack-module-argocd ([54a3db0](https://github.com/GersonRS/modern-gitops-stack/commit/54a3db061999691b33bf0614817fddb9e04d7481))
+* **deps:** Bump cert-manager::modern-gitops-stack-module-cert-manager ([aa1c9f6](https://github.com/GersonRS/modern-gitops-stack/commit/aa1c9f61170841b314dc837e3014bef623fdef32))
+
 ## [1.13.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.12.0...v1.13.0) (2024-04-30)
 
 
