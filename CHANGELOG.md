@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.14.0...v1.14.1) (2024-05-02)
+
+
+### 📚 Documentation
+
+* adjust documentation ([b98963a](https://github.com/GersonRS/modern-gitops-stack/commit/b98963ae0ffd07381e908913f158907583739bc4))
+
 ## [1.14.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.13.0...v1.14.0) (2024-05-02)
 
 
