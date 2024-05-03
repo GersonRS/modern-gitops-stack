@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.15.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.14.1...v1.15.0) (2024-05-03)
+
+
+### 🚀 New Features
+
+* change antora build process to official example ([7f19ee8](https://github.com/GersonRS/modern-gitops-stack/commit/7f19ee83117c737ca953603601aadf70faeb9ca1))
+
+
+### 📚 Documentation
+
+* update documentation ([d7399b4](https://github.com/GersonRS/modern-gitops-stack/commit/d7399b40fbba0f934a9d5b22670fe4768908ca15))
+
 ## [1.14.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.14.0...v1.14.1) (2024-05-02)
 
 
