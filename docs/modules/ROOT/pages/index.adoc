@@ -34,8 +34,6 @@ The main documentation contains information pertaining to the Modern Gitops Stac
 
 This documentation as well as some examples are stored on the {url-main-repo}[main repository on GitHub].
 
-Since this is an internal project of {url-c2c}[GersonRS], *some of the documentation pages may be more geared towards our employees and teams*.
-
 == Contributing
 
 On the contributing section of the sidebar you'll find some guidelines on how to contribute to the Modern Gitops Stack. You have some xref:ROOT:contributing/general_guidelines.adoc[general guidelines] on how to contribute to the project along with explanations on xref:ROOT:contributing/modules.adoc[how a module is structured], xref:ROOT:contributing/documentation.adoc[how to write documentation] and xref:ROOT:contributing/release.adoc[how the release process works].
