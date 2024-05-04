@@ -136,5 +136,5 @@ content:
         # - "!v1.0.0-alpha.*"
 ui:
   bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: https://github.com/GersonRS/modern-gitops-stack-antora-ui/releases/download/main-latest/ui-bundle.zip
     snapshot: true
