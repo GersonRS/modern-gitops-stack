@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.15.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.15.0...v1.15.1) (2024-05-04)
+
+
+### 🔥 Bug Fixes
+
+* fix module @antora/lunr-extension instalation ([636d0c6](https://github.com/GersonRS/modern-gitops-stack/commit/636d0c64a872acc40c6884ee256861d845fb40a5))
+
+
+### 📚 Documentation
+
+* update theme antora ui ([531e46c](https://github.com/GersonRS/modern-gitops-stack/commit/531e46c56b17f931beee334261bd992da2ae17b7))
+
 ## [1.15.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.14.1...v1.15.0) (2024-05-03)
 
 
