@@ -1,9 +1,9 @@
 = Modern GitOps Stack
 
-The Modern Gitops Stack provides a standard Kubernetes Platform, bringing together automated Provisioning as Code, Continuous Application Deployment, and readily-made configurations for the best Cloud Native tools in the industry.
+O Modern Gitops Stack fornece uma plataforma Kubernetes padrão, reunindo provisionamento automatizado como código, implantação contínua de aplicativos e configurações prontas para as melhores ferramentas nativas da nuvem do setor.
 
-== Documentation
+== Documentação
 
-The documentation is published here: https://gersonrs.github.io/modern-gitops-stack/
+A documentação está publicada aqui: https://gersonrs.github.io/modern-gitops-stack/
 
-There you will find everything you need to know to get started with the Modern Gitops Stack as well as how our contribution guidelines.
+Lá você encontrará tudo o que precisa saber para começar a usar o Modern Gitops Stack, bem como nossas diretrizes de contribuição.
