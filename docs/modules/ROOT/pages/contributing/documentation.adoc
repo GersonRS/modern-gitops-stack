@@ -1,32 +1,32 @@
-= Documentation
+= Documentação
 
-// These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
+// Esses URLs são usados no documento como estão para gerar novos URLs, portanto, não devem conter nenhuma barra final.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 :url-template-repo: https://github.com/GersonRS/modern-gitops-stack-module-template
 :url-docker-antora-repo: https://github.com/GersonRS/modern-gitops-stack-docker-antora
 :url-antora-ui-repo: https://github.com/GersonRS/modern-gitops-stack-antora-ui
 
-These documentation pages are written in https://asciidoc.org/[AsciiDoc] format and this website you are is generated using https://antora.org/[Antora].
+Estas páginas de documentação são escritas no formato https://asciidoc.org/[AsciiDoc] e este site é gerado usando https://antora.org/[Antora].
 
-== How does Antora work?
+== Como funciona o Antora?
 
-Antora builds this documentation website from the configurations in an https://docs.antora.org/antora/latest/playbook/[Antora Playbook], which is a YAML file that describes the documentation sources and the output of the build.
+Antora constrói este site de documentação a partir das configurações em um https://docs.antora.org/antora/latest/playbook/[Antora Playbook], que é um arquivo YAML que descreve as fontes de documentação e a saída da compilação.
 
-=== Content sources
+=== Fontes de conteúdo
 
-*Our playbook is stored on the root of the {url-main-repo}[main repository] of the Modern Gitops Stack project, in the {url-main-repo}/blob/main/antora-playbook.yml[`antora-playbook.yml` file].* It is this file that defines the content sources (in our case each module of the Modern Gitops Stack project) as well as the tags to take into account when building the documentation.
+*Nosso playbook está armazenado na raiz do {url-main-repo}[repositório principal] do projeto Modern Gitops Stack, no {url-main-repo}/blob/main/antora-playbook.yml[`antora -playbook.yml` file].* É este arquivo que define as fontes de conteúdo (no nosso caso cada módulo do projeto Modern Gitops Stack), bem como as tags a serem levadas em consideração na construção da documentação.
 
-In this file you'll see a source for the main documentation (that is, the more generic pages stored in the {url-main-repo}[main repository]) and sources for each module on a list under `content.sources`. Each source is defined by a `url` to its repo and a `start_path` that tells Antora where the respective documentation is stored.
+Neste arquivo você verá uma fonte para a documentação principal (ou seja, as páginas mais genéricas armazenadas no {url-main-repo}[repositório principal]) e fontes para cada módulo em uma lista em `content.sources` . Cada fonte é definida por um `url` para seu repositório e um `start_path` que informa ao Antora onde a respectiva documentação está armazenada.
 
-=== File structure
+=== Estrutura dos arquivos
 
-Each documentation source is expected to have a precise file structure, as documented in extensive detail in the https://docs.antora.org/antora/latest/standard-directories/[Antora documentation].
+Espera-se que cada fonte de documentação tenha uma estrutura de arquivo precisa, conforme documentado detalhadamente em https://docs.antora.org/antora/latest/standard-directories/[documentação da Antora].
 
-In short, the documentation source is expected to have a `antora.yml` file at its root, a `modules` folder that contains the documentation modules and a `nav.adoc`. The `nav.adoc` file is used to generate the navigation menu on the left of the documentation website and the documentation pages are used to generate the content of the website. You'll see this folder structure throughout our modules inside the `docs` folder.
+Resumindo, espera-se que a fonte de documentação tenha um arquivo `antora.yml` em sua raiz, uma pasta `modules` que contém os módulos de documentação e um `nav.adoc`. O arquivo `nav.adoc` é usado para gerar o menu de navegação à esquerda do site de documentação e as páginas de documentação são usadas para gerar o conteúdo do site. Você verá esta estrutura de pastas em todos os nossos módulos dentro da pasta `docs`.
 
-NOTE: More information about the `antora.yml` and the `nav.adoc` file can be found https://docs.antora.org/antora/latest/component-version-descriptor/[here] and https://docs.antora.org/antora/latest/navigation/files-and-lists/[here], respectively.
+NOTE: Mais informações sobre o arquivo `antora.yml` e `nav.adoc` podem ser encontradas https://docs.antora.org/antora/latest/component-version-descriptor/[aqui] e https:// docs.antora.org/antora/latest/navigation/files-and-lists/[aqui], respectivamente.
 
-In short, our documentation sources are expected to have at least the following structure:
+Resumindo, espera-se que nossas fontes de documentação tenham pelo menos a seguinte estrutura:
 
 ----
 docs
@@ -38,40 +38,40 @@ docs
             └── ...
 ----
 
-The `antora.yml` for each module is quite simple:
+O `antora.yml` para cada módulo é bastante simples:
 
 [source,yaml]
 ----
 ---
-name: "<MODULE_NAME>" # The name of the module that will appear in the URL of the generated documentation, use something short.
-title: "<MODULE_NAME>" # The title of the module that will appear in the navigation menu of the generated documentation.
-version: true # Tells Antora to use the version tag of the module as the version of the documentation.
-start_page: README.adoc # Tells Antora which page to use as the start page of this module's documentation.
+name: "<MODULE_NAME>" # O nome do módulo que aparecerá na URL da documentação gerada, use algo curto.
+title: "<MODULE_NAME>" # O título do módulo que aparecerá no menu de navegação da documentação gerada.
+version: true # Diz ao Antora para usar a tag de versão do módulo como a versão da documentação.
+start_page: README.adoc # Informa ao Antora qual página usar como página inicial da documentação deste módulo.
 nav:
-  - "modules/ROOT/nav.adoc" # Tells Antora which navigation file to use for this module's documentation.
+   - "modules/ROOT/nav.adoc" # Informa ao Antora qual arquivo de navegação usar para a documentação deste módulo.
 ----
 
-=== Versioning
+=== Versionamento
 
-*Each module's documentation page is versioned using its repository tags*, which are automatically created by the Release Please CI. On each source of our Antora playbook, we can define which version tags we include or exclude using the syntax explained https://docs.antora.org/antora/latest/playbook/content-tags/[here].
+*A página de documentação de cada módulo é versionada usando suas tags de repositório*, que são criadas automaticamente pelo Release Please CI. Em cada fonte do nosso playbook Antora, podemos definir quais tags de versão incluímos ou excluímos usando a sintaxe explicada https://docs.antora.org/antora/latest/playbook/content-tags/[aqui].
 
-In our case, note that we chose to use the tags instead of the branches for versioning the document pages. This is because we release each new version on a single branch but through multiple tags. More explanations about the different versioning methods are available https://docs.antora.org/antora/latest/content-source-versioning-methods/[here].
+No nosso caso, observe que optamos por usar as tags em vez das ramificações para versionar as páginas do documento. Isso ocorre porque lançamos cada nova versão em um único branch, mas por meio de várias tags. Mais explicações sobre os diferentes métodos de versionamento estão disponíveis https://docs.antora.org/antora/latest/content-source-versioning-methods/[aqui].
 
-=== Building the documentation
+=== Construindo a documentação
 
-Our documentation is built using a GitHub Action on the main repository, available {url-main-repo}/blob/main/.github/workflows/publish-antora-docs.yaml[here].
+Nossa documentação é construída usando uma ação GitHub no repositório principal, disponível em {url-main-repo}/blob/main/.github/workflows/publish-antora-docs.yaml[aqui].
 
-In the workflow, you will note that our documentation is generated using a {url-docker-antora-repo}[customized Docker image of Antora]. This is because we require two extensions on top of Antora, as explained in the {url-docker-antora-repo}#readme[`README.adoc`]. The release process of this image is also explained on said `README.adoc`.
+No fluxo de trabalho, você notará que nossa documentação é gerada usando um {url-docker-antora-repo}[imagem Docker personalizada do Antora]. Isso ocorre porque precisamos de duas extensões no Antora, conforme explicado em {url-docker-antora-repo}#readme[`README.adoc`]. O processo de liberação desta imagem também é explicado no referido `README.adoc`.
 
-The UI of the documentation pages comes from a fork of the default Antora UI, available {url-antora-ui-repo}[here]. This fork is used to add a custom syntax highlighter for Terraform code blocks. In order to use this UI, we simply create a `*.zip` bundle with a GitHub Actions workflow that is then pointed to by our {url-main-repo}/blob/main/antora-playbook.yml[`antora-playbook.yml` file].
+A UI das páginas de documentação vem de uma bifurcação da UI padrão do Antora, disponível {url-antora-ui-repo}[aqui]. Esta bifurcação é usada para adicionar um realce de sintaxe personalizado para blocos de código Terraform. Para usar esta UI, simplesmente criamos um pacote `*.zip` com um fluxo de trabalho GitHub Actions que é então apontado por nosso {url-main-repo}/blob/main/antora-playbook.yml[`antora- arquivo playbook.yml`].
 
-TIP: The `README.adoc` of the {url-docker-antora-repo}[customized Docker image] contains a command that you can use to build the documentation pages locally to preview you changes.
+TIP: O `README.adoc` do {url-docker-antora-repo}[imagem personalizada do Docker] contém um comando que você pode usar para construir as páginas de documentação localmente para visualizar suas alterações.
 
-After generating the documentation, it is then published to the {url-main-repo}/tree/gh-pages[`gh-pages`] branch of the main repository. This branch is then used by GitHub Pages to serve the documentation website.
+Depois de gerar a documentação, ela é publicada no branch {url-main-repo}/tree/gh-pages[`gh-pages`] do repositório principal. Este branch é então usado pelo GitHub Pages para servir o site de documentação.
 
-== Module documentation
+== Documentação do módulo
 
-The documentation in each module is quite particular in the sense that we have not put the documentation pages on the `docs` folder. Instead we have symbolic links to the `README.adoc` on the root of the repository and to the `README.adoc` inside each variant. Consequently, a typical module as a structure like this:
+A documentação de cada módulo é bastante particular no sentido de que não colocamos as páginas de documentação na pasta `docs`. Em vez disso, temos links simbólicos para `README.adoc` na raiz do repositório e para `README.adoc` dentro de cada variante. Consequentemente, um módulo típico tem uma estrutura como esta:
 
 ----
 modern-gitops-stack-module-template
@@ -90,9 +90,9 @@ modern-gitops-stack-module-template
                 └── README.adoc -> ../../../../README.adoc
 ----
 
-As you can see, besides the root `README.adoc`, each variant should have its own file. This is because of the way the automatic documentation is generated (Terraform Docs needs to put the generated documentation on separate files) and since each variant has its own specificities.
+Como você pode ver, além da raiz `README.adoc`, cada variante deve ter seu próprio arquivo. Isso se deve à forma como a documentação automática é gerada (o Terraform Docs precisa colocar a documentação gerada em arquivos separados) e porque cada variante possui suas especificidades.
 
-A simple module without variants has a simpler structure:
+Um módulo simples sem variantes possui uma estrutura mais simples:
 
 ----
 modern-gitops-stack-module-template
@@ -107,16 +107,16 @@ modern-gitops-stack-module-template
 
 === Content
 
-The {url-template-repo}[module template] contains a good example of what the `README.adoc` should include in its content.
+O {url-template-repo}[module template] contém um bom exemplo do que o `README.adoc` deve incluir em seu conteúdo.
 
-A good `README.adoc` should contain a small description of what the module does and, if it installs a chart, list the chart version along with a link to the official chart and documentation. Next, show some examples of the usage of the module, from the simplest to the most complex. Finally, the end of the module will contain the automatic documentation.
+Um bom `README.adoc` deve conter uma pequena descrição do que o módulo faz e, se instalar um gráfico, listar a versão do gráfico junto com um link para o gráfico oficial e documentação. A seguir, mostro alguns exemplos de utilização do módulo, do mais simples ao mais complexo. Por fim, o final do módulo conterá a documentação automática.
 
-A module that has variants will be a bit different. The main `README.adoc` should contain an introduction and chart version, but it is each variant's `README.adoc` that should have usage examples, as these are different from variant to variant.
+Um módulo que possui variantes será um pouco diferente. O `README.adoc` principal deve conter uma introdução e uma versão do gráfico, mas é o `README.adoc` de cada variante que deve ter exemplos de uso, pois estes são diferentes de variante para variante.
 
-TIP: Check the existing module's documentation pages for examples (the xref:thanos:ROOT:README.adoc[Thanos module] is a good example of a module with variants and the xref:keycloak:ROOT:README.adoc[Keycloak module] is an example without).
+TIP: Verifique as páginas de documentação do módulo existente para obter exemplos (o xref:thanos:ROOT:README.adoc[Thanos module] é um bom exemplo de um módulo com variantes e o xref:keycloak:ROOT:README.adoc[Keycloak module] é um exemplo sem).
 
-=== Terraform Docs documentation
+=== Documentação do Terraform Docs
 
-You'll notice that the last sections of the `README.adoc` that are automatically generated by Terraform Docs.
+Você notará que as últimas seções do `README.adoc` que são geradas automaticamente pelo Terraform Docs.
 
-Everything that is between the comments `BEGIN_TF_DOCS` / `END_TF_DOCS` and `BEGIN_TF_TABLES` / `END_TF_TABLES` is generated automatically by a GitHub workflow, that is available in the {url-main-repo}/blob/main/.github/workflows/modules-terraform-docs.yaml[main repository].
+Tudo o que está entre os comentários `BEGIN_TF_DOCS` / `END_TF_DOCS` e `BEGIN_TF_TABLES` / `END_TF_TABLES` é gerado automaticamente por um fluxo de trabalho GitHub, que está disponível em {url-main-repo}/blob/main/.github/workflows /modules-terraform-docs.yaml[repositório principal].

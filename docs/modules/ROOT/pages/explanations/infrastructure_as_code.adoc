@@ -1,9 +1,9 @@
-= Infrastructure as Code
+= Infraestrutura como Código
 
-Deploying Kubernetes clusters from scratch has become an easy task with IaaS interfaces. However, the proper management of all components that make up the cluster and its ecosystem can quickly become a nightmare if everything was done manually.
+Implantar clusters Kubernetes do zero tornou-se uma tarefa fácil com interfaces IaaS. Porém, o gerenciamento adequado de todos os componentes que compõem o cluster e seu ecossistema pode rapidamente se tornar um pesadelo se tudo for feito manualmente.
 
-The Infrastructure as Code approach has long proved its worth to deploy and maintain complex environments on the long run. In particular, in the context of cloud resources, it allows to make sure all resources are managed centrally and destroyed in their proper context. This is important to control the financial consequences of numerous deployments.
+A abordagem Infraestrutura como Código já provou há muito tempo seu valor para implantar e manter ambientes complexos no longo prazo. Em particular, no contexto dos recursos da nuvem, permite garantir que todos os recursos sejam geridos centralmente e destruídos no seu contexto adequado. Isto é importante para controlar as consequências financeiras de inúmeras implantações.
 
-The Modern Gitops Stack is strongly founded on the idea that every one of its components should be managed as code. *As such, the underlying Kubernetes cluster and its components are managed with Terraform and the cluster applications are deployed using Helm charts orchestrated by Argo CD.*
+O Modern Gitops Stack é fortemente baseado na ideia de que cada um de seus componentes deve ser gerenciado como código. *Como tal, o cluster Kubernetes subjacente e seus componentes são gerenciados com Terraform e os aplicativos de cluster são implantados usando gráficos Helm orquestrados pelo Argo CD.*
 
-This allows you to keep track of all changes made at any level of the stack, using xref:ROOT:explanations/continuous_deployment.adoc[Continuous Deployment] in a GitOps approach.
+Isso permite que você acompanhe todas as alterações feitas em qualquer nível da pilha, usando xref:ROOT:explanations/continuous_deployment.adoc[Continuous Deployment] em uma abordagem GitOps.

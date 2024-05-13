@@ -1,74 +1,74 @@
-= Purpose of the Modern Gitops Stack
+= Objetivo da pilha moderna de Gitops
 
-== Introduction
+== Introdução
 
-Since about 2006, the IT industry has been totally disrupted by the conjunction of several factors, including the virtualization of resources and the possibility of obtaining them on-demand. This new way of managing IT resources is widely known as "Cloud Computing". It has become a kind of standard, or at least an objective pursued also by people wishing to maintain on-premises infrastructures. The long-awaited dream of finally being able to consider IT as a simple commodity. Well that's what many believed.
+Desde cerca de 2006, a indústria de TI tem sido totalmente perturbada pela conjunção de vários fatores, incluindo a virtualização de recursos e a possibilidade de obtê-los sob demanda. Esta nova forma de gerenciar recursos de TI é amplamente conhecida como “Cloud Computing”. Tornou-se uma espécie de padrão, ou pelo menos um objetivo perseguido também por pessoas que desejam manter infraestruturas locais. O tão esperado sonho de finalmente poder considerar a TI como uma simples mercadoria. Bem, isso é o que muitos acreditavam.
 
-The concrete consequences of this revolution for IT companies like GersonRS have mainly been the incredible growth in the number of resources to be provisioned and managed. Extensive process automation engaged by our teams allowed us to cope with such a growth without lowering our quality standards, therefore remaining competitive.
+As consequências concretas desta revolução para empresas de TI como a GersonRS têm sido principalmente o incrível crescimento no número de recursos a serem provisionados e gerenciados. A ampla automação de processos realizada por nossas equipes nos permitiu fazer frente a esse crescimento sem diminuir nossos padrões de qualidade, permanecendo competitivos.
 
-We had no respite in this automation journey and made the best out of a thriving ecosystem of open source projects that address all the needs related to this paradigm shift.
+Não tivemos trégua nessa jornada de automação e tiramos o melhor proveito de um ecossistema próspero de projetos de código aberto que atendem a todas as necessidades relacionadas a essa mudança de paradigma.
 
-We have learned a lot during all these years and the Modern Gitops Stack is our answer to implement our best practices in a containerized world where Kubernetes is the _de facto_ standard for application platforms.
+Aprendemos muito durante todos esses anos e o Modern Gitops Stack é a nossa resposta para implementar nossas melhores práticas em um mundo conteinerizado onde o Kubernetes é o padrão _de fato_ para plataformas de aplicativos.
 
-== Cloud Agnostic Kubernetes Distribution
+== Distribuição Kubernetes Agnóstica em Nuvem
 
-Nowadays, the question is not so much whether there is software to solve a problem, but which one to use. Like a Linux distribution, we have container orchestrators (Kubernetes as a kernel) and many other projects revolving around it and offering different features. These features are sometimes oriented towards developers, operators or both (e.g. observability tools).
+Hoje em dia, a questão não é tanto se existe software para resolver um problema, mas qual usar. Como uma distribuição Linux, temos orquestradores de contêineres (Kubernetes como kernel) e muitos outros projetos que giram em torno dele e oferecem diferentes recursos. Esses recursos às vezes são orientados para desenvolvedores, operadores ou ambos (por exemplo, ferramentas de observabilidade).
 
-As for a Linux distribution, what we need is consistency, components that work together and that are easy to install and maintain. But unlike a Linux distribution which is by definition server-centric, the promise of containers and Kubernetes is portability. The possibility of moving from one cloud (or on-prem infrastructure) to another, of distributing the workloads on different platforms. At the end, this Modern Gitops Stack is simply a "Cloud Agnostic Kubernetes Distribution".
+Quanto a uma distribuição Linux, o que precisamos é de consistência, componentes que funcionem juntos e que sejam fáceis de instalar e manter. Mas, ao contrário de uma distribuição Linux que é, por definição, centrada no servidor, a promessa dos contêineres e do Kubernetes é a portabilidade. A possibilidade de passar de uma nuvem (ou infraestrutura on-premise) para outra, de distribuir as cargas de trabalho em diferentes plataformas. No final das contas, este Modern Gitops Stack é simplesmente uma "Distribuição Kubernetes Agnóstica em Nuvem".
 
-== Without the Modern Gitops Stack
+== Sem o Modern Gitops Stack
 
-image::explanations/without_modern-gitops-stack.png[Without the Modern Gitops Stack]
+image::explanations/without_modern-gitops-stack.png[Sem a pilha moderna de Gitops]
 
-The illustration above tries to show that while it is quite simple to manage one Kubernetes project, the complexity increases dramatically when you add more and more projects and you want to keep a certain homogeneity between them. The main problems observed are:
+A ilustração acima tenta mostrar que embora seja bastante simples gerenciar um projeto Kubernetes, a complexidade aumenta dramaticamente quando você adiciona mais e mais projetos e deseja manter uma certa homogeneidade entre eles. Os principais problemas observados são:
 
-* It does not scale
-* There is a lot of code duplications
-* There is no implementation reference
-* Improvements are not always backported to other projects
-* It is very hard to maintain
-* All projects will eventually diverge
-* Each project points to different versions of dependencies
+* Não escala
+* Há muitas duplicações de código
+* Não há referência de implementação
+* As melhorias nem sempre são transferidas para outros projetos
+* É muito difícil manter
+* Todos os projetos acabarão por divergir
+* Cada projeto aponta para diferentes versões de dependências
 
-This is not a new IT problem. Two decades ago, it was not really easy to manage thousands, or even hundreds of hosts in a homogeneous way. This problem has been successfully addressed by solutions like CFEngine, Puppet or more recently by Ansible. Today, we must adapt these principles for Kubernetes. There are many open source components out there, we just a smart way to interconnect them.
+Este não é um novo problema de TI. Há duas décadas, não era muito fácil gerir milhares, ou mesmo centenas de anfitriões de forma homogénea. Este problema foi resolvido com sucesso por soluções como CFEngine, Puppet ou mais recentemente pelo Ansible. Hoje, devemos adaptar esses princípios ao Kubernetes. Existem muitos componentes de código aberto por aí, apenas uma maneira inteligente de interconectá-los.
 
-== With the Modern Gitops Stack
+== Com a pilha moderna de Gitops
 
-image::explanations/with_modern-gitops-stack.png[With the Modern Gitops Stack]
+image::explanations/with_modern-gitops-stack-2.png[Com a pilha moderna de Gitops]
 
-By creating the Modern Gitops Stack (a kind of abstraction layer), it becomes possible to instantiate all the components through a logical and coherent process. The main advantages are:
+Ao criar o Modern Gitops Stack (uma espécie de camada de abstração), torna-se possível instanciar todos os componentes através de um processo lógico e coerente. As principais vantagens são:
 
-* It scales
-* Minimal code duplication
-* A reference implementation
-* Improvements can be easily backported to other projects
-* Dependency pining is done on the Modern Gitops Stack to ensure reproducibility
+* Ele escala
+* Duplicação mínima de código
+* Uma implementação de referência
+* As melhorias podem ser facilmente transferidas para outros projetos
+* O pining de dependência é feito no Modern Gitops Stack para garantir a reprodutibilidade
 
-== Summary
+== Resumo
 
-In the end, the Modern Gitops Stack provides:
+No final, o Modern Gitops Stack fornece:
 
-* A Playground to test/prototype new stuff related to k8s world
-* An opinionated abstraction layer to deploy and manage our Kubernetes deployments
-* Enforce Modern Gitops best practices:
-** Infrastructure as Code (IaC)
-** Configuration Management (CM)
+* Um Playground para testar/prototipar coisas novas relacionadas ao mundo K8s
+* Uma camada de abstração opinativa para implantar e gerenciar nossas implantações do Kubernetes
+* Aplicar as melhores práticas do Modern Gitops:
+** Infraestrutura como Código (IaC)
+** Gerenciamento de Configuração (CM)
 ** GitOps
-** Continuous Integration (CI)
-** Continuous Delivery (CD)
-** Documentation as Code
-* A consistent toolset
-** Observability (monitoring, logging, alerting, trending)
-** Continuous Delivery (change management + Git features)
-** Dynamic Web Routing
-** Dynamic Storage Provisioning
-** Dynamic Certificate Management
-** Authentication and Authorization
+** Integração Contínua (CI)
+** Entrega Contínua (CD)
+** Documentação como Código
+* Um conjunto de ferramentas consistente
+** Observabilidade (monitoramento, registro, alertas, tendências)
+** Entrega Contínua (gerenciamento de mudanças + recursos Git)
+** Roteamento Web Dinâmico
+** Provisionamento de armazenamento dinâmico
+** Gerenciamento Dinâmico de Certificados
+** Autenticação e autorização
 
-With the following main features:
+Com as seguintes características principais:
 
-* Supports multiple Kubernetes distributions (AWS EKS, Azure AKS and KinD for locals development and testing purposes);
-* Supports blue/green or prod/qa/int/dev patterns;
-* Infrastructure as Code with Terraform;
-* Automatic deployment of "core apps" (cert-manager, Prometheus, AlertManager, Grafana, Loki, Traefik. etc.) in GitOps spirit with Argo CD;
-* Central point of documentation deployed with Antora.
+* Suporta múltiplas distribuições Kubernetes (AWS EKS, Azure AKS e KinD para desenvolvimento local e fins de teste);
+* Suporta padrões azul/verde ou prod/qa/int/dev;
+* Infraestrutura como Código com Terraform;
+* Implantação automática de "core apps" (cert-manager, Prometheus, AlertManager, Grafana, Loki, Traefik. etc.) no espírito GitOps com Argo CD;
+* Ponto central de documentação implantado com Antora.

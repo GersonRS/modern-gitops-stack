@@ -1,76 +1,76 @@
-= General Contributing Guidelines
+= Diretrizes Gerais de Contribuição
 
-// These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
+// Esses URLs são usados no documento como estão para gerar novos URLs, portanto, não devem conter nenhuma barra final.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 
-This document describes the general guidelines for contributing to the Modern Gitops Stack.
+Este documento descreve as diretrizes gerais para contribuir com o Modern Gitops Stack.
 
-The Modern Gitops Stack is a collection of modules, each of them having its own release cycle, in order to ease the development and maintenance of each module.
+O Modern Gitops Stack é uma coleção de módulos, cada um deles com seu próprio ciclo de lançamento, para facilitar o desenvolvimento e manutenção de cada módulo.
 
-TIP: A private GitHub project owned by the https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack` team] is available https://github.com/orgs/GersonRS/projects/3/[here]. It is a useful way to follow the progress of the PRs and Issues of all the repositories. For more information on how it is implemented, check the xref:ROOT:contributing/project_board.adoc[Project Board] page.
+DICA: Um projeto GitHub privado de propriedade da equipe https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack`] está disponível https: //github.com/orgs/GersonRS/projects/3/[aqui]. É uma forma útil de acompanhar o andamento dos PRs e Issues de todos os repositórios. Para obter mais informações sobre como ele é implementado, verifique a página xref:ROOT:contributing/project_board.adoc[Project Board].
 
-== Development workflow
+== Fluxo de trabalho de desenvolvimento
 
-When a new feature or fix is required, the typical workflow is the following:
+Quando um novo recurso ou correção é necessário, o fluxo de trabalho típico é o seguinte:
 
-1. You should create a new branch from the `main` branch of the module you want to work on;
-2. Work and test on your branch;
-3. When you think you feature/fix is ready, create a Pull Request to merge your branch into the `main` branch.
+1. Você deve criar um novo branch a partir do branch `main` do módulo que deseja trabalhar;
+2. Trabalhe e teste em sua filial;
+3. Quando você achar que seu recurso/correção está pronto, crie um Pull Request para mesclar seu branch no branch `main`.
 
-The following subsections describe some of the best practices to follow when working on the Modern Gitops Stack.
+As subseções a seguir descrevem algumas das melhores práticas a serem seguidas ao trabalhar no Modern Gitops Stack.
 
-=== Branches
+=== Ramos
 
-* Keep the `main` branch clean, and only merge Pull Requests into it.
-* Create a new branch for each Pull Request. *The name of the branch should be the Jira ticket number, followed by a short description of the work done in the branch*, for example `ISMODERN-GITOPS-185-v1-docs`. This will allow the Jira ticket to be automatically linked to the branch and the Pull Request.
+* Mantenha o branch `main` limpo e apenas mescle Pull Requests nele.
+* Crie um novo branch para cada Pull Request. *O nome da filial deve ser o número do ticket do Jira, seguido de uma breve descrição do trabalho realizado na filial*, por exemplo `ISMODERN-GITOPS-185-v1-docs`. Isso permitirá que o ticket Jira seja automaticamente vinculado à filial e ao Pull Request.
 
-=== Commit messages
+=== Confirmar mensagens
 
-* When committing to your branch, you should follow the https://www.conventionalcommits.org/[Conventional Commits] specification. *This will also allow the automated changelog generation to work properly.*
+* Ao se comprometer com sua filial, você deve seguir a especificação https://www.conventionalcommits.org/[Conventional Commits]. *Isso também permitirá que a geração automatizada do changelog funcione corretamente.*
 
-* We use the following commit types:
+* Usamos os seguintes tipos de commit:
 
-** *`feat`* - a new feature
-** *`fix`* - a bug fix
-** *`docs`* - documentation only changes
-** *`style`* - changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-** *`refactor`* - a code change that neither fixes a bug nor adds a feature
-** *`ci`* - changes to the CI configuration files and scripts
-** *`chore`* - other changes that don't really modify the code (could be a merge commit, for example, `chore: rebase 'main' into 'ISMODERN-GITOPS-184-v1-docs' before merging PR`)
+** *`feat`* - um novo recurso
+** *`fix`* - uma correção de bug
+** *`docs`* - apenas a documentação muda
+** *`style`* - alterações que não afetam o significado do código (espaço em branco, formatação, falta de ponto e vírgula, etc)
+** *`refactor`* - uma alteração de código que não corrige um bug nem adiciona um recurso
+** *`ci`* - alterações nos arquivos e scripts de configuração do CI
+** *`chore`* - outras alterações que realmente não modificam o código (pode ser um commit de mesclagem, por exemplo, `chore: rebase 'main' into 'ISMODERN-GITOPS-184-v1-docs' antes de mesclar PR `)
 
-* *If your commit adds a breaking change, you should add a `!` after the commit type*, for example `feat!: add a breaking change`.
+* *Se o seu commit adiciona uma alteração significativa, você deve adicionar um `!` após o tipo de commit*, por exemplo `feat!: add uma alteração significativa`.
 +
-IMPORTANT: Adding a breaking change will automatically trigger a major version bump when the module is released.
+IMPORTANT: Adicionar uma alteração significativa acionará automaticamente um aumento na versão principal quando o módulo for lançado.
 
-* The commit scope is optional but recommended:
-** At least, for the modules that have variants, *it is recommended to include the variant on the scope (`eks`, `aks` or `kind`)*. You could simply use the variant or even use the variant as a prefix (for example, `docs(eks-variables): add descriptions`).
-** If modifying something on the chart, *you should add `chart` as the scope*.
-** Otherwise, recommended scopes could just be the type of code changed, for example, `variables`, `outputs`, `main`, etc. 
+* O escopo do commit é opcional, mas recomendado:
+** Pelo menos, para os módulos que possuem variantes, *recomenda-se incluir a variante no escopo (`eks`, `aks` ou `kind`)*. Você pode simplesmente usar a variante ou até mesmo usar a variante como prefixo (por exemplo, `docs(eks-variables): add descriptions`).
+** Se estiver modificando algo no gráfico, *você deve adicionar `chart` como escopo*.
+** Caso contrário, os escopos recomendados poderiam ser apenas o tipo de código alterado, por exemplo, `variáveis`, `saídas`, `principal`, etc.
 
-* The conventional commits specification also allows you to add a body and a footer to the commit message. You could use the body to add more details and context to the commit, but keep it short. The footer could be used to add a reference to a Jira ticket, for example.
+* A especificação de commits convencional também permite adicionar um corpo e um rodapé à mensagem de commit. Você poderia usar o corpo para adicionar mais detalhes e contexto ao commit, mas seja curto. O rodapé pode ser usado para adicionar uma referência a um ticket do Jira, por exemplo.
 
-=== Pull Requests
+=== Solicitações pull
 
-* You can create Pull Requests from your branch any time during the development, but if it isn't ready to be merged, you should mark it as a _Draft Pull Request_. This will prevent it from being merged by mistake while still allowing you to get feedback from other developers as well as the automated checks and documentation generation done by GitHub Actions.
+* Você pode criar Pull Requests a partir de seu branch a qualquer momento durante o desenvolvimento, mas se ele não estiver pronto para ser mesclado, você deve marcá-lo como _Draft Pull Request_. Isso evitará que ele seja mesclado por engano, ao mesmo tempo que permitirá que você obtenha feedback de outros desenvolvedores, bem como verificações automatizadas e geração de documentação feitas pelo GitHub Actions.
 
-* For a PR to be merged, you need to have at least a review from another developer and all the automated checks must pass. Comments on the PR are welcome and allow us to keep track of the discussions that happen on the PR.
+* Para que um PR seja mesclado, você precisa ter pelo menos uma revisão de outro desenvolvedor e todas as verificações automatizadas devem ser aprovadas. Comentários sobre o PR são bem-vindos e nos permitem acompanhar as discussões que acontecem no PR.
 
-* *We prefer using the `Rebase and Merge` option when merging a PR.* This allows the automatic release process to add multiple entries on the changelog, one for each commit on the PR. *This is particularly useful when the PR contains multiple changes*, for example, when adding a new feature and fixing a bug at the same time.
+* *Preferimos usar a opção `Rebase and Merge` ao mesclar um PR.* Isso permite que o processo de liberação automática adicione múltiplas entradas no changelog, uma para cada commit no PR. *Isto é particularmente útil quando o PR contém múltiplas alterações*, por exemplo, ao adicionar um novo recurso e corrigir um bug ao mesmo tempo.
 +
-IMPORTANT: The downside of this approach is that the commit history needs to be looked after. For example, having multiple commits that say `docs: fix typo` is not appropriate. *In this case, you should manually squash the commits into a single commit with a proper commit message.* The same goes for multiple commits that where iteratively used to fix a bug or develop a feature. *In this case, you should squash the commits into a single commit, one for each fix or feature.*
+IMPORTANT: A desvantagem desta abordagem é que o histórico de commits precisa ser cuidado. Por exemplo, ter vários commits que dizem `docs: fix typo` não é apropriado. *Neste caso, você deve compactar manualmente os commits em um único commit com uma mensagem de commit adequada.* O mesmo vale para vários commits que foram usados iterativamente para corrigir um bug ou desenvolver um recurso. *Nesse caso, você deve compactar os commits em um único commit, um para cada correção ou recurso.*
 
-// TODO Maybe add an example of a good commit history and a bad commit history.
+// TODO Talvez adicione um exemplo de um histórico de commits bom e um histórico de commits ruim.
 
-* Take care to properly title and describe your Pull Request. *The title should be descriptive enough and follow the conventional commits specification*. As for the description, follow the template that is provided.
+* Tome cuidado para intitular e descrever adequadamente sua solicitação pull. *O título deve ser suficientemente descritivo e seguir as especificações convencionais dos commits*. Quanto à descrição, siga o modelo fornecido.
 +
-IMPORTANT: If you do a `Squash and Merge` on a Pull Request, *the commit message will be the title of the Pull Request*. So, make sure the title is descriptive enough and follows the conventional commits specification, otherwise we will have to manually fix the commit message in the `main` branch, which is inconvenient, to say the least.
+IMPORTANT: Se você fizer um `Squash and Merge` em um Pull Request, *a mensagem de commit será o título do Pull Request*. Portanto, certifique-se de que o título seja descritivo o suficiente e siga a especificação convencional dos commits, caso contrário teremos que corrigir manualmente a mensagem do commit no branch `main`, o que é no mínimo inconveniente.
 
-=== Issues
+=== Problemas
 
-* If you find some issue on the Modern Gitops Stack, you could create an issue on the repository in which you find the issue. An issue could be a bug or a feature request/proposition.
+* Se você encontrar algum problema no Modern Gitops Stack, poderá criar um problema no repositório em que o encontrou. Um problema pode ser um bug ou uma solicitação/proposta de recurso.
 
-* If it is a bug, take care to properly describe the issue and provide as much context as possible.
+* Se for um bug, descreva o problema adequadamente e forneça o máximo de contexto possível.
 
-* If it is a feature request/proposition, describe why the feature is needed and what problem it will solve for you.
+* Se for uma solicitação/proposta de recurso, descreva por que o recurso é necessário e qual problema ele resolverá para você.
 
-* *The issues are more useful for external users of the Modern Gitops Stack*, if possible we can discuss the issue on our weekly meeting and then decide if it is something that we want to implement or not. In that case, we can then create a Jira ticket, to keep track of the work that needs to be done.
+* *As questões são mais úteis para usuários externos do Modern Gitops Stack*, se possível podemos discutir o assunto em nossa reunião semanal e então decidir se é algo que queremos implementar ou não. Nesse caso, podemos então criar um ticket Jira, para acompanhar o trabalho que precisa ser feito.

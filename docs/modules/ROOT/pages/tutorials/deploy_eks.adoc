@@ -1,130 +1,130 @@
-= Deployment on Amazon EKS
+= Implantação no Amazon EKS
 
-An example of a local deployment on Amazon EKS is provided https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/eks[here]. Clone this repository and modify the files at your convenience.
-In the repository, as in a standard https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[Terraform module], you will find the following files:
+Um exemplo de implantação local no Amazon EKS é fornecido https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/eks[aqui]. Clone este repositório e modifique os arquivos conforme sua conveniência.
+No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[módulo Terraform] padrão, você encontrará os seguintes arquivos:
 
-* *`terraform.tf`* - declaration of the Terraform providers used in this project;
-* *`locals.tf`* - local variables used by the Modern Gitops Stack modules;
-* *`main.tf`* - definition of all the deployed modules;
-* *`s3_loki.tf`* - creation of the IAM policy, assumable role and bucket used by Loki;
-* *`s3_thanos.tf`* - creation of the IAM policy, assumable role and bucket used by Thanos;
-* *`csi_drivers.tf`* - creation of the required resources as well as the Modern Gitops Stack modules needed for the CSI drivers of the cluster;
-* *`outputs.tf`* - the output variables of the Modern Gitops Stack;
+* *`terraform.tf`* - declaração dos provedores Terraform utilizados neste projeto;
+* *`locals.tf`* - variáveis locais usadas pelos módulos Modern Gitops Stack;
+* *`main.tf`* - definição de todos os módulos implantados;
+* *`s3_loki.tf`* - criação da política IAM, função assumida e bucket utilizado pelo Loki;
+* *`s3_thanos.tf`* - criação da política IAM, função assumida e bucket usado pelo Thanos;
+* *`csi_drivers.tf`* - criação dos recursos necessários, bem como dos módulos Modern Gitops Stack necessários para os drivers CSI do cluster;
+* *`outputs.tf`* - as variáveis de saída do Modern Gitops Stack;
 
-== Requirements
+== Requisitos
 
-On your local machine, you need to have the following tools installed:
+Na sua máquina local, você precisa ter as seguintes ferramentas instaladas:
 
-* https://www.terraform.io/[Terraform] to provision the whole stack;
-* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] or https://github.com/derailed/k9s[`k9s`]to interact with your cluster;
-* https://aws.amazon.com/cli/[AWS CLI] to interact with your AWS account;
-* https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[`gopass` and `summon`] to easily pass the IAM secrets as environment variables when running `terraform` commands;
+* https://www.terraform.io/[Terraform] para provisionar toda a pilha;
+* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`]para interagir com seu cluster;
+* https://aws.amazon.com/cli/[AWS CLI] para interagir com sua conta AWS;
+* https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[`gopass` e `summon`] para passar facilmente os segredos do IAM como variáveis de ambiente ao executar `terraform `comandos;
 
-Other than that, you will require the following:
+Fora isso, você precisará do seguinte:
 
-* an AWS account;
-* an AWS IAM key with at least the ... ... ...
-// TODO Check with Christian for other requirements and specificities
-* a Route 53 zone;
+* uma conta AWS;
+* uma chave AWS IAM com pelo menos ... ... ...
+// TODO Verifique com Christian outros requisitos e especificidades
+* uma zona da Rota 53;
 
-== Specificities and explanations
+== Especificidades e explicações
 
-=== `secrets.yml`
+=== `segredos.yml`
 
-TIP: Check https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[this blog post] for more information on how to configure `gopass` and `summon` to work together.
+DICA: Verifique https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[esta postagem do blog] para obter mais informações sobre como configurar `gopass` e `summon` para trabalhar juntos.
 
-For simplicity and ease of use, as well as security, the example uses `gopass` and `summon` to pass the IAM credentials to the Terraform commands. The `secrets.yml` file contains the path to the the secret values on the `gopass` password store. On execution, the `summon` command will then read the `secrets.yml` file and pass the credentials as environment variables to the Terraform commands.
+Para simplicidade e facilidade de uso, bem como segurança, o exemplo usa `gopass` e `summon` para passar as credenciais do IAM para os comandos do Terraform. O arquivo `secrets.yml` contém o caminho para os valores secretos no armazenamento de senhas `gopass`. Na execução, o comando `summon` lerá o arquivo `secrets.yml` e passará as credenciais como variáveis de ambiente para os comandos do Terraform.
 
-The commands presented on this tutorial all use the `summon` command.
+Todos os comandos apresentados neste tutorial usam o comando `summon`.
 
-IMPORTANT: The environment variable `AWS_DEFAULT_REGION` defines where all the AWS resources created by Terraform will reside, including the EKS cluster.
+IMPORTANTE: A variável de ambiente `AWS_DEFAULT_REGION` define onde residirão todos os recursos AWS criados pelo Terraform, incluindo o cluster EKS.
 
-=== Remote Terraform state
+=== Estado remoto do Terraform
 
-If you do not want to configure the remote Terraform state backend, you can simply remove the `backend` block from the `terraform.tf` file.
+Se não quiser configurar o back-end de estado remoto do Terraform, você pode simplesmente remover o bloco `backend` do arquivo `terraform.tf`.
 
-NOTE: More information about the remote backends is available on the https://developer.hashicorp.com/terraform/language/settings/backends/configuration[official documentation].
+NOTA: Mais informações sobre backends remotos estão disponíveis em https://developer.hashicorp.com/terraform/language/settings/backends/configuration[documentação oficial].
 
-=== OIDC authentication
+=== Autenticação OIDC
 
-IMPORTANT: The Modern Gitops Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the Modern Gitops Stack applications.
+IMPORTANTE: Os módulos Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos Modern Gitops Stack.
 
-In this example, we use the https://aws.amazon.com/eks/[Amazon EKS] OIDC provider. We provide a xref:oidc-aws-cognito:ROOT:README.adoc[module] that takes in a Cognito pool ID and its domain to provide you with the required configuration to deploy the Modern Gitops Stack applications.
+Neste exemplo, usamos o provedor OIDC https://aws.amazon.com/eks/[Amazon EKS]. Fornecemos um xref:oidc-aws-cognito:ROOT:README.adoc[module] que usa um ID de pool Cognito e seu domínio para fornecer a configuração necessária para implantar os aplicativos Modern Gitops Stack.
 
-This assumes that you have created a Cognito pool yourself, however you can use our module to also create the pool and populate it with users, as shown in the example.
+Isso pressupõe que você mesmo criou um pool do Cognito, mas você pode usar nosso módulo para também criar o pool e preenchê-lo com usuários, conforme mostrado no exemplo.
 
-NOTE: Check the xref:oidc-aws-cognito:ROOT:README.adoc[AWS Cognito OIDC] usage documentation for more information on how to use it.
+NOTA: Verifique a documentação de uso xref:oidc-aws-cognito:ROOT:README.adoc[AWS Cognito OIDC] para obter mais informações sobre como usá-lo.
 
-The `user_map` variable of that module allows you to create OIDC users used to authenticate to the Modern Gitops Stack applications. You should receive an e-mail from AWS with a temporary password to login for the first time.
+A variável `user_map` desse módulo permite criar usuários OIDC usados ​​para autenticar nos aplicativos Modern Gitops Stack. Você deverá receber um e-mail da AWS com uma senha temporária para fazer login pela primeira vez.
 
-=== Let's Encrypt SSL certificates
+=== Vamos criptografar certificados SSL
 
-By default, to avoid rate-limiting your domain by Let's Encrypt, the example uses the `letsencrypt-staging` configuration of the cert-manager module to generate certificates. This uses the Let's Encrypt staging environment which has an invalid CA certificate.
+Por padrão, para evitar a limitação de taxa do seu domínio pelo Let's Encrypt, o exemplo usa a configuração `letsencrypt-staging` do módulo cert-manager para gerar certificados. Isso usa o ambiente de teste Let's Encrypt que possui um certificado CA inválido.
 
-If you feel ready to test with production certificates, you can simply edit the `locals.tf` file and change the `cluster_issuer` variable to `letsencrypt-prod`.
+Se você se sentir pronto para testar com certificados de produção, você pode simplesmente editar o arquivo `locals.tf` e alterar a variável `cluster_issuer` para `letsencrypt-prod`.
 
-== Deployment
+== Implantação
 
-1. Clone the repository and `cd` into the `examples/eks` folder;
+1. Clone o repositório e `cd` na pasta `examples/eks`;
 
-2. Adapt the `secrets.yml` file to point to the correct path on your `gopass` password store;
+2. Adapte o arquivo `secrets.yml` para apontar para o caminho correto em seu armazenamento de senhas `gopass`;
 
-3. Check out the modules you want to deploy in the `main.tf` file, and comment out the others;
+3. Confira os módulos que deseja implantar no arquivo `main.tf` e comente os demais;
 +
-TIP: You can also add your own Terraform modules in this file or any other file on the root folder. A good place to start to write your own module is to clone the https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] repository and adapt it to your needs.
+DICA: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa.
 
-4. On the `oidc` module, adapt the `user_map` variable as you wish (please check the <<oidc-authentication,OIDC section>> for more information).
+4. No módulo `oidc`, adapte a variável `user_map` como desejar (por favor verifique a seção <<oidc-authentication,OIDC>> para mais informações).
 
-5. From the source of the example deployment, initialize the Terraform modules and providers:
+5. Na origem da implantação de exemplo, inicialize os módulos e provedores do Terraform:
 +
 [source,bash]
 ----
 summon terraform init
 ----
 
-6. Configure the variables in `locals.tf` to your preference:
+6. Configure as variáveis em `locals.tf` de acordo com sua preferência:
 +
-IMPORTANT: The `cluster_name` and `vpc_cidr` must be unique for each Modern Gitops Stack deployment in a single AWS account and the `base_domain` must match a Route 53 zone in that same account.
+IMPORTANTE: `cluster_name` e `vpc_cidr` devem ser exclusivos para cada implantação do Modern Gitops Stack em uma única conta da AWS e o `base_domain` deve corresponder a uma zona do Route 53 nessa mesma conta.
 +
-TIP: The xref:eks:ROOT:README.adoc[cluster module documentation] can help you know what to put in the `kubernetes_version`, for example.
+DICA: O xref:eks:ROOT:README.adoc[documentação do módulo cluster] pode ajudá-lo a saber o que colocar em `kubernetes_version`, por exemplo.
 +
 [source,terraform]
 ----
 include::examples$deploy_examples/eks/locals.tf[]
 ----
 
-7. Finally, run `terraform apply` and accept the proposed changes to create the Kubernetes nodes on Amazon EKS and populate them with our services;
+7. Por fim, execute `terraform apply` e aceite as alterações propostas para criar os nós Kubernetes no Amazon EKS e preenchê-los com nossos serviços;
 +
 [source,bash]
 ----
 summon terraform apply
 ----
 
-8. After the first deployment (please note the troubleshooting step related with Argo CD), you can go to the `locals.tf` and enable the _ServiceMonitor_ boolean to activate the Prometheus exporters that will send metrics to Prometheus;
+8. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao CD Argo), você pode ir para `locals.tf` e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
 +
-IMPORTANT: This flag needs to be set as `false` for the first bootstrap of the cluster, otherwise the applications will fail to deploy while the Custom Resource Definitions of the kube-prometheus-stack are not yet created.
+IMPORTANTE: Este sinalizador precisa ser definido como `false` para a primeira inicialização do cluster, caso contrário, os aplicativos falharão na implantação enquanto as definições de recursos personalizados do kube-prometheus-stack ainda não foram criadas.
 +
-NOTE: You can either set the flag as `true` in the `locals.tf` file or you can simply delete the line on the modules' declarations, since this variable is set as `true` by default on each module.
+NOTA: Você pode definir o sinalizador como `true` no arquivo `locals.tf` ou pode simplesmente deletar a linha nas declarações dos módulos, já que esta variável é definida como `true` por padrão em cada módulo.
 +
-TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the Modern Gitops Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
+DICA: Anote o local chamado `app_autosync`. Se você definir a condição do operador ternário como `false` você desabilitará a sincronização automática para todos os módulos Modern Gitops Stack. Isso permite que você escolha quando sincronizar manualmente o módulo na interface do Argo CD e é útil para fins de solução de problemas.
 
-== Access the cluster and the Modern Gitops Stack applications
+== Acesse o cluster e os aplicativos Modern Gitops Stack
 
-To access your cluster, you need to use the AWS CLI to recover a Kubeconfig you can use:
+Para acessar seu cluster, você precisa usar a AWS CLI para recuperar um Kubeconfig que você pode usar:
 
 [source,bash]
 ----
 summon aws eks update-kubeconfig --name YOUR_CLUSTER_NAME --region YOUR_CLUSTER_ZONE --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-Then you can use the `kubectl` or `k9s` command to interact with the cluster:
+Então você pode usar o comando `kubectl` ou `k9s` para interagir com o cluster:
 
 [source,bash]
 ----
 k9s --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-As for the Modern Gitops Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
+Quanto aos aplicativos Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `terraform apply` tiver feito seu trabalho:
 
 [source,shell]
 ----
@@ -134,40 +134,40 @@ modern_gitops_admins = <sensitive>
 ingress_domain = "your.domain.here"
 ----
 
-Or you can use `kubectl` to get all the ingresses and their respective URLs:
+Ou você pode usar `kubectl` para obter todas as entradas e seus respectivos URLs:
 
 [source,bash]
 ----
 kubectl get ingress --all-namespaces --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-The output `modern_gitops_admins` list all users and respective e-mails that were configured using the OIDC module:
+A saída `modern_gitops_admins` lista todos os usuários e respectivos e-mails que foram configurados usando o módulo OIDC:
 
 [source,bash]
 ----
 summon terraform output modern_gitops_admins
 ----
 
-Those users should have received an e-mail with a temporary password in order to login to the Modern Gitops Stack applications for the first time.
+Esses usuários deveriam ter recebido um e-mail com uma senha temporária para fazer login nos aplicativos Modern Gitops Stack pela primeira vez.
 
-== Stop the cluster
+== Pare o cluster
 
-To definitively stop the cluster on a single command (that is the reason we delete some resources from the state file), you can use the following command:
+Para parar definitivamente o cluster com um único comando (é por isso que excluímos alguns recursos do arquivo de estado), você pode usar o seguinte comando:
 
 [source,bash]
 ----
 summon terraform state rm $(summon terraform state list | grep "argocd_application\|argocd_project\|kubernetes_\|helm_") && summon terraform destroy
 ----
 
-== Conclusion
+== Conclusão
 
-That's it, you now have a fully functional Kubernetes cluster in Amazon EKS with the Modern Gitops Stack applications deployed on it. For more information, keep on reading the https://modern-gitops-stack.io/docs/latest/[documentation]. **You can explore the possibilities of each module and get the link to the source code on their respective documentation pages.**
+É isso, agora você tem um cluster Kubernetes totalmente funcional no Amazon EKS com os aplicativos Modern Gitops Stack implantados nele. Para mais informações, continue lendo https://modern-gitops-stack.io/docs/latest/[documentation]. **Você pode explorar as possibilidades de cada módulo e obter o link para o código-fonte nas respectivas páginas de documentação.**
 
-== Troubleshooting
+== Solução de problemas
 
-=== `connection_error` during the first deployment
+=== `connection_error` durante a primeira implantação
 
-In some cases, you could encounter an error like these the first deployment:
+Em alguns casos, você pode encontrar um erro como estes na primeira implantação:
 
 [source,shell]
 ----
@@ -182,12 +182,12 @@ In some cases, you could encounter an error like these the first deployment:
 ╵
 ----
 
-The error is due to the way we provision Argo CD on the final steps of the deployment. We use the bootstrap Argo CD to deploy the final Argo CD module, which causes a redeployment of Argo CD and consequently a momentary loss of connection between the Argo CD Terraform provider and the Argo CD server.
+O erro se deve à forma como provisionamos o Argo CD nas etapas finais da implantação. Usamos o bootstrap Argo CD para implantar o módulo Argo CD final, o que causa uma reimplantação do Argo CD e consequentemente uma perda momentânea de conexão entre o provedor Argo CD Terraform e o servidor Argo CD.
 
-*You can simply re-run the command `summon terraform apply` to finalize the bootstrap of the cluster every time you encounter this error.*
+*Você pode simplesmente executar novamente o comando `summon terraform apply` para finalizar a inicialização do cluster sempre que encontrar esse erro.*
 
-=== Argo CD interface reload loop when clicking on login
+=== Loop de recarga da interface Argo CD ao clicar no login
 
-If you encounter a loop when clicking on the login button on the Argo CD interface, you can try to delete the Argo CD server pod and let it be recreated.
+Se você encontrar um loop ao clicar no botão de login na interface do Argo CD, você pode tentar excluir o pod do servidor Argo CD e deixá-lo ser recriado.
 
-TIP: For more informations about the Argo CD module, please refer to the xref:argocd:ROOT:README.adoc[respective documentation page].
+TIP: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
