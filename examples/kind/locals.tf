@@ -1,3 +1,7 @@
+resource "random_password" "airflow_fernetKey" {
+  length  = 32
+  special = false
+}
 locals {
   kubernetes_version     = "v1.27.3"
   cluster_name           = "kind"
