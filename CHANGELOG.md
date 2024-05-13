@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.15.1...v1.16.0) (2024-05-13)
+
+
+### 🚀 New Features
+
+* adjust publish antora page workflow, add postgresql and airflow modules ([6753656](https://github.com/GersonRS/modern-gitops-stack/commit/675365687437704dd6ecbc867c6c4ec6b81ab053))
+
+
+### 📚 Documentation
+
+* tranlate documentation to pt-br ([1c0112b](https://github.com/GersonRS/modern-gitops-stack/commit/1c0112be3275d189ad8bec95d373f8f1913ec0d5))
+
 ## [1.15.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.15.0...v1.15.1) (2024-05-04)
 
 
