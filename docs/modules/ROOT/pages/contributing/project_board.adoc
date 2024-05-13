@@ -1,41 +1,41 @@
-= GitHub Project Board
+= Conselho do Projeto GitHub
 
-// These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
+// Esses URLs são usados no documento como estão para gerar novos URLs, portanto, não devem conter nenhuma barra final.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 
-In order to ease up the burden of the project maintainers, there is an internal Project Board on GitHub used to track the progress of the PRs and issues. The board is available only to the https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack` team] and is available https://github.com/orgs/GersonRS/projects/3/[here]. All the repositories of the Modern Gitops Stack are also connected to this project upon creation.
+Para aliviar o fardo dos mantenedores do projeto, existe um Conselho de Projeto interno no GitHub usado para acompanhar o progresso dos PRs e problemas. O quadro está disponível apenas para a equipe https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack`] e está disponível https:/ /github.com/orgs/GersonRS/projects/3/[aqui]. Todos os repositórios do Modern Gitops Stack também estão conectados a este projeto no momento da criação.
 
-The way this is accomplished is somewhat convoluted, hence the reason for this documentation page.
+A maneira como isso é feito é um tanto complicada, daí o motivo desta página de documentação.
 
-== Modern Gitops Stack Project
+== Projeto Gitops Stack Moderno
 
-The project itself has been manually created on the https://github.com/orgs/GersonRS/[`@GersonRS`] organization, using the GitHub web interface (https://docs.github.com/en/issues/planning-and-tracking-with-projects/creating-projects/creating-a-project[documentation]). *The project is private (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-visibility-of-your-projects[documentation]) and only accessible to the `@GersonRS/is-modern-gitops-stack` team* (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-access-to-your-projects[documentation]).
+O projeto em si foi criado manualmente na organização https://github.com/orgs/GersonRS/[`@GersonRS`], usando a interface web do GitHub (https://docs.github.com/en/issues/planning -e-rastreamento-com-projetos/criando-projetos/criando-um-projeto[documentação]). *O projeto é privado (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-visibility-of-your-projects[documentação]) e acessível apenas à equipe `@GersonRS/is-modern-gitops-stack`* (https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing -acesso aos seus projetos[documentação]).
 
-All the boards and tables have also been created manually. In the settings of the project, there are automation workflows (https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations[documentation]) that move the Issues and PRs around depending on their status (open, closed, merged, etc.).
+Todos os quadros e tabelas também foram criados manualmente. Nas configurações do projeto, existem fluxos de trabalho de automação (https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in- automações[documentação]) que movimentam os problemas e PRs dependendo de seu status (aberto, fechado, mesclado, etc.).
 
-== Adding a PR/Issue to the Project
+== Adicionando um PR/problema ao projeto
 
-Since there are some limits on how many repositories we can add to a project using the default workflows, we were forced to automate this process using a GitHub workflow, as suggested on the https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions#example-workflow-authenticating-with-a-github-app[official documentation].
+Como existem alguns limites de quantos repositórios podemos adicionar a um projeto usando os fluxos de trabalho padrão, fomos forçados a automatizar esse processo usando um fluxo de trabalho do GitHub, conforme sugerido em https://docs.github.com/en/issues/ planejando e rastreando com projetos/automatizando seu projeto/automatizando projetos usando ações#exemplo-fluxo de trabalho-autenticando-com-um-github-app[documentação oficial].
 
-Although the official documentation explicitly calls the API with `gh` commands, we opted to use an official GitHub Action (https://github.com/actions/add-to-project[`actions/add-to-project`]) to accomplish this. Moreover, in order to allow the workflows to modify the project we needed to create a GitHub app that the sole purpose is providing the necessary permissions to the workflows.
+Embora a documentação oficial chame explicitamente a API com comandos `gh`, optamos por usar uma ação oficial do GitHub (https://github.com/actions/add-to-project[`actions/add-to-project`]) para conseguir isso. Além disso, para permitir que os fluxos de trabalho modificassem o projeto, precisávamos criar um aplicativo GitHub cujo único propósito é fornecer as permissões necessárias aos fluxos de trabalho.
 
-=== Modern Gitops Stack Project App
+=== Aplicativo de projeto moderno Gitops Stack
 
-The app is called `Modern Gitops Stack Project` and is available https://github.com/apps/modern-gitops-stack-project[here].
+O aplicativo é chamado de `Modern Gitops Stack Project` e está disponível https://github.com/apps/modern-gitops-stack-project [aqui].
 
-This app was created on our organization by an administrator and is configured with a limited scope of permissions: it can only access the projects of the organization where it is installed as well as the PRs and Issues of repositories on which it is installed (https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/creating-a-github-app[official documentation] on how to create a GitHub app).
+Este aplicativo foi criado em nossa organização por um administrador e está configurado com um escopo limitado de permissões: ele só pode acessar os projetos da organização onde está instalado, bem como os PRs e Issues dos repositórios nos quais está instalado (https: //docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/creating-a-github-app[documentação oficial] sobre como criar um aplicativo GitHub).
 
-After the app creation, an administrator was needed to install it on the organization and all the repositories of the Modern Gitops Stack. This was done by going to the app page and clicking on the `Install` button then configuring the proper settings after installation (all this is done on the organization settings, check the https://docs.github.com/en/apps/maintaining-github-apps/installing-github-apps#installing-your-private-github-app-on-your-repository[official documentation]).
+Após a criação do aplicativo, foi necessário um administrador para instalá-lo na organização e em todos os repositórios do Modern Gitops Stack. Isso foi feito acessando a página do aplicativo e clicando no botão `Instalar` e definindo as configurações adequadas após a instalação (tudo isso é feito nas configurações da organização, verifique https://docs.github.com/en/apps/ mantendo-github-apps/instalando-github-apps#instalando-seu-privado-github-app-on-seu-repositório[documentação oficial]).
 
-IMPORTANT: The reason to not install the app on all the repositories by default was to further limit the scope of the app, although *this adds the burden of installing it on each repository manually every time a new repository of the Modern Gitops Stack is created*.
+IMPORTANTE: O motivo para não instalar o aplicativo em todos os repositórios por padrão foi limitar ainda mais o escopo do aplicativo, embora *isso adicione o fardo de instalá-lo manualmente em cada repositório sempre que um novo repositório do Modern Gitops Stack for criado *.
 
-=== Centralized workflow
+=== Fluxo de trabalho centralizado
 
-The workflow definition is available in the {url-main-repo}/blob/main/.github/workflows/pr-issues-project.yaml[main repository].
+A definição do fluxo de trabalho está disponível em {url-main-repo}/blob/main/.github/workflows/pr-issues-project.yaml[repositório principal].
 
 [source,yaml]
 ----
 include::examples$github_workflows/pr-issues-project.yaml[]
 ----
 
-NOTE: It is the step _Generate authentication token from GitHub App_ that uses the GitHub app created above in order to generate a token with the proper permissions that is then passed to the _Add PR or issue to Modern Gitops Stack project board_ step.
+NOTA: É a etapa _Gerar token de autenticação do aplicativo GitHub_ que usa o aplicativo GitHub criado acima para gerar um token com as permissões adequadas que é então passado para a etapa _Adicionar PR ou emitir ao quadro do projeto Modern Gitops Stack_.

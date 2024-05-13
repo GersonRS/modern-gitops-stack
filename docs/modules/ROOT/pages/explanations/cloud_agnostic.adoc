@@ -1,12 +1,11 @@
-= Cloud Agnostic
+= Agnóstico em nuvem
 
-Nobody likes to be locked-in. That's why the Modern Gitops Stack provides a cloud abstraction so you can deploy it on top of multiple Cloud Platforms, in an agnostic way.
+Ninguém gosta de ficar preso. É por isso que o Modern Gitops Stack fornece uma abstração de nuvem para que você possa implantá-lo em várias plataformas de nuvem, de forma agnóstica.
 
-Currently, the Modern Gitops Stack supports the following Cloud Platforms, besides a local test deployment with KinD:
+Atualmente, o Modern Gitops Stack suporta as seguintes plataformas em nuvem, além de uma implantação de teste local com KinD:
 
 - Amazon Web Services (AWS)
-- Azure
-- Exoscale
-- Scaleway
+- Microsoft Cloud (Azure)
+- Google Cloud Platform (GCP)
 
-Good "agnostic" automation practices offer many benefits.
+Boas práticas de automação “agnósticas” oferecem muitos benefícios.

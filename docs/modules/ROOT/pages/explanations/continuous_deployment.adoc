@@ -1,17 +1,17 @@
-= Continuous Delivery & GitOps
+= Entrega Contínua e GitOps
 
-Change management is at the heart of Infrastructure Operations. The rise of Continuous Integration and Continuous Delivery practices in the Infrastructure world has been so important that the expression Modern Gitops Engineer is often used to describe CI/CD Engineering.
+O gerenciamento de mudanças está no centro das operações de infraestrutura. A ascensão das práticas de Integração Contínua e Entrega Contínua no mundo da infraestrutura tem sido tão importante que a expressão Modern Gitops Engineer é frequentemente usada para descrever a Engenharia de CI/CD.
 
-The Modern Gitops Stack takes advantage of the CI/CD approach to make changes seamless, both at the provisioning and deployment levels.
+O Modern Gitops Stack aproveita a abordagem CI/CD para tornar as mudanças perfeitas, tanto nos níveis de provisionamento quanto de implantação.
 
-== Terraform
+== Terraforma
 
-The underlying infrastructure which sets up the Kubernetes cluster underneath the Modern Gitops Stack is managed with Terraform.
+A infraestrutura subjacente que configura o cluster Kubernetes sob o Modern Gitops Stack é gerenciada com Terraform.
 
-It is strongly encouraged to use a CI/CD approach to manage this Terraform deployment, and the Modern Gitops Stack provides a set of scripts to integrate pair-reviewed change process on your CI/CD platform of choice.
+É altamente recomendável usar uma abordagem CI/CD para gerenciar esta implantação do Terraform, e o Modern Gitops Stack fornece um conjunto de scripts para integrar o processo de mudança revisado em pares na plataforma CI/CD de sua escolha.
 
-== Argo CD
+== ArgoCD
 
-On top of Kubernetes, the Modern Gitops Stack sets up Argo CD to continuously deploy all applications to the cluster.
+Além do Kubernetes, o Modern Gitops Stack configura o ArgoCD para implantar continuamente todos os aplicativos no cluster.
 
-Argo CD monitors Kubernetes resources and can keep them synchronized with their target state.
+O ArgoCD monitora os recursos do Kubernetes e pode mantê-los sincronizados com seu estado de destino.

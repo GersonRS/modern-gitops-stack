@@ -1,3 +1,0 @@
-= Deploying Apps
-
-_Work In Progress_

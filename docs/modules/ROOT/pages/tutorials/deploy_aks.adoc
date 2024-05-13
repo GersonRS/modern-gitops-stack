@@ -1,79 +1,79 @@
-= Deployment On Azure AKS
+= Implantação no Azure AKS
 
-An example of a local deployment of a Kubernetes cluster on Azure AKS is provided https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks[here]. Clone this repository and modify the files at your convenience.
-In the repository, as in a standard https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[Terraform module], you will find the following files:
+Um exemplo de implantação local de um cluster Kubernetes no Azure AKS é fornecido https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks[aqui]. Clone este repositório e modifique os arquivos conforme sua conveniência.
+No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[módulo Terraform] padrão, você encontrará os seguintes arquivos:
 
-* *`terraform.tf`* - declaration of the Terraform providers used in this project;
-* *`locals.tf`* - local variables used by the Modern Gitops Stack modules;
-* *`main.tf`* - definition of all the deployed modules;
-* *`storage.tf`* - creation of the Storage Account and Storage Container used by Loki and Thanos;
-* *`dns.tf`* - creation of the wildcard record for the ingresses of the Modern Gitops Stack components;
-* *`oidc.tf`* - addition of the redirect URIs to the Azure AD Enterprise Application in order to use it to authenticate to the Modern Gitops Stack components providing a web interface;
-* *`outputs.tf`* - the output variables of the Modern Gitops Stack;
+* *`terraform.tf`* - declaração dos provedores Terraform utilizados neste projeto;
+* *`locals.tf`* - variáveis locais usadas pelos módulos Modern Gitops Stack;
+* *`main.tf`* - definição de todos os módulos implantados;
+* *`storage.tf`* - criação da Conta de Armazenamento e Container de Armazenamento usado por Loki e Thanos;
+* *`dns.tf`* - criação do registro curinga para as entradas dos componentes Modern Gitops Stack;
+* *`oidc.tf`* - adição dos URIs de redirecionamento ao Aplicativo Empresarial Azure AD para usá-lo para autenticação nos componentes Modern Gitops Stack fornecendo uma interface web;
+* *`outputs.tf`* - as variáveis de saída do Modern Gitops Stack;
 
-IMPORTANT: The *`requirements`* folder is not part of the Terraform code you execute directly. Its importance is explained on the next section.
+IMPORTANTE: A pasta *`requirements`* não faz parte do código do Terraform que você executa diretamente. Sua importância é explicada na próxima seção.
 
-== Requirements
+== Requisitos
 
-On your local machine, you need to have the following tools installed:
+Na sua máquina local, você precisa ter as seguintes ferramentas instaladas:
 
-* https://learn.microsoft.com/en-us/cli/azure/[Azure CLI] to login to your Azure account and interact with your AKS cluster;
-* https://www.terraform.io/[Terraform] to provision the whole stack;
-* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] or https://github.com/derailed/k9s[`k9s`]to interact with your cluster;
+* https://learn.microsoft.com/en-us/cli/azure/[Azure CLI] para fazer login em sua conta do Azure e interagir com seu cluster AKS;
+* https://www.terraform.io/[Terraform] para provisionar toda a pilha;
+* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`]para interagir com seu cluster;
 
-Other than that, you will require the following:
+Fora isso, você precisará do seguinte:
 
-* An active Azure account with an active subscription;
-* An Enterprise Application on Entra ID to use as an identity provider for the Modern Gitops Stack components;
-* The Azure subscription needs to have a Key Vault to store the secrets used to pass the credentials of said application to the Modern Gitops Stack components;
-* Your Azure account needs to be part of a user group that has been assigned the role `Owner`, `Key Vault Reader` and `Key Vault Secrets User` on the subscription;
-* Your Azure account also needs to be an `Owner` of the Enterprise Application in order to add the proper redirect URIs.
-
-[TIP]
-====
-In this repository, you will find an example of Terraform code that could provision the required resources above. You can find this code https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements[here].
-
-*Note that this code needs to be executed by an administrator with the proper rights on the on the subscription but also on Entra ID.*
-====
+* Uma conta Azure ativa com uma assinatura ativa;
+* Um aplicativo corporativo no Entra ID para usar como provedor de identidade para os componentes Modern Gitops Stack;
+* A assinatura do Azure precisa ter um Key Vault para armazenar os segredos usados para passar as credenciais da referida aplicação para os componentes Modern Gitops Stack;
+* Sua conta do Azure precisa fazer parte de um grupo de usuários ao qual foi atribuída a função `Proprietário`, `Leitor do Key Vault` e `Usuário do Key Vault Secrets` na assinatura;
+* Sua conta do Azure também precisa ser um `Proprietário` do Aplicativo Empresarial para adicionar os URIs de redirecionamento adequados.
 
 [TIP]
 ====
-An alternative to creating the required resources separately is that your user has an `Application Developer` role assignment on the Entra ID instance the subscription is linked to.
+Neste repositório, você encontrará um exemplo de código Terraform que pode provisionar os recursos necessários acima. Você pode encontrar este código https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements[aqui].
 
-This will allow you to create the Enterprise Application and add the redirect URIs directly with your code, without the need of an administrator.
-
-Check the https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements/application.tf[`application.tf`] from the tip above and adapt the Terraform resources in order to create the application yourself.
-
-Or simply create the Enterprise Application and add the redirect URIs manually.
+*Observe que este código precisa ser executado por um administrador com os direitos apropriados na assinatura, mas também no Entra ID.*
 ====
 
-== Specificities and explanations
+[TIP]
+====
+Uma alternativa para criar os recursos necessários separadamente é que seu usuário tenha uma atribuição de função `Desenvolvedor de aplicativos` na instância do Entra ID à qual a assinatura está vinculada.
 
-=== Remote Terraform state
+Isso permitirá que você crie o Aplicativo Corporativo e adicione os URIs de redirecionamento diretamente com seu código, sem a necessidade de um administrador.
 
-If you do not want to configure the remote Terraform state backend, you can simply remove the `backend` block from the `terraform.tf` file.
+Verifique https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements/application.tf[`application.tf`] da dica acima e adapte os recursos do Terraform para crie você mesmo o aplicativo.
 
-NOTE: More information about the remote backends is available on the https://developer.hashicorp.com/terraform/language/settings/backends/configuration[official documentation].
+Ou simplesmente crie o aplicativo corporativo e adicione os URIs de redirecionamento manualmente.
+====
 
-=== OIDC authentication
+== Especificidades e explicações
 
-IMPORTANT: The Modern Gitops Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the Modern Gitops Stack applications.
+=== Estado remoto do Terraform
 
-In this example, we use an https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/[Enterprise Applicaion] as OIDC provider.
+Se não quiser configurar o back-end de estado remoto do Terraform, você pode simplesmente remover o bloco `backend` do arquivo `terraform.tf`.
 
-You can use any other OIDC provider by adapting the `oidc` block in the `locals.tf` file with the proper values. 
+NOTA: Mais informações sobre backends remotos estão disponíveis em https://developer.hashicorp.com/terraform/language/settings/backends/configuration[documentação oficial].
 
-=== Let's Encrypt SSL certificates
+=== Autenticação OIDC
 
-By default, to avoid rate-limiting your domain by Let's Encrypt, the example uses the `letsencrypt-staging` configuration of the cert-manager module to generate certificates. This uses the Let's Encrypt staging environment which has an invalid CA certificate.
+IMPORTANT: Os módulos Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos Modern Gitops Stack.
 
-If you feel ready to test with production certificates, you can simply edit the `locals.tf` file and change the `cluster_issuer` variable to `letsencrypt-prod`.
+Neste exemplo, usamos https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/[Enterprise Applicaion] como provedor OIDC.
 
-== Deployment
+Você pode usar qualquer outro provedor OIDC adaptando o bloco `oidc` no arquivo `locals.tf` com os valores apropriados.
 
-1. Clone the repository and `cd` into the `examples/aks` folder;
+=== Vamos criptografar certificados SSL
 
-2. Login to your Azure account with the Azure CLI, set the proper subscription and verify you are connected it:
+Por padrão, para evitar a limitação de taxa do seu domínio pelo Let's Encrypt, o exemplo usa a configuração `letsencrypt-staging` do módulo cert-manager para gerar certificados. Isso usa o ambiente de teste Let's Encrypt que possui um certificado CA inválido.
+
+Se você se sentir pronto para testar com certificados de produção, você pode simplesmente editar o arquivo `locals.tf` e alterar a variável `cluster_issuer` para `letsencrypt-prod`.
+
+== Implantação
+
+1. Clone o repositório e `cd` na pasta `examples/aks`;
+
+2. Faça login em sua conta do Azure com a CLI do Azure, defina a assinatura adequada e verifique se você está conectado:
 +
 [source,bash]
 ----
@@ -82,43 +82,43 @@ az account set --subscription <subscription_id>
 az account show
 ----
 
-3. Check out the modules you want to deploy in the `main.tf` file, and comment out the others;
+3. Confira os módulos que deseja implantar no arquivo `main.tf` e comente os demais;
 +
-TIP: You can also add your own Terraform modules in this file or any other file on the root folder. A good place to start to write your own module is to clone the https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] repository and adapt it to your needs.
+DICA: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa.
 
-4. From the source of the example deployment, initialize the Terraform modules and providers:
+4. Na origem da implantação de exemplo, inicialize os módulos e provedores do Terraform:
 +
 [source,bash]
 ----
 terraform init
 ----
 
-5. Configure the variables in `locals.tf` to your preference:
-TIP: The xref:eks:ROOT:README.adoc[cluster module documentation] can help you know what to put in the `kubernetes_version`, for example.
+5. Configure as variáveis em `locals.tf` de acordo com sua preferência:
+DICA: O xref:eks:ROOT:README.adoc[documentação do módulo cluster] pode ajudá-lo a saber o que colocar em `kubernetes_version`, por exemplo.
 +
 [source,terraform]
 ----
 include::examples$deploy_examples/aks/locals.tf[]
 ----
 
-6. Finally, run `terraform apply` and accept the proposed changes to create the Kubernetes nodes on Azure AKS and populate them with our services;
+6. Por fim, execute `terraform apply` e aceite as alterações propostas para criar os nós Kubernetes no Azure AKS e preenchê-los com nossos serviços;
 +
 [source,bash]
 ----
 terraform apply
 ----
 
-7. After the first deployment (please note the troubleshooting step related with Argo CD), you can go to the `locals.tf` and enable the _ServiceMonitor_ boolean to activate the Prometheus exporters that will send metrics to Prometheus;
+7. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao CD Argo), você pode ir para `locals.tf` e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
 +
-IMPORTANT: This flag needs to be set as `false` for the first bootstrap of the cluster, otherwise the applications will fail to deploy while the Custom Resource Definitions of the kube-prometheus-stack are not yet created.
+IMPORTANTE: Este sinalizador precisa ser definido como `false` para a primeira inicialização do cluster, caso contrário, os aplicativos falharão na implantação enquanto as definições de recursos personalizados do kube-prometheus-stack ainda não foram criadas.
 +
-NOTE: You can either set the flag as `true` in the `locals.tf` file or you can simply delete the line on the modules' declarations, since this variable is set as `true` by default on each module.
+NOTA: Você pode definir o sinalizador como `true` no arquivo `locals.tf` ou pode simplesmente deletar a linha nas declarações dos módulos, já que esta variável é definida como `true` por padrão em cada módulo.
 +
-TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the Modern Gitops Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
+DICA: Anote o local chamado `app_autosync`. Se você definir a condição do operador ternário como `false` você desabilitará a sincronização automática para todos os módulos Modern Gitops Stack. Isso permite que você escolha quando sincronizar manualmente o módulo na interface do Argo CD e é útil para fins de solução de problemas.
 
-== Access the cluster and the Modern Gitops Stack applications
+== Acesse o cluster e os aplicativos Modern Gitops Stack
 
-To access your cluster, you need to use the Azure CLI to recover a Kubeconfig you can use:
+Para acessar seu cluster, você precisa usar a CLI do Azure para recuperar um Kubeconfig que você pode usar:
 
 [source,bash]
 ----

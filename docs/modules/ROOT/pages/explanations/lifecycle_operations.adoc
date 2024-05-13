@@ -1,57 +1,57 @@
-= Lifecycle Operations
+= Operações do ciclo de vida
 
-It is not easy to describe the different phases of an IT project, especially when you also want to talk about operational aspects. One way to do this, which seems to be used more and more, is to talk about "days".
+Não é fácil descrever as diferentes fases de um projeto de TI, principalmente quando se quer falar também de aspectos operacionais. Uma forma de fazer isso, que parece ser cada vez mais utilizada, é falar em “dias”.
 
-== What "days" are all about
+== Do que se tratam os "dias"
 
-To make it very simple, here are some explanations:
+Para simplificar, aqui vão algumas explicações:
 
-- *Day 0* is related to software development, questions about requirements, architecture and design.
-- *Day 1* is more about deploying software developed in the *Day 0* and starting to build and configure the hosting infrastructure.
-- *Day 2* is the time to go live and hope that the efforts made in *Day 1* are adequate. This is a crucial moment, when it is imperative to have metrics, monitoring, tools and best practices to do efficient troubleshooting.
+- *Dia 0* está relacionado ao desenvolvimento de software, questões sobre requisitos, arquitetura e design.
+- O *Dia 1* é mais sobre a implantação do software desenvolvido no *Dia 0* e o início da construção e configuração da infraestrutura de hospedagem.
+- *Dia 2* é o momento de entrar no ar e esperar que os esforços feitos no *Dia 1* sejam adequados. Este é um momento crucial, quando é imperativo ter métricas, monitoramento, ferramentas e melhores práticas para solucionar problemas de maneira eficiente.
 
-For now, the Modern Gitops Stack is very focused on the points relating to days 1 and 2, in particular, the aspects related to the provisioning of a Kubernetes platform as well as the mandatory services related to its operational management.
+Para já, o Modern Gitops Stack está muito focado nos pontos relativos aos dias 1 e 2, em particular, nos aspectos relacionados com o provisionamento de uma plataforma Kubernetes bem como nos serviços obrigatórios relacionados com a sua gestão operacional.
 
-We must also take into account that using the Cloud and Cloud Native development practices make it much easier to handle changes related to software life cycle. The boundaries and responsibilities between these different phases have become more blurred, less strict.
+Devemos também levar em consideração que o uso das práticas de desenvolvimento Cloud e Cloud Native torna muito mais fácil lidar com as mudanças relacionadas ao ciclo de vida do software. Os limites e responsabilidades entre estas diferentes fases tornaram-se mais confusos e menos rígidos.
 
-== Developers need love
+== Desenvolvedores precisam de amor
 
-In the near future, we really want to invest significantly in aspects related to day 0 by improving the Modern Gitops Stack in that direction, especially the software factory and development best practices related to Kubernetes integration.
+Num futuro próximo, queremos realmente investir significativamente em aspectos relacionados ao dia 0, melhorando o Modern Gitops Stack nessa direção, especialmente a fábrica de software e as melhores práticas de desenvolvimento relacionadas à integração do Kubernetes.
 
-This is closely linked to the generalization of the https://12factor.net/[Twelve-Factor App] methodology, as well as breaking silos and embracing Modern Gitops principles. These good practices should be applied as early as possible in projects. It is absolutely necessary.
+Isso está intimamente ligado à generalização da metodologia https://12factor.net/[Twelve-Factor App], bem como à quebra de silos e à adoção dos princípios do Modern Gitops. Estas boas práticas devem ser aplicadas o mais cedo possível nos projetos. É absolutamente necessário.
 
-== Sysadmins want control
+== Administradores de sistemas querem controle
 
-The Modern Gitops Stack provisions our Kubernetes clusters with a set of administration and monitoring tools out-of-the-box. Below you will find some of the services' dashboards.
+O Modern Gitops Stack fornece aos nossos clusters Kubernetes um conjunto de ferramentas de administração e monitoramento prontas para uso. Abaixo você encontrará alguns dos dashboards dos serviços.
 
-=== Identity Management Dashboard (Keycloak)
+=== Painel de gerenciamento de identidade (Keycloak)
 
-Whether you use AKS, EKS, or your local workstation using KinD, the Modern Gitops Stack provisions the cluster with an Identity and Access Manager.
+Quer você use AKS, EKS ou sua estação de trabalho local usando KinD, o Modern Gitops Stack provisiona o cluster com um Identity and Access Manager.
 
-For the case of a local KinD cluster, the Modern Gitops Stack spawns a Keycloak instance.
+Para o caso de um cluster KinD local, o Modern Gitops Stack gera uma instância Keycloak.
 
-==== User management with Keycloak
-image::explanations/keycloak_users.png[Dashboard for user management]
+==== Gerenciamento de usuários com Keycloak
+image::explanations/keycloak_users.png[Painel para gerenciamento de usuários]
 
-==== Client management with Keycloak
-image::explanations/keycloak_clients.png[Dashboard for client management]
+==== Gerenciamento de clientes com Keycloak
+image::explanations/keycloak_clients.png[Painel para gerenciamento de clientes]
 
-=== Continuous Deployment Dashboard (ArgoCD)
+=== Painel de implantação contínua (ArgoCD)
 
-In a xref:ROOT:explanations/continuous_deployment.adoc[GitOps approach], the Modern Gitops Stack uses Argo CD to continuously deploy all applications.
+Em uma xref:ROOT:explanations/continuous_deployment.adoc[abordagem Gitops], o Modern Gitops Stack usa o Argo CD para implantar continuamente todos os aplicativos.
 
-==== Identity and Access Manager (Keycloak) deployment with Argo CD
+==== Implantação do Identity and Access Manager (Keycloak) com Argo CD
 
-image::explanations/argo_keycloak.png[Keycloak deployment with Argo CD]
+image::explanations/argo_keycloak.png[Implantação do Keycloak com Argo CD]
 
-=== Monitoring Dashboards (Grafana)
+=== Painéis de monitoramento (Grafana)
 
-The Modern Gitops Stack ships with some pre-configured dashboards.
+O Modern Gitops Stack vem com alguns painéis pré-configurados.
 
-==== Grafana dashboard for monitoring the K8s cluster
+==== Painel Grafana para monitorar o cluster K8s
 
-image::explanations/grafana_k8s_cluster.png[Dashboard for monitoring the K8s cluster]
+image::explanations/grafana_k8s_cluster.png[Dashboard para monitoramento do cluster K8s]
 
-==== Grafana dashboard for monitoring cert-manager
+==== Painel Grafana para monitoramento do gerenciador de certificados
 
-image::explanations/grafana_cert_manager.png[Dashboard for monitoring cert-manager]
+image::explanations/grafana_cert_manager.png[Painel para monitoramento do cert-manager]

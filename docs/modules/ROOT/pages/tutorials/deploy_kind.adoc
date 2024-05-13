@@ -1,101 +1,101 @@
-= Deployment on KinD
+= Implantação no KinD
 
-An example of a local deployment on KinD is provided https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/kind[here]. Clone this repository and modify the files at your convenience.
-In the repository, as in a standard https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[Terraform module], you will find the following files:
+Um exemplo de implantação local no KinD é fornecido https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/kind[aqui]. Clone este repositório e modifique os arquivos conforme sua conveniência.
+No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[módulo Terraform] padrão, você encontrará os seguintes arquivos:
 
-* *`terraform.tf`* - declaration of the Terraform providers used in this project as well as their configuration;
-* *`locals.tf`* - local variables used by the Modern Gitops Stack modules;
-* *`main.tf`* - definition of all the deployed modules;
-* *`s3_bucket.tf`* - configuration of the MinIO bucket, used as backend for Loki and Thanos;
-* *`outputs.tf`* - the output variables of the Modern Gitops Stack, e.g. credentials and the `.kubeconfig` file to use with `kubectl`;
+* *`terraform.tf`* - declaração dos provedores Terraform utilizados neste projeto bem como sua configuração;
+* *`locals.tf`* - variáveis locais usadas pelos módulos Modern Gitops Stack;
+* *`main.tf`* - definição de todos os módulos implantados;
+* *`s3_bucket.tf`* - configuração do bucket MinIO, usado como backend para Loki e Thanos;
+* *`outputs.tf`* - as variáveis de saída do Modern Gitops Stack, por exemplo. credenciais e o arquivo `.kubeconfig` para usar com `kubectl`;
 
-== Requirements
+== Requisitos
 
-On your local machine, you need to have the following tools installed:
+Na sua máquina local, você precisa ter as seguintes ferramentas instaladas:
 
-* https://docs.docker.com/get-docker[Docker] to deploy the KinD containers;
-* https://www.terraform.io/[Terraform] to provision the whole stack;
-* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] or https://github.com/derailed/k9s[`k9s`]to interact with your cluster;
+* https://docs.docker.com/get-docker[Docker] para implantar os contêineres KinD;
+* https://www.terraform.io/[Terraform] para provisionar toda a pilha;
+* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`]para interagir com seu cluster;
 
-== Specificities and explanations
+== Especificidades e explicações
 
-=== Local Load Balancer
+=== Balanceador de carga local
 
-https://metallb.universe.tf/[MetalLB] is used as a load balancer for the cluster. This allows us to have a multi-node KinD cluster without the need to use Traefik in a single replica with a NodePort configuration.
+https://metallb.universe.tf/[MetalLB] é usado como balanceador de carga para o cluster. Isso nos permite ter um cluster KinD de vários nós sem a necessidade de usar o Traefik em uma única réplica com uma configuração NodePort.
 
-=== OIDC authentication
+=== Autenticação OIDC
 
-IMPORTANT: The Modern Gitops Stack modules are developed with OIDC in mind. In production, you should have an identity provider that supports OIDC and use it to authenticate to the Modern Gitops Stack applications.
+IMPORTANTE: Os módulos Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos Modern Gitops Stack.
 
-TIP: You can have a local containing the OIDC configuration properly structured for the Modern Gitops Stack applications and simply use an external OIDC provider instead of using Keycloak. Check https://github.com/GersonRS/modern-gitops-stack-module-keycloak/blob/main/oidc_bootstrap/locals.tf[this `locals.tf` on the Keycloak module] for an example.
+DICA: Você pode ter um local contendo a configuração do OIDC devidamente estruturado para as aplicações Modern Gitops Stack e simplesmente usar um provedor OIDC externo em vez de usar o Keycloak. Verifique https://github.com/GersonRS/modern-gitops-stack-module-keycloak/blob/main/oidc_bootstrap/locals.tf [este `locals.tf` no módulo Keycloak] para obter um exemplo.
 
-To quickly deploy a testing environment on KinD you can use the Keycloak module, as shown in the example.
+Para implantar rapidamente um ambiente de teste no KinD você pode usar o módulo Keycloak, conforme mostrado no exemplo.
 
-After deploying Keycloak, you can use the OIDC bootstrap module to create the Keycloak realm, groups, users, etc.
+Depois de implantar o Keycloak, você pode usar o módulo de inicialização OIDC para criar o domínio, grupos, usuários do Keycloak, etc.
 
-The `user_map` variable of that module allows you to create OIDC users used to authenticate to the Modern Gitops Stack applications. The module will generate a password for each user, which you can check later after the deployment.
+A variável `user_map` desse módulo permite criar usuários OIDC usados ​​para autenticar nos aplicativos Modern Gitops Stack. O módulo irá gerar uma senha para cada usuário, que você poderá verificar posteriormente após a implantação.
 
-TIP: If you do not provide a value for the `user_map` variable, the module will create a user named `moderngitopsadmin` with a random password.
+DICA: Se você não fornecer um valor para a variável `user_map`, o módulo criará um usuário chamado `moderngitopsadmin` com uma senha aleatória.
 
-=== Self-signed SSL certificates
+=== Certificados SSL autoassinados
 
-Since KinD is deployed on your machine, there is no easy way of creating valid SSL certificates for the ingresses using Let's Encrypt. As such, `cert-manager` is configured to use a self-signed Certificate Authority and the remaining modules are configured to ignore the SSL warnings/errors that are a consequence of that.
+Como o KinD está implantado em sua máquina, não há uma maneira fácil de criar certificados SSL válidos para entradas usando Let's Encrypt. Como tal, `cert-manager` está configurado para usar uma autoridade de certificação autoassinada e os módulos restantes são configurados para ignorar os avisos/erros SSL que são consequência disso.
 
-NOTE: When accessing the ingresses on your browser, you'll obviously see warnings saying that the certificate is not valid. You can safely ignore them.
+NOTA: Ao acessar os ingressos no seu navegador, obviamente você verá avisos informando que o certificado não é válido. Você pode ignorá-los com segurança.
 
-== Deployment
+== Implantação
 
-1. Clone the repository and `cd` into the `examples/kind` folder.
+1. Clone o repositório e `cd` na pasta `examples/kind`.
 
-2. Check out the modules you want to deploy in the `main.tf` file, and comment out the others;
+2. Confira os módulos que deseja implantar no arquivo `main.tf` e comente os demais;
 +
-TIP: You can also add your own Terraform modules in this file or any other file on the root folder. A good place to start to write your own module is to clone the https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] repository and adapt it to your needs;
+DICA: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa;
 
-3. On the `oidc` module, adapt the `user_map` variable as you wish (please check the <<oidc-authentication,OIDC section>> for more information).
+3. No módulo `oidc`, adapte a variável `user_map` como desejar (verifique a seção <<oidc-authentication,OIDC>> para mais informações).
 
-4. From the source of the example deployment, initialize Terraform, which downloads all required providers and modules locally (they will be stored in the hidden folder `.terraform`);
+4. A partir da origem da implantação de exemplo, inicialize o Terraform, que baixa todos os provedores e módulos necessários localmente (eles serão armazenados na pasta oculta `.terraform`);
 +
 [source,bash]
 ----
 terraform init
 ----
 
-5. Configure the variables in `locals.tf` to your preference:
+5. Configure as variáveis em `locals.tf` de acordo com sua preferência:
 +
 [source,terraform]
 ----
 include::examples$deploy_examples/kind/locals.tf[]
 ----
 
-6. Finally, run `terraform apply` and accept the proposed changes to create the Kubernetes nodes as Docker containers, and populate them with our services;
+6. Por fim, execute `terraform apply` e aceite as alterações propostas para criar os nós Kubernetes como contêineres Docker e preenchê-los com nossos serviços;
 +
 [source,bash]
 ----
 terraform apply
 ----
 
-7. After the first deployment (please note the troubleshooting step related with Argo CD), you can go to locals and enable the _ServiceMonitor_ boolean to activate the Prometheus exporters that will send metrics to Prometheus;
+7. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao Argo CD), você pode ir para locais e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
 +
-IMPORTANT: This flag needs to be set as `false` for the first bootstrap of the cluster, otherwise the applications will fail to deploy while the Custom Resource Definitions of the kube-prometheus-stack are not yet created.
+IMPORTANTE: Este sinalizador precisa ser definido como `false` para a primeira inicialização do cluster, caso contrário, os aplicativos falharão na implantação enquanto as definições de recursos personalizados do kube-prometheus-stack ainda não foram criadas.
 +
-NOTE: You can either set the flag as `true` in the `locals.tf` file or you can simply delete the line on the modules' declarations, since this variable is set as `true` by default on each module.
+NOTA: Você pode definir o sinalizador como `true` no arquivo `locals.tf` ou pode simplesmente deletar a linha nas declarações dos módulos, já que esta variável é definida como `true` por padrão em cada módulo.
 +
-TIP: Take note of the local called `app_autosync`. If you set the condition of the ternary operator to `false` you will disable the auto-sync for all the Modern Gitops Stack modules. This allows you to choose when to manually sync the module on the Argo CD interface and is useful for troubleshooting purposes.
+DICA: Anote o local chamado `app_autosync`. Se você definir a condição do operador ternário como `false` você desabilitará a sincronização automática para todos os módulos Modern Gitops Stack. Isso permite que você escolha quando sincronizar manualmente o módulo na interface do Argo CD e é útil para fins de solução de problemas.
 
-== Access the cluster and the Modern Gitops Stack applications
+== Acesse o cluster e os aplicativos Modern Gitops Stack
 
-Typically the KinD Terraform provider used in our code already appends the credentials to your default Kubeconfig, so you should be good to go to access the cluster.
+Normalmente, o provedor KinD Terraform usado em nosso código já anexa as credenciais ao seu Kubeconfig padrão, portanto, você deve estar pronto para acessar o cluster.
 
-Otherwise, you can use the content of the `kubernetes_kubeconfig` output to manually generate a Kubeconfig file or you can use the one automatically created on the root folder of the project.
+Caso contrário, você pode usar o conteúdo da saída `kubernetes_kubeconfig` para gerar manualmente um arquivo Kubeconfig ou pode usar aquele criado automaticamente na pasta raiz do projeto.
 
-Then you can use the `kubectl` or `k9s` command to interact with the cluster:
+Então você pode usar o comando `kubectl` ou `k9s` para interagir com o cluster:
 
 [source,bash]
 ----
 k9s --kubeconfig <PATH_TO_TERRAFORM_PROJECT>/<CLUSTER_NAME>-config
 ----
 
-As for the Modern Gitops Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
+Quanto aos aplicativos Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `terraform apply` tiver feito seu trabalho:
 
 [source,shell]
 ----
@@ -107,14 +107,14 @@ keycloak_users = <sensitive>
 kubernetes_kubeconfig = <sensitive>
 ----
 
-Or you can use `kubectl` to get all the ingresses and their respective URLs:
+Ou você pode usar `kubectl` para obter todas as entradas e seus respectivos URLs:
 
 [source,bash]
 ----
 kubectl get ingress --all-namespaces
 ----
 
-For example, if the base domain name is `172-19-0-1.nip.io`, the applications are accessible at the following adresses:
+Por exemplo, se o nome de domínio base for `172-19-0-1.nip.io`, as aplicações estarão acessíveis nos seguintes endereços:
 
 ----
 https://grafana.apps.172-19-0-1.nip.io
@@ -127,7 +127,7 @@ https://thanos-bucketweb.apps.172-19-0-1.nip.io
 https://thanos-query.apps.172-19-0-1.nip.io
 ----
 
-You can access the applications using the credentials created by the Keycloak module. They are written to the Terraform output:
+Você pode acessar os aplicativos usando as credenciais criadas pelo módulo Keycloak. Eles são gravados na saída do Terraform:
 
 [source,bash]
 ----
@@ -145,31 +145,31 @@ $ terraform output keycloak_users
 }
 ----
 
-== Pause the cluster
+== Pausar o cluster
 
-The `docker pause` command can be used to halt the cluster for a while in order to save energy (replace `kind-cluster` by the cluster name you defined in `locals.tf`):
+O comando `docker pause` pode ser usado para interromper o cluster por um tempo para economizar energia (substitua `kind-cluster` pelo nome do cluster que você definiu em `locals.tf`):
 
 [source,bash]
 ----
-# Pause the cluster:
+# Pause o cluster:
 docker pause kind-cluster-control-plane kind-cluster-worker{,2,3}
 
-# Resume the cluster:
+# Resume o cluster:
 docker unpause kind-cluster-control-plane kind-cluster-worker{,2,3}
 ----
 
-NOTE: When the host computer is restarted, the Docker container will start again, but the cluster will not resume correctly. It has to be destroyed and recreated.
+NOTA: Quando o computador host for reiniciado, o contêiner do Docker será iniciado novamente, mas o cluster não será retomado corretamente. Tem que ser destruído e recriado.
 
-== Stop the cluster
+== Pare o cluster
 
-To definitively stop the cluster on a single command (that is the reason we delete some resources from the state file), you can use the following command:
+Para parar definitivamente o cluster com um único comando (é por isso que excluímos alguns recursos do arquivo de estado), você pode usar o seguinte comando:
 
 [source,bash]
 ----
 terraform state rm $(terraform state list | grep "argocd_application\|argocd_project\|kubernetes_\|helm_\|keycloak_") && terraform destroy
 ----
 
-A dirtier alternative is to directly destroy the Docker containers and volumes (replace `kind-cluster` by the cluster name you defined in `locals.tf`):
+Uma alternativa mais suja é destruir diretamente os contêineres e volumes do Docker (substitua `kind-cluster` pelo nome do cluster que você definiu em `locals.tf`):
 
 [source,bash]
 ----
@@ -179,15 +179,15 @@ docker container stop kind-cluster-control-plane kind-cluster-worker{,2,3} && do
 rm terraform.state
 ----
 
-== Conclusion
+== Conclusão
 
-That's it, you have deployed the Modern Gitops Stack locally! For more information, keep on reading the https://modern-gitops-stack.io/docs/latest/[documentation]. **You can explore the possibilities of each module and get the link to the source code on their respective documentation pages.**
+É isso, você implantou o Modern Gitops Stack localmente! Para mais informações, continue lendo https://modern-gitops-stack.io/docs/latest/[documentation]. **Você pode explorar as possibilidades de cada módulo e obter o link para o código-fonte nas respectivas páginas de documentação.**
 
-== Troubleshooting
+== Solução de problemas
 
-=== `connection_error` during the first deployment
+=== `connection_error` durante a primeira implantação
 
-In some cases, you could encounter an error like this the first deployment:
+Em alguns casos, você pode encontrar um erro como este na primeira implantação:
 
 [source,shell]
 ----
@@ -202,21 +202,21 @@ In some cases, you could encounter an error like this the first deployment:
 ╵
 ----
 
-This error is due to the way we provision Argo CD on the final steps of the deployment. We use the bootstrap Argo CD to deploy the final Argo CD module, which causes a redeployment of Argo CD and consequently a momentary loss of connection between the Argo CD Terraform provider and the Argo CD server.
+Este erro se deve à forma como provisionamos o Argo CD nas etapas finais da implantação. Usamos o bootstrap Argo CD para implantar o módulo Argo CD final, o que causa uma reimplantação do Argo CD e consequentemente uma perda momentânea de conexão entre o provedor Argo CD Terraform e o servidor Argo CD.
 
-*You can simply re-run the command `terraform apply` to finalize the bootstrap of the cluster.*
+*Você pode simplesmente executar novamente o comando `terraform apply` para finalizar a inicialização do cluster.*
 
-TIP: For more informations about the Argo CD module, please refer to the xref:argocd:ROOT:README.adoc[respective documentation page].
+DICA: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
 
-=== Argo CD interface reload loop when clicking on login
+=== Loop de recarga da interface Argo CD ao clicar no login
 
-If you encounter a loop when clicking on the login button on the Argo CD interface, you can try to delete the Argo CD server pod and let it be recreated.
+Se você encontrar um loop ao clicar no botão de login na interface do Argo CD, você pode tentar excluir o pod do servidor Argo CD e deixá-lo ser recriado.
 
-TIP: For more informations about the Argo CD module, please refer to the xref:argocd:ROOT:README.adoc[respective documentation page].
+DICA: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
 
-=== `loki-stack-promtail` pods stuck with status `CrashLoopBackOff`
+=== Pods `loki-stack-promtail` presos com status `CrashLoopBackOff`
 
-You could stumble upon `loki-stack-promtail` stuck in a creation loop with the following logs:
+Você pode encontrar `loki-stack-promtail` preso em um loop de criação com os seguintes logs:
 
 [source]
 ----
@@ -224,7 +224,7 @@ level=error ts=2023-05-09T06:32:38.495673778Z caller=main.go:117 msg="error crea
 Stream closed EOF for loki-stack/loki-stack-promtail-bxcmw (promtail)
 ----
 
-If that's the case, you will have to increase the upper limit on the number of INotify instances that can be created per real user ID:
+Se for esse o caso, você terá que aumentar o limite máximo do número de instâncias INotify que podem ser criadas por ID de usuário real:
 
 [source,bash]
 ----

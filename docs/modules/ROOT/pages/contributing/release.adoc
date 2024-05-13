@@ -1,39 +1,39 @@
-= Release
+= Liberação
 
-// These URLs are used in the document as-is to generate new URLs, so they should not contain any trailing slash.
+// Esses URLs são usados no documento como estão para gerar novos URLs, portanto, não devem conter nenhuma barra final.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 :url-template-repo: https://github.com/GersonRS/modern-gitops-stack-module-template
 
-Each module is released and versioned independently. The release process is automated and triggered by a GitHub Action that is triggered when a PR is merged into the `main` branch. This action uses the https://github.com/google-github-actions/release-please-action[Release Please tool developed by Google] to automatically create a new release PR that updates the `CHANGELOG.md` file and bumps the version in the `version.txt` and `variables.tf` files. For a release to be completed, the release PR needs to be manually approved and then merged into the `main` branch.
+Cada módulo é lançado e versionado de forma independente. O processo de lançamento é automatizado e acionado por uma ação GitHub que é acionada quando um PR é mesclado no branch `main`. Esta ação usa a https://github.com/google-github-actions/release-please-action[ferramenta Release Please desenvolvida pelo Google] para criar automaticamente um novo PR de lançamento que atualiza o arquivo `CHANGELOG.md` e elimina o version nos arquivos `version.txt` e `variables.tf`. Para que um lançamento seja concluído, o PR do lançamento precisa ser aprovado manualmente e então mesclado no branch `principal`.
 
-In the subsections below we will go through the release process in more detail and then explain some steps when manually setting a version.
+Nas subseções abaixo, passaremos pelo processo de lançamento com mais detalhes e, em seguida, explicaremos algumas etapas ao definir manualmente uma versão.
 
-== Release Please configuration
+== Liberar Por favor configuração
 
-The Release Please tool can be found on https://github.com/googleapis/release-please[this repository] and the GitHub Action we use is available on a https://github.com/google-github-actions/release-please-action[another repository]. Both are maintained by Google.
+A ferramenta Release Please pode ser encontrada https://github.com/googleapis/release-please [neste repositório] e o GitHub Action que usamos está disponível em https://github.com/google-github-actions/release-please-action[outro repositório]. Ambos são mantidos pelo Google.
 
-Every Modern Gitops Stack module contains a GitHub workflow that simply calls a centralized workflow.
+Cada módulo Modern Gitops Stack contém um fluxo de trabalho GitHub que simplesmente chama um fluxo de trabalho centralizado.
 
-=== Centralized workflow
+=== Fluxo de trabalho centralizado
 
-The workflow definition available in the {url-main-repo}/blob/main/.github/workflows/modules-release-please.yaml[main repository].
+A definição de fluxo de trabalho disponível em {url-main-repo}/blob/main/.github/workflows/modules-release-please.yaml[repositório principal].
 
-[source,yaml]
+[fonte,yaml]
 ----
-include::examples$github_workflows/modules-release-please.yaml[]
+incluem::exemplos$github_workflows/modules-release-please.yaml[]
 ----
 
-Note following lines:
+Observe as seguintes linhas:
 
-. The `workflow_call` setting means the workflow is only triggered by an external call (i.e. when a module calls it).
+. A configuração `workflow_call` significa que o fluxo de trabalho só é acionado por uma chamada externa (ou seja, quando um módulo o chama).
 
-. The `release-type` setting is set to `simple` which means it only updates the `CHANGELOG.md` file and bumps the version in the `version.txt` file.
+. A configuração `release-type` está definida como `simple`, o que significa que apenas atualiza o arquivo `CHANGELOG.md` e altera a versão no arquivo `version.txt`.
 
-. The `extra-files` setting is used to specify additional files that need to be updated when bumping the version. In our case, we also need to update the `variables.tf` file. *This is because we need to statically define the variable `target_revision`, which is used to pin the module version in `argocd_application` resources.*
+. A configuração `extra-files` é usada para especificar arquivos adicionais que precisam ser atualizados ao alterar a versão. No nosso caso, também precisamos atualizar o arquivo `variables.tf`. *Isso ocorre porque precisamos definir estaticamente a variável `target_revision`, que é usada para fixar a versão do módulo nos recursos `argocd_application`.*
 
-=== Caller workflow
+=== Fluxo de trabalho do chamador
 
-The caller workflow on every module simply points to this workflow and is set to run on every push to the `main` branch. This is the workflow definition:
+O fluxo de trabalho do chamador em cada módulo simplesmente aponta para este fluxo de trabalho e é configurado para ser executado em cada push para o branch `main`. Esta é a definição do fluxo de trabalho:
 
 [source,yaml]
 ----
@@ -50,22 +50,22 @@ jobs:
     uses: GersonRS/modern-gitops-stack/.github/workflows/modules-release-please.yaml@main
 ----
 
-NOTE: Our {url-template-repo}/blob/main/.github/workflows/release-please.yaml[module template] already contains this workflow definition, but with a caveat. To avoid creating releases on the template itself, it was deactivated and you need to re-activate it when creating a new module. The comments on the file are self-explanatory.
+NOTE: Nosso {url-template-repo}/blob/main/.github/workflows/release-please.yaml[module template] já contém esta definição de fluxo de trabalho, mas com uma ressalva. Para evitar a criação de releases no próprio template, ele foi desativado e é necessário reativá-lo ao criar um novo módulo. Os comentários no arquivo são autoexplicativos.
 
-== Automatic versioning
+== Versionamento automático
 
-The commit messages are used to determine the type of release that needs to be created.
+As mensagens de commit são usadas para determinar o tipo de release que precisa ser criado.
 
-Only the `feat` and `fix` commit types will trigger the release CI. The `feat` commit type will trigger a minor version bump while the `fix` commit type will trigger a patch version bump. If you add a `!` after the commit type, the release will be a major version bump. For example, `feat!: this is a breaking change` will trigger a major version bump.
+Somente os tipos de commit `feat` e `fix` acionarão o IC de lançamento. O tipo de commit `feat` irá desencadear um aumento de versão secundária, enquanto o tipo de commit `fix` irá desencadear um aumento de versão de patch. Se você adicionar um `!` após o tipo de commit, o lançamento será um aumento na versão principal. Por exemplo, `feat!: this is a break change` irá desencadear um aumento na versão principal.
 
-Any other commit type will not trigger a release. This includes `chore`, `docs`, `style`, `refactor`, `perf` and `test`. If you still want to force a release, you can add a footer to any commit message with the `Release-As:` prefix.
+Qualquer outro tipo de commit não acionará um lançamento. Isso inclui `chore`, `docs`, `style`, `refactor`, `perf` e `test`. Se você ainda quiser forçar um lançamento, você pode adicionar um rodapé a qualquer mensagem de commit com o prefixo `Release-As:`.
 
-=== Versioning while on pre-release stage
+=== Versionamento durante a fase de pré-lançamento
 
-When a module is still in pre-release stage, the versioning is a bit different. The versioning is done manually through the `Release-As:` footer.
+Quando um módulo ainda está em fase de pré-lançamento, o versionamento é um pouco diferente. O versionamento é feito manualmente através do rodapé `Release-As:`.
 
-We propose that for as long as the module is in pre-release stage, you should only do a `Squash and Merge` and add the `Release-As:` footer to the merge comment. The release PR will contain the version that you specified in the `Release-As:` footer. You can then approve and merge the release PR.
+Propomos que enquanto o módulo estiver em fase de pré-lançamento, você deve apenas fazer um `Squash and Merge` e adicionar o rodapé `Release-As:` ao comentário de mesclagem. O PR de lançamento conterá a versão que você especificou no rodapé `Release-As:`. Você pode então aprovar e mesclar o PR de lançamento.
 
-For pre-release versioning, we propose to use `v1.0.0-alpha.X` or `v1.0.0-beta.X`, depending on the maturity. `X` is the pre-release version and is what should be incremented manually.
+Para versionamento de pré-lançamento, propomos usar `v1.0.0-alpha.X` ou `v1.0.0-beta.X`, dependendo da maturidade. `X` é a versão de pré-lançamento e é o que deve ser incrementado manualmente.
 
-IMPORTANT: When a module is ready for the first release, you need to add the `Release-As: v1.0.0` footer and this will trigger the first release. After that, the release process will be automatic.
+IMPORTANT: Quando um módulo estiver pronto para o primeiro lançamento, você precisará adicionar o rodapé `Release-As: v1.0.0` e isso acionará o primeiro lançamento. Depois disso, o processo de liberação será automático.
