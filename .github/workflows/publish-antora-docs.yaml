@@ -1,42 +1,50 @@
-name: Publish to GitHub Pages with Lunr Search Extension
+---
+name: "publish-antora-docs"
+
 on:
   push:
-    branches: [main]
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+    - main
+    paths:
+    - "version.txt" # Trigger a build when the version changes in order to take the version tag into account
+
+  schedule:
+    # Every day at 3:00 AM in order to generate documentation for every module that had a new release
+    - cron: "0 3 * * *"
+
+  pull_request:
+    paths:
+    - "docs/**"
+
   workflow_dispatch:
-concurrency:
-  group: github-pages
-  cancel-in-progress: false
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  
 jobs:
-  build:
+  publish-antora-docs:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-    - name: Checkout repository
+    - name: "Check out repository"
       uses: actions/checkout@v4
-              
-    - name: Configure GitHub Pages        
-      uses: actions/configure-pages@v5.0.0
-    
-    - name: Install Node.js
-      uses: actions/setup-node@v4
       with:
-        node-version: '18'
-    - name: Install Antora with the Antora Lunr Extension
-      run: npm i antora @antora/lunr-extension
-    - name: Generate Site
-      run: npx antora antora-playbook.yml
-    - name: Upload GitHub Pages artifact
-      uses: actions/upload-pages-artifact@v3.0.1
+        fetch-depth: 0 # Fetch all branches and tags
+
+    - name: "Build documentation with Antora"
+      uses: docker://ghcr.io/camptocamp/devops-stack-antora:v3
       with:
-        path: build/site
-    - name: Deploy GitHub Pages site
-      id: deployment
-      uses: actions/deploy-pages@v4.0.5
+        args: generate antora-playbook.yml --to-dir public/docs
+
+    - name: "Upload generated artifact"
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation
+        path: ${{ github.workspace }}/public/docs
+
+    - name: "Deploy documentation to GitHub Pages"
+      if: github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+      uses: JamesIves/github-pages-deploy-action@v4.6.0
+      with:
+        branch: gh-pages
+        folder: public/docs
+        target-folder: .
+        commit-message: "ci: publish documentation for ${{ github.sha }}"
