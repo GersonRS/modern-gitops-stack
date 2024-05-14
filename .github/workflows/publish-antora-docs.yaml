@@ -21,8 +21,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Configure Pages
-      uses: actions/configure-pages@v3
+              
+    - name: Configure GitHub Pages        
+      uses: actions/configure-pages@v5.0.0
+    
     - name: Install Node.js
       uses: actions/setup-node@v4
       with:
