@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.4](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.3...v1.17.4) (2024-05-17)
+
+
+### 📚 Documentation
+
+* add path on publish antora workflow ([b401b56](https://github.com/GersonRS/modern-gitops-stack/commit/b401b56ad77dab52925fd9738be4a6c9c6c47021))
+* update nav documentation ([82e6866](https://github.com/GersonRS/modern-gitops-stack/commit/82e686695692604b04225ed7cc4f44ea2bca134a))
+
 ## [1.17.3](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.2...v1.17.3) (2024-05-17)
 
 
