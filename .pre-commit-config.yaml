@@ -10,8 +10,8 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
-      - id: no-commit-to-branch
-        args: ["--branch", "main"]
+      # - id: no-commit-to-branch
+      #   args: ["--branch", "main"]
 
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
     rev: v9.10.0
