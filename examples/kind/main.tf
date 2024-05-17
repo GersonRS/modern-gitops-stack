@@ -64,7 +64,7 @@ module "cert-manager" {
 }
 
 module "keycloak" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v2.4.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
