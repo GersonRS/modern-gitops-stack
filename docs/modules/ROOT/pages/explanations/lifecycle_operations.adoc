@@ -6,19 +6,19 @@ Não é fácil descrever as diferentes fases de um projeto de TI, principalmente
 
 Para simplificar, aqui vão algumas explicações:
 
-- *Dia 0* está relacionado ao desenvolvimento de software, questões sobre requisitos, arquitetura e design.
-- O *Dia 1* é mais sobre a implantação do software desenvolvido no *Dia 0* e o início da construção e configuração da infraestrutura de hospedagem.
-- *Dia 2* é o momento de entrar no ar e esperar que os esforços feitos no *Dia 1* sejam adequados. Este é um momento crucial, quando é imperativo ter métricas, monitoramento, ferramentas e melhores práticas para solucionar problemas de maneira eficiente.
+- *Day 0* está relacionado ao desenvolvimento de software, questões sobre requisitos, arquitetura e design.
+- O *Day 1* é mais sobre a implantação do software desenvolvido no *Day 0* e o início da construção e configuração da infraestrutura de hospedagem.
+- *Day 2* é o momento de entrar no ar e esperar que os esforços feitos no *Day 1* sejam adequados. Este é um momento crucial, quando é imperativo ter métricas, monitoramento, ferramentas e melhores práticas para solucionar problemas de maneira eficiente.
 
-Para já, o Modern Gitops Stack está muito focado nos pontos relativos aos dias 1 e 2, em particular, nos aspectos relacionados com o provisionamento de uma plataforma Kubernetes bem como nos serviços obrigatórios relacionados com a sua gestão operacional.
+Por enquanto, o Modern Gitops Stack está muito focado nos pontos relativos aos dias 1 e 2, em particular, nos aspectos relacionados com o provisionamento de uma plataforma Kubernetes bem como nos serviços obrigatórios relacionados com a sua gestão operacional.
 
 Devemos também levar em consideração que o uso das práticas de desenvolvimento Cloud e Cloud Native torna muito mais fácil lidar com as mudanças relacionadas ao ciclo de vida do software. Os limites e responsabilidades entre estas diferentes fases tornaram-se mais confusos e menos rígidos.
 
 == Desenvolvedores precisam de amor
 
-Num futuro próximo, queremos realmente investir significativamente em aspectos relacionados ao dia 0, melhorando o Modern Gitops Stack nessa direção, especialmente a fábrica de software e as melhores práticas de desenvolvimento relacionadas à integração do Kubernetes.
+Num futuro próximo, quero realmente investir significativamente em aspectos relacionados ao Day 2, melhorando o Modern Gitops Stack nessa direção, especialmente em MLOps e as melhores práticas de desenvolvimento e monitoramento relacionadas à integração do Kubernetes.
 
-Isso está intimamente ligado à generalização da metodologia https://12factor.net/[Twelve-Factor App], bem como à quebra de silos e à adoção dos princípios do Modern Gitops. Estas boas práticas devem ser aplicadas o mais cedo possível nos projetos. É absolutamente necessário.
+Isso está intimamente ligado à generalização da metodologia https://12factor.net/[Twelve-Factor App], bem como à quebra de silos e à adoção dos princípios do Gitops e MLOps. Estas boas práticas devem ser aplicadas o mais cedo possível nos projetos e é absolutamente necessário.
 
 == Administradores de sistemas querem controle
 
@@ -26,7 +26,7 @@ O Modern Gitops Stack fornece aos nossos clusters Kubernetes um conjunto de ferr
 
 === Painel de gerenciamento de identidade (Keycloak)
 
-Quer você use AKS, EKS ou sua estação de trabalho local usando KinD, o Modern Gitops Stack provisiona o cluster com um Identity and Access Manager.
+Quer você use AKS, EKS, GKE ou seu desktop local usando KinD, o Modern Gitops Stack provisiona o cluster com um Identity and Access Manager.
 
 Para o caso de um cluster KinD local, o Modern Gitops Stack gera uma instância Keycloak.
 

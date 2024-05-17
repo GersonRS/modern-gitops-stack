@@ -3,7 +3,7 @@
 Um exemplo de implantação local no KinD é fornecido https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/kind[aqui]. Clone este repositório e modifique os arquivos conforme sua conveniência.
 No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[módulo Terraform] padrão, você encontrará os seguintes arquivos:
 
-* *`terraform.tf`* - declaração dos provedores Terraform utilizados neste projeto bem como sua configuração;
+* *`terraform.tf`* - declaração dos provedores Tofu/Terraform utilizados neste projeto bem como sua configuração;
 * *`locals.tf`* - variáveis locais usadas pelos módulos Modern Gitops Stack;
 * *`main.tf`* - definição de todos os módulos implantados;
 * *`s3_bucket.tf`* - configuração do bucket MinIO, usado como backend para Loki e Thanos;
@@ -14,7 +14,7 @@ No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/
 Na sua máquina local, você precisa ter as seguintes ferramentas instaladas:
 
 * https://docs.docker.com/get-docker[Docker] para implantar os contêineres KinD;
-* https://www.terraform.io/[Terraform] para provisionar toda a pilha;
+* https://opentofu.org/[Tofu] ou https://www.terraform.io/[Terraform] para provisionar toda a stack;
 * https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`]para interagir com seu cluster;
 
 == Especificidades e explicações
@@ -25,39 +25,39 @@ https://metallb.universe.tf/[MetalLB] é usado como balanceador de carga para o 
 
 === Autenticação OIDC
 
-IMPORTANTE: Os módulos Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos Modern Gitops Stack.
+IMPORTANTE: Os módulos do Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos do Modern Gitops Stack.
 
-DICA: Você pode ter um local contendo a configuração do OIDC devidamente estruturado para as aplicações Modern Gitops Stack e simplesmente usar um provedor OIDC externo em vez de usar o Keycloak. Verifique https://github.com/GersonRS/modern-gitops-stack-module-keycloak/blob/main/oidc_bootstrap/locals.tf [este `locals.tf` no módulo Keycloak] para obter um exemplo.
+TIP: Você pode ter um local contendo a configuração do OIDC devidamente estruturado para as aplicações do Modern Gitops Stack e simplesmente usar um provedor OIDC externo em vez de usar o Keycloak. Verifique https://github.com/GersonRS/modern-gitops-stack-module-keycloak/blob/main/oidc_bootstrap/locals.tf [este `locals.tf` no módulo Keycloak] para obter um exemplo.
 
 Para implantar rapidamente um ambiente de teste no KinD você pode usar o módulo Keycloak, conforme mostrado no exemplo.
 
 Depois de implantar o Keycloak, você pode usar o módulo de inicialização OIDC para criar o domínio, grupos, usuários do Keycloak, etc.
 
-A variável `user_map` desse módulo permite criar usuários OIDC usados ​​para autenticar nos aplicativos Modern Gitops Stack. O módulo irá gerar uma senha para cada usuário, que você poderá verificar posteriormente após a implantação.
+A variável `user_map` desse módulo permite criar usuários OIDC usados ​​para autenticar nos aplicativos do Modern Gitops Stack. O módulo irá gerar uma senha para cada usuário, que você poderá verificar posteriormente após a implantação.
 
-DICA: Se você não fornecer um valor para a variável `user_map`, o módulo criará um usuário chamado `moderngitopsadmin` com uma senha aleatória.
+TIP: Se você não fornecer um valor para a variável `user_map`, o módulo criará um usuário chamado `moderngitopsadmin` com uma senha aleatória.
 
 === Certificados SSL autoassinados
 
-Como o KinD está implantado em sua máquina, não há uma maneira fácil de criar certificados SSL válidos para entradas usando Let's Encrypt. Como tal, `cert-manager` está configurado para usar uma autoridade de certificação autoassinada e os módulos restantes são configurados para ignorar os avisos/erros SSL que são consequência disso.
+Como o KinD está implantado em sua máquina, não há uma maneira fácil de criar certificados SSL válidos para entradas usando Let's Encrypt. Como tal, o `cert-manager` está configurado para usar uma autoridade de certificação autoassinada e os módulos restantes são configurados para ignorar os avisos/erros SSL que são consequência disso.
 
-NOTA: Ao acessar os ingressos no seu navegador, obviamente você verá avisos informando que o certificado não é válido. Você pode ignorá-los com segurança.
+NOTE: Ao acessar os ingress no seu navegador, obviamente você verá avisos informando que o certificado não é válido. Você pode ignorá-los com segurança.
 
 == Implantação
 
-1. Clone o repositório e `cd` na pasta `examples/kind`.
+1. Clone o repositório e entre na pasta executando `cd examples/kind`.
 
 2. Confira os módulos que deseja implantar no arquivo `main.tf` e comente os demais;
 +
-DICA: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa;
+TIP: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao que você precisa;
 
 3. No módulo `oidc`, adapte a variável `user_map` como desejar (verifique a seção <<oidc-authentication,OIDC>> para mais informações).
 
-4. A partir da origem da implantação de exemplo, inicialize o Terraform, que baixa todos os provedores e módulos necessários localmente (eles serão armazenados na pasta oculta `.terraform`);
+4. A partir da origem da implantação de exemplo, inicialize o Tofu/Terraform, que baixa todos os provedores e módulos necessários localmente (eles serão armazenados na pasta oculta `.terraform`);
 +
 [source,bash]
 ----
-terraform init
+tofu init
 ----
 
 5. Configure as variáveis em `locals.tf` de acordo com sua preferência:
@@ -67,11 +67,11 @@ terraform init
 include::examples$deploy_examples/kind/locals.tf[]
 ----
 
-6. Por fim, execute `terraform apply` e aceite as alterações propostas para criar os nós Kubernetes como contêineres Docker e preenchê-los com nossos serviços;
+6. Por fim, execute `tofu apply` e aceite as alterações propostas para criar os nós Kubernetes como contêineres Docker e preenchê-los com nossos serviços;
 +
 [source,bash]
 ----
-terraform apply
+tofu apply
 ----
 
 7. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao Argo CD), você pode ir para locais e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
@@ -80,11 +80,11 @@ IMPORTANTE: Este sinalizador precisa ser definido como `false` para a primeira i
 +
 NOTA: Você pode definir o sinalizador como `true` no arquivo `locals.tf` ou pode simplesmente deletar a linha nas declarações dos módulos, já que esta variável é definida como `true` por padrão em cada módulo.
 +
-DICA: Anote o local chamado `app_autosync`. Se você definir a condição do operador ternário como `false` você desabilitará a sincronização automática para todos os módulos Modern Gitops Stack. Isso permite que você escolha quando sincronizar manualmente o módulo na interface do Argo CD e é útil para fins de solução de problemas.
+TIP: Anote o local chamado `app_autosync`. Se você definir a condição do operador ternário como `false` você desabilitará a sincronização automática para todos os módulos do Modern Gitops Stack. Isso permite que você escolha quando sincronizar manualmente o módulo na interface do Argo CD e é útil para fins de solução de problemas.
 
 == Acesse o cluster e os aplicativos Modern Gitops Stack
 
-Normalmente, o provedor KinD Terraform usado em nosso código já anexa as credenciais ao seu Kubeconfig padrão, portanto, você deve estar pronto para acessar o cluster.
+Normalmente, o provider KinD usado em nosso código já anexa as credenciais ao seu Kubeconfig padrão, portanto, você deve estar pronto para acessar o cluster.
 
 Caso contrário, você pode usar o conteúdo da saída `kubernetes_kubeconfig` para gerar manualmente um arquivo Kubeconfig ou pode usar aquele criado automaticamente na pasta raiz do projeto.
 
@@ -95,7 +95,7 @@ Então você pode usar o comando `kubectl` ou `k9s` para interagir com o cluster
 k9s --kubeconfig <PATH_TO_TERRAFORM_PROJECT>/<CLUSTER_NAME>-config
 ----
 
-Quanto aos aplicativos Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `terraform apply` tiver feito seu trabalho:
+Quanto aos aplicativos do Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `tofu apply` tiver feito seu trabalho:
 
 [source,shell]
 ----
@@ -114,32 +114,33 @@ Ou você pode usar `kubectl` para obter todas as entradas e seus respectivos URL
 kubectl get ingress --all-namespaces
 ----
 
-Por exemplo, se o nome de domínio base for `172-19-0-1.nip.io`, as aplicações estarão acessíveis nos seguintes endereços:
+Por exemplo, se o nome de domínio base for `172-18-0-1.nip.io`, as aplicações estarão acessíveis nos seguintes endereços:
 
 ----
-https://grafana.apps.172-19-0-1.nip.io
-https://alertmanager.apps.172-19-0-1.nip.io
-https://prometheus.apps.172-19-0-1.nip.io
-https://keycloak.apps.172-19-0-1.nip.io
-https://minio.apps.172-19-0-1.nip.io
-https://argocd.apps.172-19-0-1.nip.io
-https://thanos-bucketweb.apps.172-19-0-1.nip.io
-https://thanos-query.apps.172-19-0-1.nip.io
+https://grafana.apps.172-18-0-1.nip.io
+https://alertmanager.apps.172-18-0-1.nip.io
+https://prometheus.apps.172-18-0-1.nip.io
+https://keycloak.apps.172-18-0-1.nip.io
+https://minio.apps.172-18-0-1.nip.io
+https://argocd.apps.172-18-0-1.nip.io
+https://thanos-bucketweb.apps.172-18-0-1.nip.io
+https://thanos-query.apps.172-18-0-1.nip.io
 ----
 
-Você pode acessar os aplicativos usando as credenciais criadas pelo módulo Keycloak. Eles são gravados na saída do Terraform:
+Você pode acessar os aplicativos usando as credenciais criadas pelo módulo Keycloak.
+Eles são gravados na saída do Tofu/Terraform, usando o comando `tofu output`:
 
 [source,bash]
 ----
-# List all outputs
-$ terraform output
+# Listar todas as saídas
+$ tofu output
 keycloak_admin_credentials = <sensitive>
 keycloak_users = <sensitive>
 kubernetes_kubeconfig = <sensitive>
 minio_root_user_credentials = <sensitive>
 
-# To get the credentials for Grafana, Prometheus, etc.
-$ terraform output keycloak_users
+# Para obter as credenciais de acesso as aplicações do Modern GitOps Stack.
+$ tofu output keycloak_users
 {
   "moderngitopsadmin" = "PASSWORD"
 }
@@ -147,35 +148,35 @@ $ terraform output keycloak_users
 
 == Pausar o cluster
 
-O comando `docker pause` pode ser usado para interromper o cluster por um tempo para economizar energia (substitua `kind-cluster` pelo nome do cluster que você definiu em `locals.tf`):
+O comando `docker pause` pode ser usado para interromper o cluster por um tempo para economizar energia (substitua `kind` pelo nome do cluster que você definiu em `locals.tf`):
 
 [source,bash]
 ----
-# Pause o cluster:
-docker pause kind-cluster-control-plane kind-cluster-worker{,2,3}
+# Pausar o cluster:
+docker pause kind-control-plane kind-worker{,2,3}
 
-# Resume o cluster:
-docker unpause kind-cluster-control-plane kind-cluster-worker{,2,3}
+# Retornar o cluster:
+docker unpause kind-control-plane kind-worker{,2,3}
 ----
 
-NOTA: Quando o computador host for reiniciado, o contêiner do Docker será iniciado novamente, mas o cluster não será retomado corretamente. Tem que ser destruído e recriado.
+NOTE: Quando o computador host for reiniciado, o contêiner do Docker será iniciado novamente, mas o cluster não será retomado corretamente. Tem que ser destruído e recriado.
 
-== Pare o cluster
+== Parar o cluster
 
 Para parar definitivamente o cluster com um único comando (é por isso que excluímos alguns recursos do arquivo de estado), você pode usar o seguinte comando:
 
 [source,bash]
 ----
-terraform state rm $(terraform state list | grep "argocd_application\|argocd_project\|kubernetes_\|helm_\|keycloak_") && terraform destroy
+tofu state rm $(tofu state list | grep "argocd_application\|argocd_project\|kubernetes_\|helm_\|keycloak_") && tofu destroy
 ----
 
-Uma alternativa mais suja é destruir diretamente os contêineres e volumes do Docker (substitua `kind-cluster` pelo nome do cluster que você definiu em `locals.tf`):
+Uma alternativa mais suja é destruir diretamente os contêineres e volumes do Docker (substitua `kind` pelo nome do cluster que você definiu em `locals.tf`):
 
 [source,bash]
 ----
-# Stop and remove Docker containers
-docker container stop kind-cluster-control-plane kind-cluster-worker{,2,3} && docker container rm -v kind-cluster-control-plane kind-cluster-worker{,2,3}
-# Remove the Terraform state file
+# Parar e remover contêineres Docker
+docker container stop kind-control-plane kind-worker{,2,3} && docker container rm -v kind-control-plane kind-worker{,2,3}
+# Remova o arquivo de estado do Tofu/Terraform
 rm terraform.state
 ----
 
@@ -204,15 +205,15 @@ Em alguns casos, você pode encontrar um erro como este na primeira implantaçã
 
 Este erro se deve à forma como provisionamos o Argo CD nas etapas finais da implantação. Usamos o bootstrap Argo CD para implantar o módulo Argo CD final, o que causa uma reimplantação do Argo CD e consequentemente uma perda momentânea de conexão entre o provedor Argo CD Terraform e o servidor Argo CD.
 
-*Você pode simplesmente executar novamente o comando `terraform apply` para finalizar a inicialização do cluster.*
+*Você pode simplesmente executar novamente o comando `tofu apply` para finalizar a inicialização do cluster.*
 
-DICA: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
+TIP: Para obter mais informações sobre o módulo Argo CD, a consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
 
 === Loop de recarga da interface Argo CD ao clicar no login
 
 Se você encontrar um loop ao clicar no botão de login na interface do Argo CD, você pode tentar excluir o pod do servidor Argo CD e deixá-lo ser recriado.
 
-DICA: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
+TIP: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
 
 === Pods `loki-stack-promtail` presos com status `CrashLoopBackOff`
 
@@ -228,8 +229,8 @@ Se for esse o caso, você terá que aumentar o limite máximo do número de inst
 
 [source,bash]
 ----
-# Increase the limit until next reboot
+# Aumente o limite até a próxima reinicialização
 sudo sysctl fs.inotify.max_user_instances=512
-# Increase the limit permanently (run this command as root)
+# Aumente o limite permanentemente (execute este comando como root)
 echo 'fs.inotify.max_user_instances=512' >> /etc/sysctl.conf
 ----

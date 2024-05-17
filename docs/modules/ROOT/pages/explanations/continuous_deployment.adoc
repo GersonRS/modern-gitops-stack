@@ -1,17 +1,17 @@
 = Entrega Contínua e GitOps
 
-O gerenciamento de mudanças está no centro das operações de infraestrutura. A ascensão das práticas de Integração Contínua e Entrega Contínua no mundo da infraestrutura tem sido tão importante que a expressão Modern Gitops Engineer é frequentemente usada para descrever a Engenharia de CI/CD.
+O gerenciamento de mudanças está no centro das operações de infraestrutura. A ascensão das práticas de Integração Contínua, Entrega Contínua e GitOps no mundo da infraestrutura tem sido tão importante que a expressão Gitops Engineer é frequentemente usada para descrever a Engenharia de pipelines CI/CD.
 
 O Modern Gitops Stack aproveita a abordagem CI/CD para tornar as mudanças perfeitas, tanto nos níveis de provisionamento quanto de implantação.
 
-== Terraforma
+== Tofu e Terraform
 
-A infraestrutura subjacente que configura o cluster Kubernetes sob o Modern Gitops Stack é gerenciada com Terraform.
+A infraestrutura subjacente que configura o cluster Kubernetes sob o Modern Gitops Stack é gerenciada preferencialmente com Tofu, mas pode ser executado via Terraform.
 
-É altamente recomendável usar uma abordagem CI/CD para gerenciar esta implantação do Terraform, e o Modern Gitops Stack fornece um conjunto de scripts para integrar o processo de mudança revisado em pares na plataforma CI/CD de sua escolha.
+É altamente recomendável usar uma abordagem CI/CD para gerenciar esta implantação do Tofu/Terraform, e o Modern Gitops Stack fornece um conjunto de scripts para integrar o processo de mudança revisado em pares na plataforma CI/CD de sua escolha.
 
 == ArgoCD
 
 Além do Kubernetes, o Modern Gitops Stack configura o ArgoCD para implantar continuamente todos os aplicativos no cluster.
 
-O ArgoCD monitora os recursos do Kubernetes e pode mantê-los sincronizados com seu estado de destino.
+O ArgoCD monitora os recursos do Kubernetes e pode mantê-los sincronizados com seu estado desejado.

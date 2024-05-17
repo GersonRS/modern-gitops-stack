@@ -63,7 +63,7 @@ Nossa documentação é construída usando uma ação GitHub no repositório pri
 
 No fluxo de trabalho, você notará que nossa documentação é gerada usando um {url-docker-antora-repo}[imagem Docker personalizada do Antora]. Isso ocorre porque precisamos de duas extensões no Antora, conforme explicado em {url-docker-antora-repo}#readme[`README.adoc`]. O processo de liberação desta imagem também é explicado no referido `README.adoc`.
 
-A UI das páginas de documentação vem de uma bifurcação da UI padrão do Antora, disponível {url-antora-ui-repo}[aqui]. Esta bifurcação é usada para adicionar um realce de sintaxe personalizado para blocos de código Terraform. Para usar esta UI, simplesmente criamos um pacote `*.zip` com um fluxo de trabalho GitHub Actions que é então apontado por nosso {url-main-repo}/blob/main/antora-playbook.yml[`antora- arquivo playbook.yml`].
+A UI das páginas de documentação vem de uma bifurcação da UI padrão do Antora, disponível {url-antora-ui-repo}[aqui]. Esta branch é usada para adicionar um realce de sintaxe personalizado para blocos de código Tofu/Terraform. Para usar esta UI, simplesmente criamos um pacote `*.zip` com um fluxo de trabalho GitHub Actions que é então apontado por nosso {url-main-repo}/blob/main/antora-playbook.yml[`antora-playbook.yml`].
 
 TIP: O `README.adoc` do {url-docker-antora-repo}[imagem personalizada do Docker] contém um comando que você pode usar para construir as páginas de documentação localmente para visualizar suas alterações.
 
@@ -119,4 +119,4 @@ TIP: Verifique as páginas de documentação do módulo existente para obter exe
 
 Você notará que as últimas seções do `README.adoc` que são geradas automaticamente pelo Terraform Docs.
 
-Tudo o que está entre os comentários `BEGIN_TF_DOCS` / `END_TF_DOCS` e `BEGIN_TF_TABLES` / `END_TF_TABLES` é gerado automaticamente por um fluxo de trabalho GitHub, que está disponível em {url-main-repo}/blob/main/.github/workflows /modules-terraform-docs.yaml[repositório principal].
+Tudo o que está entre os comentários `BEGIN_TF_DOCS` / `END_TF_DOCS` e `BEGIN_TF_TABLES` / `END_TF_TABLES` é gerado automaticamente por um fluxo de trabalho GitHub, que está disponível no {url-main-repo}/blob/main/.github/workflows/modules-terraform-docs.yaml[repositório principal].

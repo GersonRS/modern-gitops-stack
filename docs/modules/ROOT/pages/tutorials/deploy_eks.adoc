@@ -15,10 +15,10 @@ No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/
 
 Na sua máquina local, você precisa ter as seguintes ferramentas instaladas:
 
-* https://www.terraform.io/[Terraform] para provisionar toda a pilha;
+* https://opentofu.org/[Tofu] ou https://www.terraform.io/[Terraform] para provisionar toda a stack;
 * https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`]para interagir com seu cluster;
 * https://aws.amazon.com/cli/[AWS CLI] para interagir com sua conta AWS;
-* https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[`gopass` e `summon`] para passar facilmente os segredos do IAM como variáveis de ambiente ao executar `terraform `comandos;
+* https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[`gopass` e `summon`] para passar facilmente os segredos do IAM como variáveis de ambiente ao executar o comando `tofu/terraform`;
 
 Fora isso, você precisará do seguinte:
 
@@ -33,17 +33,17 @@ Fora isso, você precisará do seguinte:
 
 DICA: Verifique https://dev.to/GersonRS-ops/simple-secret-sharing-with-gopass-and-summon-40jk[esta postagem do blog] para obter mais informações sobre como configurar `gopass` e `summon` para trabalhar juntos.
 
-Para simplicidade e facilidade de uso, bem como segurança, o exemplo usa `gopass` e `summon` para passar as credenciais do IAM para os comandos do Terraform. O arquivo `secrets.yml` contém o caminho para os valores secretos no armazenamento de senhas `gopass`. Na execução, o comando `summon` lerá o arquivo `secrets.yml` e passará as credenciais como variáveis de ambiente para os comandos do Terraform.
+Para simplicidade e facilidade de uso, bem como segurança, o exemplo usa `gopass` e `summon` para passar as credenciais do IAM para os comandos do Tofu/Terraform. O arquivo `secrets.yml` contém o caminho para os valores secretos no armazenamento de senhas `gopass`. Na execução, o comando `summon` lerá o arquivo `secrets.yml` e passará as credenciais como variáveis de ambiente para os comandos do Tofu/Terraform.
 
 Todos os comandos apresentados neste tutorial usam o comando `summon`.
 
-IMPORTANTE: A variável de ambiente `AWS_DEFAULT_REGION` define onde residirão todos os recursos AWS criados pelo Terraform, incluindo o cluster EKS.
+IMPORTANTE: A variável de ambiente `AWS_DEFAULT_REGION` define onde residirão todos os recursos AWS criados pelo Tofu/Terraform, incluindo o cluster EKS.
 
-=== Estado remoto do Terraform
+=== Estado remoto do Tofu/Terraform
 
-Se não quiser configurar o back-end de estado remoto do Terraform, você pode simplesmente remover o bloco `backend` do arquivo `terraform.tf`.
+Se não quiser configurar o back-end de estado remoto do Tofu/Terraform, você pode simplesmente remover o bloco `backend` do arquivo `terraform.tf`.
 
-NOTA: Mais informações sobre backends remotos estão disponíveis em https://developer.hashicorp.com/terraform/language/settings/backends/configuration[documentação oficial].
+NOTA: Mais informações sobre backends remotos estão disponíveis na https://developer.hashicorp.com/terraform/language/settings/backends/configuration[documentação oficial].
 
 === Autenticação OIDC
 
@@ -71,15 +71,15 @@ Se você se sentir pronto para testar com certificados de produção, você pode
 
 3. Confira os módulos que deseja implantar no arquivo `main.tf` e comente os demais;
 +
-DICA: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa.
+DICA: Você também pode adicionar seus próprios módulos Tofu/Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa.
 
 4. No módulo `oidc`, adapte a variável `user_map` como desejar (por favor verifique a seção <<oidc-authentication,OIDC>> para mais informações).
 
-5. Na origem da implantação de exemplo, inicialize os módulos e provedores do Terraform:
+5. Na origem da implantação de exemplo, inicialize os módulos e provedores do Tofu/Terraform:
 +
 [source,bash]
 ----
-summon terraform init
+summon tofu init
 ----
 
 6. Configure as variáveis em `locals.tf` de acordo com sua preferência:
@@ -93,14 +93,14 @@ DICA: O xref:eks:ROOT:README.adoc[documentação do módulo cluster] pode ajudá
 include::examples$deploy_examples/eks/locals.tf[]
 ----
 
-7. Por fim, execute `terraform apply` e aceite as alterações propostas para criar os nós Kubernetes no Amazon EKS e preenchê-los com nossos serviços;
+7. Por fim, execute `tofu apply` e aceite as alterações propostas para criar os nós Kubernetes no Amazon EKS e preenchê-los com o Modern GitOps Stack;
 +
 [source,bash]
 ----
-summon terraform apply
+summon tofu apply
 ----
 
-8. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao CD Argo), você pode ir para `locals.tf` e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
+8. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao ArgoCD), você pode ir para `locals.tf` e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
 +
 IMPORTANTE: Este sinalizador precisa ser definido como `false` para a primeira inicialização do cluster, caso contrário, os aplicativos falharão na implantação enquanto as definições de recursos personalizados do kube-prometheus-stack ainda não foram criadas.
 +
@@ -124,7 +124,7 @@ Então você pode usar o comando `kubectl` ou `k9s` para interagir com o cluster
 k9s --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-Quanto aos aplicativos Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `terraform apply` tiver feito seu trabalho:
+Quanto aos aplicativos do Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `terraform apply` tiver feito seu trabalho:
 
 [source,shell]
 ----
@@ -148,9 +148,9 @@ A saída `modern_gitops_admins` lista todos os usuários e respectivos e-mails q
 summon terraform output modern_gitops_admins
 ----
 
-Esses usuários deveriam ter recebido um e-mail com uma senha temporária para fazer login nos aplicativos Modern Gitops Stack pela primeira vez.
+Esses usuários deveriam ter recebido um e-mail com uma senha temporária para fazer login nos aplicativos do Modern Gitops Stack pela primeira vez.
 
-== Pare o cluster
+== Parar o cluster
 
 Para parar definitivamente o cluster com um único comando (é por isso que excluímos alguns recursos do arquivo de estado), você pode usar o seguinte comando:
 
@@ -161,7 +161,7 @@ summon terraform state rm $(summon terraform state list | grep "argocd_applicati
 
 == Conclusão
 
-É isso, agora você tem um cluster Kubernetes totalmente funcional no Amazon EKS com os aplicativos Modern Gitops Stack implantados nele. Para mais informações, continue lendo https://modern-gitops-stack.io/docs/latest/[documentation]. **Você pode explorar as possibilidades de cada módulo e obter o link para o código-fonte nas respectivas páginas de documentação.**
+É isso, agora você tem um cluster Kubernetes totalmente funcional no Amazon EKS com os aplicativos do Modern Gitops Stack implantados nele. Para mais informações, continue lendo https://modern-gitops-stack.io/docs/latest/[documentation]. **Você pode explorar as possibilidades de cada módulo e obter o link para o código-fonte nas respectivas páginas de documentação.**
 
 == Solução de problemas
 
@@ -182,12 +182,12 @@ Em alguns casos, você pode encontrar um erro como estes na primeira implantaç�
 ╵
 ----
 
-O erro se deve à forma como provisionamos o Argo CD nas etapas finais da implantação. Usamos o bootstrap Argo CD para implantar o módulo Argo CD final, o que causa uma reimplantação do Argo CD e consequentemente uma perda momentânea de conexão entre o provedor Argo CD Terraform e o servidor Argo CD.
+O erro se deve à forma como provisionamos o Argo CD nas etapas finais da implantação. Usamos o bootstrap Argo CD para implantar o módulo Argo CD final, o que causa uma reimplantação do Argo CD e consequentemente uma perda momentânea de conexão entre o provedor ArgoCD do Tofu/Terraform e o servidor do Argo CD.
 
-*Você pode simplesmente executar novamente o comando `summon terraform apply` para finalizar a inicialização do cluster sempre que encontrar esse erro.*
+*Você pode simplesmente executar novamente o comando `summon tofu apply` para finalizar a inicialização do cluster sempre que encontrar esse erro.*
 
-=== Loop de recarga da interface Argo CD ao clicar no login
+=== Loop de recarga da interface do Argo CD ao clicar no login
 
 Se você encontrar um loop ao clicar no botão de login na interface do Argo CD, você pode tentar excluir o pod do servidor Argo CD e deixá-lo ser recriado.
 
-TIP: Para obter mais informações sobre o módulo Argo CD, consulte xref:argocd:ROOT:README.adoc[respectiva página de documentação].
+TIP: Para obter mais informações sobre o módulo Argo CD, consulte a xref:argocd:ROOT:README.adoc[respectiva página de documentação].

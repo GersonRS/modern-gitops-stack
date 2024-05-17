@@ -1,9 +1,9 @@
 = Implantação no Azure AKS
 
 Um exemplo de implantação local de um cluster Kubernetes no Azure AKS é fornecido https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks[aqui]. Clone este repositório e modifique os arquivos conforme sua conveniência.
-No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[módulo Terraform] padrão, você encontrará os seguintes arquivos:
+No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/modules/module#what-is-a-terraform-module[módulo Tofu/Terraform] padrão, você encontrará os seguintes arquivos:
 
-* *`terraform.tf`* - declaração dos provedores Terraform utilizados neste projeto;
+* *`terraform.tf`* - declaração dos provedores Tofu/Terraform utilizados neste projeto;
 * *`locals.tf`* - variáveis locais usadas pelos módulos Modern Gitops Stack;
 * *`main.tf`* - definição de todos os módulos implantados;
 * *`storage.tf`* - criação da Conta de Armazenamento e Container de Armazenamento usado por Loki e Thanos;
@@ -11,53 +11,53 @@ No repositório, como em um https://developer.hashicorp.com/terraform/tutorials/
 * *`oidc.tf`* - adição dos URIs de redirecionamento ao Aplicativo Empresarial Azure AD para usá-lo para autenticação nos componentes Modern Gitops Stack fornecendo uma interface web;
 * *`outputs.tf`* - as variáveis de saída do Modern Gitops Stack;
 
-IMPORTANTE: A pasta *`requirements`* não faz parte do código do Terraform que você executa diretamente. Sua importância é explicada na próxima seção.
+IMPORTANTE: A pasta *`requirements`* não faz parte do código do Tofu/Terraform que você executa diretamente. Sua importância é explicada na próxima seção.
 
 == Requisitos
 
 Na sua máquina local, você precisa ter as seguintes ferramentas instaladas:
 
 * https://learn.microsoft.com/en-us/cli/azure/[Azure CLI] para fazer login em sua conta do Azure e interagir com seu cluster AKS;
-* https://www.terraform.io/[Terraform] para provisionar toda a pilha;
-* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`]para interagir com seu cluster;
+* https://opentofu.org/[Tofu] ou https://www.terraform.io/[Terraform] para provisionar toda a stack;
+* https://kubernetes.io/docs/reference/kubectl/[`kubectl`] ou https://github.com/derailed/k9s[`k9s`] para interagir com seu cluster;
 
 Fora isso, você precisará do seguinte:
 
 * Uma conta Azure ativa com uma assinatura ativa;
 * Um aplicativo corporativo no Entra ID para usar como provedor de identidade para os componentes Modern Gitops Stack;
 * A assinatura do Azure precisa ter um Key Vault para armazenar os segredos usados para passar as credenciais da referida aplicação para os componentes Modern Gitops Stack;
-* Sua conta do Azure precisa fazer parte de um grupo de usuários ao qual foi atribuída a função `Proprietário`, `Leitor do Key Vault` e `Usuário do Key Vault Secrets` na assinatura;
-* Sua conta do Azure também precisa ser um `Proprietário` do Aplicativo Empresarial para adicionar os URIs de redirecionamento adequados.
+* Sua conta do Azure precisa fazer parte de um grupo de usuários ao qual foi atribuída a função `Owner`, `Key Vault Reader` e `Key Vault Secrets user` na assinatura;
+* Sua conta do Azure também precisa ser um `Owner` do Aplicativo Empresarial para adicionar os URIs de redirecionamento adequados.
 
 [TIP]
 ====
-Neste repositório, você encontrará um exemplo de código Terraform que pode provisionar os recursos necessários acima. Você pode encontrar este código https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements[aqui].
+Neste repositório, você encontrará um exemplo de código Tofu/Terraform que pode provisionar os recursos necessários acima. Você pode encontrar este código https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements[aqui].
 
-*Observe que este código precisa ser executado por um administrador com os direitos apropriados na assinatura, mas também no Entra ID.*
+*Observe que este código precisa ser executado por um administrador com os direitos apropriados na assinatura e também no Entra ID.*
 ====
 
 [TIP]
 ====
-Uma alternativa para criar os recursos necessários separadamente é que seu usuário tenha uma atribuição de função `Desenvolvedor de aplicativos` na instância do Entra ID à qual a assinatura está vinculada.
+Uma alternativa para criar os recursos necessários separadamente é que seu usuário tenha uma atribuição de função `Application Developer` na instância do Entra ID à qual a assinatura está vinculada.
 
 Isso permitirá que você crie o Aplicativo Corporativo e adicione os URIs de redirecionamento diretamente com seu código, sem a necessidade de um administrador.
 
-Verifique https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements/application.tf[`application.tf`] da dica acima e adapte os recursos do Terraform para crie você mesmo o aplicativo.
+Verifique https://github.com/GersonRS/modern-gitops-stack/tree/main/examples/aks/requirements/application.tf[`application.tf`] da dica acima e adapte os recursos do Tofu/Terraform para crie você mesmo o aplicativo.
 
 Ou simplesmente crie o aplicativo corporativo e adicione os URIs de redirecionamento manualmente.
 ====
 
 == Especificidades e explicações
 
-=== Estado remoto do Terraform
+=== Estado remoto do Tofu/Terraform
 
-Se não quiser configurar o back-end de estado remoto do Terraform, você pode simplesmente remover o bloco `backend` do arquivo `terraform.tf`.
+Se não quiser configurar o back-end de estado remoto do Tofu/Terraform, você pode simplesmente remover o bloco `backend` do arquivo `terraform.tf`.
 
 NOTA: Mais informações sobre backends remotos estão disponíveis em https://developer.hashicorp.com/terraform/language/settings/backends/configuration[documentação oficial].
 
 === Autenticação OIDC
 
-IMPORTANT: Os módulos Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos Modern Gitops Stack.
+IMPORTANT: Os módulos Modern Gitops Stack são desenvolvidos com o OIDC em mente. Na produção, você deve ter um provedor de identidade que suporte OIDC e usá-lo para autenticar os aplicativos do Modern Gitops Stack.
 
 Neste exemplo, usamos https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/[Enterprise Applicaion] como provedor OIDC.
 
@@ -71,7 +71,7 @@ Se você se sentir pronto para testar com certificados de produção, você pode
 
 == Implantação
 
-1. Clone o repositório e `cd` na pasta `examples/aks`;
+1. Clone o repositório e entre na pasta usando `cd examples/aks`;
 
 2. Faça login em sua conta do Azure com a CLI do Azure, defina a assinatura adequada e verifique se você está conectado:
 +
@@ -84,13 +84,13 @@ az account show
 
 3. Confira os módulos que deseja implantar no arquivo `main.tf` e comente os demais;
 +
-DICA: Você também pode adicionar seus próprios módulos Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao seu precisa.
+DICA: Você também pode adicionar seus próprios módulos Tofu/Terraform neste arquivo ou em qualquer outro arquivo na pasta raiz. Um bom lugar para começar a escrever seu próprio módulo é clonar o repositório https://github.com/GersonRS/modern-gitops-stack-module-template[modern-gitops-stack-module-template] e adaptá-lo ao que você precisa.
 
-4. Na origem da implantação de exemplo, inicialize os módulos e provedores do Terraform:
+4. Na raiz do deploy de exemplo, inicialize os módulos e provedores do Tofu/Terraform:
 +
 [source,bash]
 ----
-terraform init
+tofu init
 ----
 
 5. Configure as variáveis em `locals.tf` de acordo com sua preferência:
@@ -101,14 +101,14 @@ DICA: O xref:eks:ROOT:README.adoc[documentação do módulo cluster] pode ajudá
 include::examples$deploy_examples/aks/locals.tf[]
 ----
 
-6. Por fim, execute `terraform apply` e aceite as alterações propostas para criar os nós Kubernetes no Azure AKS e preenchê-los com nossos serviços;
+6. Por fim, execute `tofu apply` e aceite as alterações propostas para criar os nós Kubernetes no Azure AKS e preenchê-los com nossos serviços;
 +
 [source,bash]
 ----
-terraform apply
+tofu apply
 ----
 
-7. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao CD Argo), você pode ir para `locals.tf` e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
+7. Após a primeira implantação (observe a etapa de solução de problemas relacionada ao ArgoCD), você pode ir para `locals.tf` e habilitar o booleano _ServiceMonitor_ para ativar os exportadores do Prometheus que enviarão métricas para o Prometheus;
 +
 IMPORTANTE: Este sinalizador precisa ser definido como `false` para a primeira inicialização do cluster, caso contrário, os aplicativos falharão na implantação enquanto as definições de recursos personalizados do kube-prometheus-stack ainda não foram criadas.
 +
@@ -116,7 +116,7 @@ NOTA: Você pode definir o sinalizador como `true` no arquivo `locals.tf` ou pod
 +
 DICA: Anote o local chamado `app_autosync`. Se você definir a condição do operador ternário como `false` você desabilitará a sincronização automática para todos os módulos Modern Gitops Stack. Isso permite que você escolha quando sincronizar manualmente o módulo na interface do Argo CD e é útil para fins de solução de problemas.
 
-== Acesse o cluster e os aplicativos Modern Gitops Stack
+== Acesse o cluster e os aplicativos do Modern Gitops Stack
 
 Para acessar seu cluster, você precisa usar a CLI do Azure para recuperar um Kubeconfig que você pode usar:
 
@@ -127,17 +127,17 @@ az aks get-credentials --resource-group YOUR_CLUSTER_RESOURCE_GROUP_NAME --name 
 
 [NOTE]
 ====
-If you do not add your user's or group's object ID to the `rbac_aad_admin_group_object_ids` variable on the `main.tf`, you will need to use the `--admin` flag on the command above. This will give the privileged Kubeconfig to access the cluster.
+Se você não adicionar o ID do objeto do seu usuário ou grupo à variável `rbac_aad_admin_group_object_ids` no `main.tf`, você precisará usar o sinalizador `--admin` no comando acima. Isso dará ao Kubeconfig privilégio para acessar o cluster.
 ====
 
-Then you can use the `kubectl` or `k9s` command to interact with the cluster:
+Então você pode usar o comando `kubectl` ou `k9s` para interagir com o cluster:
 
 [source,bash]
 ----
 k9s --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-As for the Modern Gitops Stack applications, you can access them through the ingress domain that you can find in the `ingress_domain` output. If you used the code from the example without modifying the outputs, you will see something like this on your terminal after the `terraform apply` has done its job:
+Quanto aos aplicativos do Modern Gitops Stack, você pode acessá-los através do domínio de entrada que pode ser encontrado na saída `ingress_domain`. Se você usou o código do exemplo sem modificar as saídas, você verá algo assim em seu terminal depois que `tofu apply` tiver feito seu trabalho:
 
 [source,shell]
 ----
@@ -146,22 +146,22 @@ Outputs:
 ingress_domain = "your.domain.here"
 ----
 
-Or you can use `kubectl` to get all the ingresses and their respective URLs:
+Ou você pode usar `kubectl` para obter todas as entradas e suas respectivas URLs:
 
 [source,bash]
 ----
 kubectl get ingress --all-namespaces --kubeconfig ~/.kube/NAME_TO_GIVE_YOUR_CONFIG.config
 ----
 
-== Stop the cluster
+== Parar o cluster
 
-To definitively stop the cluster on a single command, you can simply use the `terraform destroy` command. This will destroy all the resources created by the Terraform code, including the Kubernetes cluster.
+Para parar definitivamente o cluster com um único comando, você pode simplesmente usar o comando `terraform destroy`. Isso destruirá todos os recursos criados pelo código Tofu/Terraform, incluindo o cluster Kubernetes.
 
-== Troubleshooting
+== Solução de problemas
 
-=== `connection_error` during the first deployment
+=== `connection_error` durante a primeira implantação
 
-In some cases, you could encounter an error like these the first deployment:
+Em alguns casos, você pode encontrar um erro como estes na primeira implantação:
 
 [source,shell]
 ----
@@ -176,12 +176,12 @@ In some cases, you could encounter an error like these the first deployment:
 ╵
 ----
 
-The error is due to the way we provision Argo CD on the final steps of the deployment. We use the bootstrap Argo CD to deploy the final Argo CD module, which causes a redeployment of Argo CD and consequently a momentary loss of connection between the Argo CD Terraform provider and the Argo CD server.
+O erro se deve à forma como provisionamos o Argo CD nas etapas finais da implantação. Usamos o bootstrap Argo CD para implantar o módulo Argo CD final, o que causa uma reimplantação do Argo CD e consequentemente uma perda momentânea de conexão entre o provedor Argo CD Terraform e o servidor Argo CD.
 
-*You can simply re-run the command `terraform apply` to finalize the bootstrap of the cluster every time you encounter this error.*
+*Você pode simplesmente executar novamente o comando `terraform apply` para finalizar a inicialização do cluster sempre que encontrar esse erro.*
 
-=== Argo CD interface reload loop when clicking on login
+=== Loop de recarga da interface Argo CD ao clicar no login
 
-If you encounter a loop when clicking on the login button on the Argo CD interface, you can try to delete the Argo CD server pod and let it be recreated.
+Se você encontrar um loop ao clicar no botão de login na interface do ArgoCD, você pode tentar excluir o pod do servidor ArgoCD e deixá-lo ser recriado.
 
-TIP: For more informations about the Argo CD module, please refer to the xref:argocd:ROOT:README.adoc[respective documentation page].
+TIP: Para mais informações sobre o módulo ArgoCD, consulte a xref:argocd:ROOT:README.adoc[respectiva página de documentação].

@@ -1,74 +1,53 @@
-= Objetivo da pilha moderna de Gitops
+= Objetivo do Modern Gitops Stack
 
 == Introdução
 
-Desde cerca de 2006, a indústria de TI tem sido totalmente perturbada pela conjunção de vários fatores, incluindo a virtualização de recursos e a possibilidade de obtê-los sob demanda. Esta nova forma de gerenciar recursos de TI é amplamente conhecida como “Cloud Computing”. Tornou-se uma espécie de padrão, ou pelo menos um objetivo perseguido também por pessoas que desejam manter infraestruturas locais. O tão esperado sonho de finalmente poder considerar a TI como uma simples mercadoria. Bem, isso é o que muitos acreditavam.
+No cenário atual de TI, a padronização e eficiência na gestão de infraestruturas em nuvem são essenciais para o sucesso organizacional. Com a proliferação de tecnologias de computação em nuvem e o uso crescente de Kubernetes para orquestração de contêineres, as empresas enfrentam o desafio de manter a consistência e qualidade em suas operações de TI. O Modern Gitops Stack foi criado para resolver esses problemas, proporcionando uma solução robusta e moderna para padronização de infraestrutura em nuvem, além de integrar as melhores práticas de MLOps e soluções de machine learning.
 
-As consequências concretas desta revolução para empresas de TI como a GersonRS têm sido principalmente o incrível crescimento no número de recursos a serem provisionados e gerenciados. A ampla automação de processos realizada por nossas equipes nos permitiu fazer frente a esse crescimento sem diminuir nossos padrões de qualidade, permanecendo competitivos.
+O Modern Gitops Stack oferece uma plataforma Kubernetes de ponta que simplifica o provisionamento e a gestão de recursos. Ele adota uma abordagem agnóstica em relação à nuvem, garantindo que as infraestruturas sejam reproduzíveis, escaláveis e fáceis de gerenciar em qualquer provedor de nuvem. Esta flexibilidade permite às empresas escolher a plataforma de nuvem que melhor atende às suas necessidades sem se preocupar com a compatibilidade.
 
-Não tivemos trégua nessa jornada de automação e tiramos o melhor proveito de um ecossistema próspero de projetos de código aberto que atendem a todas as necessidades relacionadas a essa mudança de paradigma.
+Nosso objetivo é fornecer uma infraestrutura como código (IaC) integrada com os princípios de GitOps, criando um ecossistema coeso e automatizado. Isso não só facilita o desenvolvimento e a implantação de aplicativos, mas também incorpora as melhores práticas de MLOps, permitindo a implantação eficiente de modelos de machine learning. Com o Modern Gitops Stack, as empresas podem focar na inovação em vez de se preocupar com a complexidade operacional.
 
-Aprendemos muito durante todos esses anos e o Modern Gitops Stack é a nossa resposta para implementar nossas melhores práticas em um mundo conteinerizado onde o Kubernetes é o padrão _de fato_ para plataformas de aplicativos.
+== Vantagens do Modern Gitops Stack
 
-== Distribuição Kubernetes Agnóstica em Nuvem
+Na era da computação em nuvem, a escolha das ferramentas e plataformas corretas é um desafio. O Modern Gitops Stack resolve essa complexidade ao fornecer uma distribuição Kubernetes agnóstica em nuvem, que se adapta a diferentes ambientes e necessidades. Inspirado pela consistência de uma distribuição Linux, mas com a portabilidade do Kubernetes, nosso stack integra perfeitamente diversos componentes essenciais, desde monitoramento até roteamento dinâmico.
 
-Hoje em dia, a questão não é tanto se existe software para resolver um problema, mas qual usar. Como uma distribuição Linux, temos orquestradores de contêineres (Kubernetes como kernel) e muitos outros projetos que giram em torno dele e oferecem diferentes recursos. Esses recursos às vezes são orientados para desenvolvedores, operadores ou ambos (por exemplo, ferramentas de observabilidade).
+== Por que o Modern Gitops Stack é Essencial
 
-Quanto a uma distribuição Linux, o que precisamos é de consistência, componentes que funcionem juntos e que sejam fáceis de instalar e manter. Mas, ao contrário de uma distribuição Linux que é, por definição, centrada no servidor, a promessa dos contêineres e do Kubernetes é a portabilidade. A possibilidade de passar de uma nuvem (ou infraestrutura on-premise) para outra, de distribuir as cargas de trabalho em diferentes plataformas. No final das contas, este Modern Gitops Stack é simplesmente uma "Distribuição Kubernetes Agnóstica em Nuvem".
+image::explanations/without_modern-gitops-stack.png[Sem o Modern Gitops Stack]
 
-== Sem o Modern Gitops Stack
+Sem uma solução como o Modern Gitops Stack, as empresas frequentemente enfrentam desafios significativos:
 
-image::explanations/without_modern-gitops-stack.png[Sem a pilha moderna de Gitops]
+* **Escalabilidade Limitada**: À medida que mais projetos são adicionados, a complexidade de gerenciamento aumenta.
+* **Duplicação de Código**: Sem padronização, diferentes projetos acabam duplicando esforços e códigos.
+* **Falta de Implementação de Referência**: Melhorias e práticas bem-sucedidas não são facilmente transferíveis entre projetos.
+* **Manutenção Difícil**: Cada projeto pode divergir, complicando a manutenção e atualização contínua.
+* **Dependências Divergentes**: Projetos acabam dependendo de diferentes versões de ferramentas e bibliotecas, criando conflitos e problemas de compatibilidade.
 
-A ilustração acima tenta mostrar que embora seja bastante simples gerenciar um projeto Kubernetes, a complexidade aumenta dramaticamente quando você adiciona mais e mais projetos e deseja manter uma certa homogeneidade entre eles. Os principais problemas observados são:
+== Com o Modern Gitops Stack
 
-* Não escala
-* Há muitas duplicações de código
-* Não há referência de implementação
-* As melhorias nem sempre são transferidas para outros projetos
-* É muito difícil manter
-* Todos os projetos acabarão por divergir
-* Cada projeto aponta para diferentes versões de dependências
+image::explanations/with_modern-gitops-stack-2.png[Com o Modern Gitops Stack]
 
-Este não é um novo problema de TI. Há duas décadas, não era muito fácil gerir milhares, ou mesmo centenas de anfitriões de forma homogénea. Este problema foi resolvido com sucesso por soluções como CFEngine, Puppet ou mais recentemente pelo Ansible. Hoje, devemos adaptar esses princípios ao Kubernetes. Existem muitos componentes de código aberto por aí, apenas uma maneira inteligente de interconectá-los.
+Implementando o Modern Gitops Stack, as empresas se beneficiam de uma solução que:
 
-== Com a pilha moderna de Gitops
-
-image::explanations/with_modern-gitops-stack-2.png[Com a pilha moderna de Gitops]
-
-Ao criar o Modern Gitops Stack (uma espécie de camada de abstração), torna-se possível instanciar todos os componentes através de um processo lógico e coerente. As principais vantagens são:
-
-* Ele escala
-* Duplicação mínima de código
-* Uma implementação de referência
-* As melhorias podem ser facilmente transferidas para outros projetos
-* O pining de dependência é feito no Modern Gitops Stack para garantir a reprodutibilidade
+* **Escala Facilmente**: Projetado para crescer junto com as necessidades do negócio.
+* **Minimiza a Duplicação de Código**: Utiliza práticas padronizadas e módulos reutilizáveis.
+* **Fornece uma Implementação de Referência**: Facilita a transferência de melhorias entre projetos.
+* **Facilita a Manutenção**: Centraliza o gerenciamento de dependências e configurações.
+* **Garante Reprodutibilidade**: Através de pinning de dependências e infraestrutura como código.
 
 == Resumo
 
-No final, o Modern Gitops Stack fornece:
+O Modern Gitops Stack oferece:
 
-* Um Playground para testar/prototipar coisas novas relacionadas ao mundo K8s
-* Uma camada de abstração opinativa para implantar e gerenciar nossas implantações do Kubernetes
-* Aplicar as melhores práticas do Modern Gitops:
-** Infraestrutura como Código (IaC)
-** Gerenciamento de Configuração (CM)
-** GitOps
-** Integração Contínua (CI)
-** Entrega Contínua (CD)
-** Documentação como Código
-* Um conjunto de ferramentas consistente
-** Observabilidade (monitoramento, registro, alertas, tendências)
-** Entrega Contínua (gerenciamento de mudanças + recursos Git)
-** Roteamento Web Dinâmico
-** Provisionamento de armazenamento dinâmico
-** Gerenciamento Dinâmico de Certificados
-** Autenticação e autorização
+* Um playground para testar e prototipar novas soluções relacionadas ao Kubernetes.
+* Uma camada de abstração opinativa para implantar e gerenciar implementações de Kubernetes.
+* Aplicação das melhores práticas de Modern Gitops, incluindo IaC, CM, GitOps, CI, CD e documentação como código.
+* Um conjunto consistente de ferramentas para observabilidade, entrega contínua, roteamento web dinâmico, provisionamento de armazenamento e gerenciamento de certificados.
+* Suporte a múltiplas distribuições Kubernetes, como AWS EKS, Azure AKS, Google GKE e KinD para desenvolvimento local e testes.
+* Suporte a padrões de implantação azul/verde ou ambientes diferenciados (prod/qa/int/dev).
+* Infraestrutura como Código com Tofu/Terraform.
+* Implantação automatizada de aplicativos essenciais no espírito GitOps com Argo CD.
+* Documentação centralizada e integrada usando Antora.
 
-Com as seguintes características principais:
-
-* Suporta múltiplas distribuições Kubernetes (AWS EKS, Azure AKS e KinD para desenvolvimento local e fins de teste);
-* Suporta padrões azul/verde ou prod/qa/int/dev;
-* Infraestrutura como Código com Terraform;
-* Implantação automática de "core apps" (cert-manager, Prometheus, AlertManager, Grafana, Loki, Traefik. etc.) no espírito GitOps com Argo CD;
-* Ponto central de documentação implantado com Antora.
+Com o Modern Gitops Stack, as empresas podem transformar a gestão de suas infraestruturas em nuvem, adotando uma abordagem padronizada, eficiente e moderna que suporta a inovação contínua e o crescimento sustentável, mantendo a flexibilidade de escolha entre diferentes provedores de nuvem.

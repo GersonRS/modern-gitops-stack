@@ -4,6 +4,6 @@ Implantar clusters Kubernetes do zero tornou-se uma tarefa fácil com interfaces
 
 A abordagem Infraestrutura como Código já provou há muito tempo seu valor para implantar e manter ambientes complexos no longo prazo. Em particular, no contexto dos recursos da nuvem, permite garantir que todos os recursos sejam geridos centralmente e destruídos no seu contexto adequado. Isto é importante para controlar as consequências financeiras de inúmeras implantações.
 
-O Modern Gitops Stack é fortemente baseado na ideia de que cada um de seus componentes deve ser gerenciado como código. *Como tal, o cluster Kubernetes subjacente e seus componentes são gerenciados com Terraform e os aplicativos de cluster são implantados usando gráficos Helm orquestrados pelo Argo CD.*
+O Modern Gitops Stack é fortemente baseado na ideia de que cada um de seus componentes deve ser gerenciado como código. *Como tal, o cluster Kubernetes subjacente e seus componentes são gerenciados com Tofu/Terraform e os aplicativos de cluster são implantados usando Helm Charts orquestrados pelo Argo CD.*
 
-Isso permite que você acompanhe todas as alterações feitas em qualquer nível da pilha, usando xref:ROOT:explanations/continuous_deployment.adoc[Continuous Deployment] em uma abordagem GitOps.
+Isso permite que você acompanhe todas as alterações feitas em qualquer nível da stack, usando xref:ROOT:explanations/continuous_deployment.adoc[Continuous Deployment] em uma abordagem GitOps.

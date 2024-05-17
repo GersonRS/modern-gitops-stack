@@ -1,6 +1,6 @@
-= Pilha de Gitops Moderna
+= Modern Gitops Stack
 
-:palavras-chave: terraform, kubernetes, kind, eks, aks, terraform, argocd, grafana, loki, traefik, prometheus, cert-manager, openid-connect, antora
+:palavras-chave: tofu, kubernetes, kind, eks, aks, tofu, argocd, grafana, loki, traefik, prometheus, cert-manager, openid-connect, antora
 :sectanchors:
 
 // Essas URLs são usadas no documento como estão para gerar novas URLs, portanto, não devem conter nenhuma barra final.
@@ -8,34 +8,34 @@
 :url-c2c: https://gersonrs.github.io
 :url-devops-stack-repo: https://github.com/camptocamp/devops-stack
 
-imagem::modern-gitops-stack-logo_large.png[Pilha moderna de Gitops]
+image::modern-gitops-stack-logo_large.png[Modern Gitops Stack]
 
-O Modern Gitops Stack fornece uma plataforma Kubernetes de implantação padronizada, reunindo provisionamento automatizado como código, implantação contínua de aplicativos e configurações prontas para as melhores ferramentas nativas da nuvem do setor.
+O Modern Gitops Stack oferece uma plataforma Kubernetes para implantações padronizadas, integrando provisionamento automatizado como código, entrega contínua de aplicações e configurações prontas com as melhores ferramentas nativas da nuvem.
 
-DICA: A maneira mais fácil de começar com o Modern Gitops Stack é seguir o tutorial na página xref:ROOT:tutorials/deploy_kind.adoc[Deployment on KinD]. Este tutorial deixará você com um playground https://kind.sigs.k8s.io/[KinD] totalmente operacional em sua máquina local.
+TIP: Para começar com o Modern Gitops Stack de forma fácil, siga o tutorial na página xref:ROOT:tutorials/deploy_kind.adoc[Deployment on KinD]. Este guia irá configurar um playground totalmente funcional do https://kind.sigs.k8s.io/[KinD] em sua máquina local.
 
 == Projeto
 
-Este projeto é uma extensão do projeto {url-devops-stack-repo}[DevOps Stack]. *É uma extensão focada em GitOps e MLOps para desenvolvimento e implantação de Modelos de Machine Learning*. Seu código-fonte é aberto e distribuído sob a licença Apache 2.
+Este projeto é uma extensão do projeto {url-devops-stack-repo}[DevOps Stack]. *Ele é voltado para GitOps e MLOps, facilitando o desenvolvimento e a implantação de Modelos de Machine Learning*. O código-fonte é aberto e licenciado sob a Apache 2.
 
-== Explicação rápida
+== Visão Geral
 
-O Modern Gitops Stack é composto por vários módulos Terraform usados para implantar um cluster Kubernetes junto com uma pilha de componentes que permitirá implantar aplicativos, bem como monitorar e solucionar problemas de seu cluster.
+O Modern Gitops Stack é constituído por diversos módulos Tofu/Terraform que são utilizados para implantar um cluster Kubernetes junto com uma stack de componentes, permitindo tanto a implantação de aplicativos quanto a monitorização e resolução de problemas do cluster.
 
-A escolha do módulo de cluster depende do provedor no qual você deseja implantar seu cluster. O Modern Gitops Stack atualmente oferece suporte ao Amazon EKS, Azure AKS e uma implantação de teste local usando KinD. Os módulos que implantam os componentes restantes da pilha são tão genéricos quanto possível, mas alguns possuem variantes específicas do provedor que implantam recursos diferentes dependendo da plataforma.
+A escolha do módulo de cluster depende do provedor de nuvem onde o cluster será implantado. Atualmente, o Modern Gitops Stack oferece suporte ao Amazon EKS, Azure AKS e uma implantação de teste local utilizando KinD. Os módulos para os componentes restantes são projetados para serem o mais genéricos possível, embora alguns possuam variantes específicas para diferentes provedores de nuvem.
 
-Como você verá nos exemplos, após a implantação do cluster, um CD Argo temporário é instalado para então implantar o restante dos componentes. Após a implantação de todos os componentes, esta instância do Argo CD é substituída por uma permanente que gerenciará as atualizações de todos os componentes e poderá ser usada para implantar suas aplicações (também criamos módulos para criar e configurar o Argo CD).
+Conforme mostrado nos exemplos, após a criação do cluster, uma instância temporária do ArgoCD é instalada para facilitar a implantação dos demais componentes. Depois que todos os componentes são implantados, essa instância temporária é substituída por uma permanente, que gerenciará as atualizações de todos os componentes e também poderá ser utilizada para implantar suas aplicações. Há módulos disponíveis para a criação e configuração do ArgoCD.
 
 == Documentação
 
-Estas páginas de documentação são a principal fonte de informações para o Modern Gitops Stack. Eles são escritos em https://asciidoc.org/[AsciiDoc] e construídos usando https://antora.org/[Antora].
+Estas páginas de documentação são a principal fonte de informações sobre o Modern Gitops Stack. Elas são escritas em https://asciidoc.org/[AsciiDoc] e construídas usando https://antora.org/[Antora].
 
-A documentação principal contém informações relativas ao Modern Gitops Stack como um todo, enquanto as páginas do módulo contêm detalhes mais específicos e técnicos sobre cada módulo individual. Recomendamos que você dê uma olhada na documentação geral primeiro para ter uma visão geral de uma implantação do Modern Gitops Stack e depois navegue na barra lateral para consultar a documentação de cada módulo.
+A documentação principal fornece uma visão geral do Modern Gitops Stack, enquanto as páginas dos módulos contêm informações técnicas específicas sobre cada módulo. Recomendamos que você comece pela documentação geral para entender o panorama de uma implantação do Modern Gitops Stack e, em seguida, consulte a barra lateral para detalhes específicos dos módulos.
 
-Esta documentação, bem como alguns exemplos, estão armazenados no {url-main-repo}[repositório principal no GitHub].
+A documentação e exemplos estão disponíveis no {url-main-repo}[repositório principal no GitHub].
 
 == Contribuindo
 
-Na seção de contribuição da barra lateral você encontrará algumas orientações sobre como contribuir para o Modern Gitops Stack. Você tem algumas xref:ROOT:contributing/general_guidelines.adoc[diretrizes gerais] sobre como contribuir para o projeto junto com explicações sobre xref:ROOT:contributing/modules.adoc[como um módulo é estruturado], xref:ROOT:contributing/ documentação.adoc[como escrever documentação] e xref:ROOT:contributing/release.adoc[como funciona o processo de lançamento].
+Na seção de contribuição da barra lateral, você encontrará diretrizes sobre como contribuir para o Modern Gitops Stack. Existem xref:ROOT:contributing/general_guidelines.adoc[diretrizes gerais] sobre contribuição, além de explicações sobre xref:ROOT:contributing/modules.adoc[estrutura dos módulos], xref:ROOT:contributing/documentation.adoc[como escrever a documentação] e xref:ROOT:contributing/release.adoc[processo de lançamento].
 
-Aceitamos qualquer tipo de contribuição, seja um relatório de bug, uma solicitação de recurso, uma melhoria na documentação ou até mesmo uma contribuição de código. Você também pode criar seus próprios módulos de provisionamento de cluster e solicitar nossa ajuda, mas não podemos garantir qualquer manutenção ou suporte de longo prazo para eles.
+Aceitamos todo tipo de contribuição, seja relatórios de bugs, solicitações de novas funcionalidades, melhorias na documentação ou contribuições de código. Você também pode criar seus próprios módulos de provisionamento de cluster e solicitar nossa assistência, mas não podemos garantir suporte ou manutenção de longo prazo para esses módulos.

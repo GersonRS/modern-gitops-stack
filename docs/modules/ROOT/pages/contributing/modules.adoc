@@ -1,11 +1,11 @@
-= Módulos modernos de pilha Gitops
+= Módulos do Modern Gitops Stack
 
 :documentation-page: xref:ROOT:contributing/documentation.adoc[Documentação]
 :release-page: xref:ROOT:contributing/release.adoc[Lançamento]
 // Esses URLs são usados no documento como estão para gerar novos URLs, portanto, não devem conter nenhuma barra final.
 :url-template-repo: https://github.com/GersonRS/modern-gitops-stack-module-template
 
-O Modern Gitops Stack é separado em vários módulos Terraform, cada um deles contendo um conjunto de recursos relacionados.
+O Modern Gitops Stack é separado em vários módulos Tofu/Terraform, cada um deles contendo um conjunto de recursos relacionados.
 
 A fim de melhorar a legibilidade e manutenção do código, esta página contém algumas orientações e explicações por trás da criação e desenvolvimento dos módulos Modern Gitops Stack. Há também um {url-template-repo}[modelo de repositório no GitHub] que pode ser usado como ponto de partida para novos módulos e você pode consultá-lo enquanto lê esta página.
 
@@ -45,22 +45,22 @@ Visão geral rápida de cada arquivo/pasta:
 . *`LICENSE`* - A licença do módulo. No nosso caso é a licença Apache 2.0.
 . *`README.adoc`* - A documentação do módulo. Está escrito em AsciiDoc e contém o exemplo de uso junto com algumas explicações, bem como a documentação automática gerada pelo Terraform Docs.
 . *`locals.tf`* - Contém a definição das variáveis locais utilizadas no módulo.
-. *`main.tf`* - Contém a definição dos recursos que são criados pelo módulo. Pode ser qualquer tipo de recurso Terraform, dependendo do caso de uso.
+. *`main.tf`* - Contém a definição dos recursos que são criados pelo módulo. Pode ser qualquer tipo de recurso Tofu/Terraform, dependendo do caso de uso.
 . *`outputs.tf`* - Contém a definição das variáveis de saída do módulo.
 . *`terraform.tf`* - Contém as versões dos provedores necessários.
 
-IMPORTANT: O arquivo `terraform.tf` deve conter apenas a *versão mínima necessária* dos provedores necessários. Isso evita incompatibilidades entre módulos e é https://developer.hashicorp.com/terraform/language/providers/requirements#best-practices-for-provider-versions[melhores práticas recomendadas pela Terraform].
+IMPORTANT: O arquivo `terraform.tf` deve conter apenas a *versão mínima necessária* dos provedores necessários. Isso evita incompatibilidades entre módulos e as https://developer.hashicorp.com/terraform/language/providers/requirements#best-practices-for-provider-versions[melhores práticas recomendadas para o Terraform].
 
 . *`variables.tf`* - Contém a definição das variáveis de entrada do módulo.
 . *`version.txt`* - Contém a versão do módulo. *Você só deve criá-lo se estiver criando um novo módulo*, após isso ele é atualizado automaticamente pelo Release Please GitHub Action.
 
 NOTE: Tome cuidado para descrever corretamente cada entrada nos arquivos `variables.tf` e `outputs.tf`. Estas descrições são levadas em consideração pelo Terraform Docs para a documentação automática do módulo.
 
-== Módulos com gráficos Helm incorporados
+== Módulos com Helm charts incorporados
 
-Estes são os módulos mais típicos do Modern Gitops Stack e são usados para implantar os componentes restantes da pilha. Bons exemplos disso são xref:argocd:ROOT:README.adoc[módulo Argo CD] e xref:cert-manager:ROOT:README.adoc[módulo cert-manager].
+Estes são os módulos mais típicos do Modern Gitops Stack e são usados para implantar os componentes restantes da stack. Bons exemplos disso são xref:argocd:ROOT:README.adoc[módulo Argo CD] e xref:cert-manager:ROOT:README.adoc[módulo cert-manager].
 
-NOTE: O módulo Argo CD é um caso especial, pois é utilizado para implantar os demais módulos. Um CD bootstrap Argo é implantado usando recursos do tipo `helm_release`. Este CD Argo é então responsável por implantar os módulos restantes, que utilizam recursos do tipo `argocd_project` e `argocd_application`.
+NOTE: O módulo Argo CD é um caso especial, pois é utilizado para implantar os demais módulos. Um CD bootstrap Argo é implantado usando recursos do tipo `helm_release`. Este ArgoCD é então responsável por implantar os módulos restantes, que utilizam recursos do tipo `argocd_project` e `argocd_application`.
 
 Uma estrutura típica de arquivo/pasta para um módulo com gráficos Helm incorporados é a seguinte:
 

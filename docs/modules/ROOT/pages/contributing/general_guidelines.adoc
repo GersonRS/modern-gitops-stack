@@ -7,26 +7,26 @@ Este documento descreve as diretrizes gerais para contribuir com o Modern Gitops
 
 O Modern Gitops Stack é uma coleção de módulos, cada um deles com seu próprio ciclo de lançamento, para facilitar o desenvolvimento e manutenção de cada módulo.
 
-DICA: Um projeto GitHub privado de propriedade da equipe https://github.com/orgs/GersonRS/teams/is-modern-gitops-stack/[`@GersonRS/is-modern-gitops-stack`] está disponível https: //github.com/orgs/GersonRS/projects/3/[aqui]. É uma forma útil de acompanhar o andamento dos PRs e Issues de todos os repositórios. Para obter mais informações sobre como ele é implementado, verifique a página xref:ROOT:contributing/project_board.adoc[Project Board].
+TIP: Um projeto GitHub publico está disponível https://github.com/users/GersonRS/projects/2[aqui]. É uma forma útil de acompanhar o andamento dos PRs e Issues de todos os repositórios. Para obter mais informações sobre como ele é implementado, verifique a página xref:ROOT:contributing/project_board.adoc[Project Board].
 
 == Fluxo de trabalho de desenvolvimento
 
 Quando um novo recurso ou correção é necessário, o fluxo de trabalho típico é o seguinte:
 
-1. Você deve criar um novo branch a partir do branch `main` do módulo que deseja trabalhar;
-2. Trabalhe e teste em sua filial;
-3. Quando você achar que seu recurso/correção está pronto, crie um Pull Request para mesclar seu branch no branch `main`.
+1. Você deve criar uma nova branch a partir da branch `main` do módulo que deseja trabalhar;
+2. Trabalhe e teste em sua branch;
+3. Quando você achar que sua feature/fix está pronto, crie um Pull Request para mesclar sua branch na branch `main`.
 
 As subseções a seguir descrevem algumas das melhores práticas a serem seguidas ao trabalhar no Modern Gitops Stack.
 
-=== Ramos
+=== Branches
 
-* Mantenha o branch `main` limpo e apenas mescle Pull Requests nele.
-* Crie um novo branch para cada Pull Request. *O nome da filial deve ser o número do ticket do Jira, seguido de uma breve descrição do trabalho realizado na filial*, por exemplo `ISMODERN-GITOPS-185-v1-docs`. Isso permitirá que o ticket Jira seja automaticamente vinculado à filial e ao Pull Request.
+* Mantenha o branch `main` limpa e apenas mescle Pull Requests nele.
+* Crie uma nova branch para cada Pull Request. *O nome da branch deve ter um nome que condiz com a funcionalidade que deseja implementar, seguido de uma breve descrição do trabalho realizado na branch*, por exemplo `add-oidc-authentication`.
 
-=== Confirmar mensagens
+=== Commit messages
 
-* Ao se comprometer com sua filial, você deve seguir a especificação https://www.conventionalcommits.org/[Conventional Commits]. *Isso também permitirá que a geração automatizada do changelog funcione corretamente.*
+* Ao fazer commit na sua branch, você deve seguir a especificação https://www.conventionalcommits.org/[Conventional Commits]. *Isso também permitirá que a geração automatizada do changelog funcione corretamente.*
 
 * Usamos os seguintes tipos de commit:
 
@@ -38,20 +38,20 @@ As subseções a seguir descrevem algumas das melhores práticas a serem seguida
 ** *`ci`* - alterações nos arquivos e scripts de configuração do CI
 ** *`chore`* - outras alterações que realmente não modificam o código (pode ser um commit de mesclagem, por exemplo, `chore: rebase 'main' into 'ISMODERN-GITOPS-184-v1-docs' antes de mesclar PR `)
 
-* *Se o seu commit adiciona uma alteração significativa, você deve adicionar um `!` após o tipo de commit*, por exemplo `feat!: add uma alteração significativa`.
+* *Se o seu commit adiciona uma alteração significativa, você deve adicionar um `!` após o tipo de commit*, por exemplo `feat!: add a breaking change`.
 +
 IMPORTANT: Adicionar uma alteração significativa acionará automaticamente um aumento na versão principal quando o módulo for lançado.
 
 * O escopo do commit é opcional, mas recomendado:
-** Pelo menos, para os módulos que possuem variantes, *recomenda-se incluir a variante no escopo (`eks`, `aks` ou `kind`)*. Você pode simplesmente usar a variante ou até mesmo usar a variante como prefixo (por exemplo, `docs(eks-variables): add descriptions`).
+** Pelo menos, para os módulos que possuem variantes, *recomenda-se incluir a variante no escopo (`eks`, `aks`, `gke` ou `kind`)*. Você pode simplesmente usar a variante ou até mesmo usar a variante como prefixo (por exemplo, `docs(eks-variables): add descriptions`).
 ** Se estiver modificando algo no gráfico, *você deve adicionar `chart` como escopo*.
-** Caso contrário, os escopos recomendados poderiam ser apenas o tipo de código alterado, por exemplo, `variáveis`, `saídas`, `principal`, etc.
+** Caso contrário, os escopos recomendados poderiam ser apenas o tipo de código alterado, por exemplo, `variables`, `outputs`, `main`, etc.
 
-* A especificação de commits convencional também permite adicionar um corpo e um rodapé à mensagem de commit. Você poderia usar o corpo para adicionar mais detalhes e contexto ao commit, mas seja curto. O rodapé pode ser usado para adicionar uma referência a um ticket do Jira, por exemplo.
+* A especificação de commits convencional também permite adicionar um corpo e um rodapé à mensagem de commit. Você poderia usar o corpo para adicionar mais detalhes e contexto ao commit.
 
-=== Solicitações pull
+=== Pull Requests
 
-* Você pode criar Pull Requests a partir de seu branch a qualquer momento durante o desenvolvimento, mas se ele não estiver pronto para ser mesclado, você deve marcá-lo como _Draft Pull Request_. Isso evitará que ele seja mesclado por engano, ao mesmo tempo que permitirá que você obtenha feedback de outros desenvolvedores, bem como verificações automatizadas e geração de documentação feitas pelo GitHub Actions.
+* Você pode criar Pull Requests a partir da sua branch a qualquer momento durante o desenvolvimento, mas se ele não estiver pronto para ser mesclado, você deve marcá-lo como _Draft Pull Request_. Isso evitará que ele seja mesclado por engano, ao mesmo tempo que permitirá que você obtenha feedback de outros desenvolvedores, bem como verificações automatizadas e geração de documentação feitas pelo GitHub Actions.
 
 * Para que um PR seja mesclado, você precisa ter pelo menos uma revisão de outro desenvolvedor e todas as verificações automatizadas devem ser aprovadas. Comentários sobre o PR são bem-vindos e nos permitem acompanhar as discussões que acontecem no PR.
 
@@ -59,18 +59,18 @@ IMPORTANT: Adicionar uma alteração significativa acionará automaticamente um 
 +
 IMPORTANT: A desvantagem desta abordagem é que o histórico de commits precisa ser cuidado. Por exemplo, ter vários commits que dizem `docs: fix typo` não é apropriado. *Neste caso, você deve compactar manualmente os commits em um único commit com uma mensagem de commit adequada.* O mesmo vale para vários commits que foram usados iterativamente para corrigir um bug ou desenvolver um recurso. *Nesse caso, você deve compactar os commits em um único commit, um para cada correção ou recurso.*
 
-// TODO Talvez adicione um exemplo de um histórico de commits bom e um histórico de commits ruim.
+//TODO Talvez adicionar um exemplo de um histórico de commits bom e um histórico de commits ruim.
 
-* Tome cuidado para intitular e descrever adequadamente sua solicitação pull. *O título deve ser suficientemente descritivo e seguir as especificações convencionais dos commits*. Quanto à descrição, siga o modelo fornecido.
+* Tome cuidado para intitular e descrever adequadamente seu pull requests. *O título deve ser suficientemente descritivo e seguir as especificações convencionais dos commits*. Quanto à descrição, siga o modelo fornecido.
 +
-IMPORTANT: Se você fizer um `Squash and Merge` em um Pull Request, *a mensagem de commit será o título do Pull Request*. Portanto, certifique-se de que o título seja descritivo o suficiente e siga a especificação convencional dos commits, caso contrário teremos que corrigir manualmente a mensagem do commit no branch `main`, o que é no mínimo inconveniente.
+IMPORTANT: Se você fizer um `Squash and Merge` em um Pull Request, *a mensagem de commit será o título do Pull Request*. Portanto, certifique-se de que o título seja descritivo o suficiente e siga a especificação convencional dos commits, caso contrário terei que corrigir manualmente a mensagem do commit na branch `main`, o que é no mínimo inconveniente.
 
 === Problemas
 
-* Se você encontrar algum problema no Modern Gitops Stack, poderá criar um problema no repositório em que o encontrou. Um problema pode ser um bug ou uma solicitação/proposta de recurso.
+* Se você encontrar algum problema no Modern Gitops Stack, poderá criar uma issue no repositório em que o encontrou. Um problema pode ser um bug ou uma solicitação/proposta de feature.
 
 * Se for um bug, descreva o problema adequadamente e forneça o máximo de contexto possível.
 
-* Se for uma solicitação/proposta de recurso, descreva por que o recurso é necessário e qual problema ele resolverá para você.
+* Se for uma solicitação/proposta de feature, descreva por que a feature é necessário e qual problema ele resolverá para você.
 
-* *As questões são mais úteis para usuários externos do Modern Gitops Stack*, se possível podemos discutir o assunto em nossa reunião semanal e então decidir se é algo que queremos implementar ou não. Nesse caso, podemos então criar um ticket Jira, para acompanhar o trabalho que precisa ser feito.
+* *As questões são mais úteis para usuários externos do Modern Gitops Stack*, se possível podemos discutir o assunto em uma reunião e então decidir se é algo que queremos implementar ou não. Nesse caso, podemos então criar um card no backlog, para acompanhar o trabalho que precisa ser feito.
