@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.17.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.0...v1.17.1) (2024-05-17)
+
+
+### 📚 Documentation
+
+* update documentation ([88d1413](https://github.com/GersonRS/modern-gitops-stack/commit/88d141304a7540f42c8203e9703340e45df0bfb2))
+* update documentation ([ac442e7](https://github.com/GersonRS/modern-gitops-stack/commit/ac442e7f876ec5fcd9655d72e96c08d57187bc78))
+* update documentation ([0d2b598](https://github.com/GersonRS/modern-gitops-stack/commit/0d2b598e895626aba73ac1708807b412b9a15e3b))
+
 ## [1.17.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.16.0...v1.17.0) (2024-05-17)
 
 
