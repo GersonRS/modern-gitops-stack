@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.17.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.16.0...v1.17.0) (2024-05-17)
+
+
+### 🚀 New Features
+
+* try update publish antora page ([27527b0](https://github.com/GersonRS/modern-gitops-stack/commit/27527b0398ff3054b3d214cf648e8af42d827908))
+* try update publish antora page ([4070562](https://github.com/GersonRS/modern-gitops-stack/commit/4070562ef483dead6c46a090424428a03ec75fb0))
+
+
+### 📚 Documentation
+
+* update documentation ([146069c](https://github.com/GersonRS/modern-gitops-stack/commit/146069cee3851d9ad403c289a17266f149110419))
+
 ## [1.16.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.15.1...v1.16.0) (2024-05-13)
 
 
