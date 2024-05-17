@@ -14,7 +14,7 @@ Na era da computação em nuvem, a escolha das ferramentas e plataformas correta
 
 == Por que o Modern Gitops Stack é Essencial
 
-image::explanations/without_modern-gitops-stack3.png[Sem o Modern Gitops Stack]
+image::explanations/without_modern-gitops-stack.png[Sem o Modern Gitops Stack]
 
 Sem uma solução como o Modern Gitops Stack, as empresas frequentemente enfrentam desafios significativos:
 
@@ -26,7 +26,7 @@ Sem uma solução como o Modern Gitops Stack, as empresas frequentemente enfrent
 
 == Com o Modern Gitops Stack
 
-image::explanations/with_modern-gitops-stack-2.png[Com o Modern Gitops Stack]
+image::explanations/with_modern-gitops-stack-3.png[Com o Modern Gitops Stack]
 
 Implementando o Modern Gitops Stack, as empresas se beneficiam de uma solução que:
 
