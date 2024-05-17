@@ -1,19 +1,19 @@
 .*Documentação Principal*
-* xref:ROOT:index.adoc[Home]
+* xref:ROOT:index.adoc[Página Inicial]
 * Explicações
-** xref:ROOT:explanations/purpose.adoc[Purpose]
-** xref:ROOT:explanations/cloud_agnostic.adoc[Cloud Agnostic]
-** xref:ROOT:explanations/infrastructure_as_code.adoc[Infrastructure as Code]
-** xref:ROOT:explanations/continuous_deployment.adoc[Continuous Deployment]
-** xref:ROOT:explanations/lifecycle_operations.adoc[Lifecycle Operations]
+** xref:ROOT:explanations/purpose.adoc[Propósito]
+** xref:ROOT:explanations/cloud_agnostic.adoc[Agnóstico à nuvem]
+** xref:ROOT:explanations/infrastructure_as_code.adoc[Infraestrutura como código]
+** xref:ROOT:explanations/continuous_deployment.adoc[Implantação Contínua]
+** xref:ROOT:explanations/lifecycle_operations.adoc[Operações de ciclo de vida]
 * Tutoriais
-** xref:ROOT:tutorials/deploy_kind.adoc[Deployment on KinD]
-** xref:ROOT:tutorials/deploy_aks.adoc[Deployment on AKS]
-** xref:ROOT:tutorials/deploy_eks.adoc[Deployment on EKS]
+** xref:ROOT:tutorials/deploy_kind.adoc[Deployment no KinD]
+** xref:ROOT:tutorials/deploy_aks.adoc[Deployment na AKS]
+** xref:ROOT:tutorials/deploy_eks.adoc[Deployment na EKS]
 * Diretrizes de contribuição
-** xref:ROOT:contributing/general_guidelines.adoc[General Guidelines]
-** xref:ROOT:contributing/modules.adoc[Modern Gitops Stack Modules]
-** xref:ROOT:contributing/documentation.adoc[Documentation]
+** xref:ROOT:contributing/general_guidelines.adoc[Diretrizes Gerais]
+** xref:ROOT:contributing/modules.adoc[Modulos do Modern Gitops Stack]
+** xref:ROOT:contributing/documentation.adoc[Documentação]
 ** xref:ROOT:contributing/release.adoc[Release]
 ** xref:ROOT:contributing/project_board.adoc[Project Board]
 
