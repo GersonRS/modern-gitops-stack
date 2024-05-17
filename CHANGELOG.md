@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.1...v1.17.2) (2024-05-17)
+
+
+### ⌨️ Code Refactoring
+
+* publish antora docs adjust ([f1ffa7b](https://github.com/GersonRS/modern-gitops-stack/commit/f1ffa7b5417fc7eeef863fbbcaef1d8fdb2db91a))
+
 ## [1.17.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.0...v1.17.1) (2024-05-17)
 
 
