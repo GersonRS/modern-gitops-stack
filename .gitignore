@@ -1,6 +1,8 @@
 ### Unwanted Terraform files when using the examples ###
 
 examples/*/.terraform
+examples/*/.terraform/*
+examples/*/.terraform*
 examples/*/terraform.tfstate
 examples/*/terraform.tfstate.*
 examples/*/.terraform.tfstate.lock.info
