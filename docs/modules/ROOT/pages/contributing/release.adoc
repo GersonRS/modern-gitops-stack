@@ -1,22 +1,22 @@
-= Liberação
+= Release
 
 // Esses URLs são usados no documento como estão para gerar novos URLs, portanto, não devem conter nenhuma barra final.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 :url-template-repo: https://github.com/GersonRS/modern-gitops-stack-module-template
 
-Cada módulo é lançado e versionado de forma independente. O processo de lançamento é automatizado e acionado por uma ação GitHub que é acionada quando um PR é mesclado no branch `main`. Esta ação usa a https://github.com/google-github-actions/release-please-action[ferramenta Release Please desenvolvida pelo Google] para criar automaticamente um novo PR de lançamento que atualiza o arquivo `CHANGELOG.md` e elimina o version nos arquivos `version.txt` e `variables.tf`. Para que um lançamento seja concluído, o PR do lançamento precisa ser aprovado manualmente e então mesclado no branch `principal`.
+Cada módulo é lançado e versionado de forma independente. O processo de lançamento é automatizado e acionado por uma action do GitHub que é acionada quando um PR é mesclado na branch `main`. Esta ação usa a https://github.com/googleapis/release-please-action[Release Please Action desenvolvida pelo Google] para criar automaticamente um novo PR de lançamento que atualiza o arquivo `CHANGELOG.md` e elimina o version nos arquivos `version.txt` e `variables.tf`. Para que um lançamento seja concluído, o PR do lançamento precisa ser aprovado manualmente e então mesclado na branch `main`.
 
-Nas subseções abaixo, passaremos pelo processo de lançamento com mais detalhes e, em seguida, explicaremos algumas etapas ao definir manualmente uma versão.
+Nas subseções abaixo, passarei pelo processo de lançamento com mais detalhes e, em seguida, explicarei algumas etapas ao definir manualmente uma versão.
 
-== Liberar Por favor configuração
+== Configuração do release-please-action
 
-A ferramenta Release Please pode ser encontrada https://github.com/googleapis/release-please [neste repositório] e o GitHub Action que usamos está disponível em https://github.com/google-github-actions/release-please-action[outro repositório]. Ambos são mantidos pelo Google.
+A Ação Release Please Action pode ser encontrada https://github.com/googleapis/release-please[neste repositório] e o GitHub Action que usamos está disponível em https://github.com/googleapis/release-please-action[outro repositório]. Ambos são mantidos pelo Google.
 
-Cada módulo Modern Gitops Stack contém um fluxo de trabalho GitHub que simplesmente chama um fluxo de trabalho centralizado.
+Cada módulo do Modern Gitops Stack contém um workflow do GitHub que simplesmente chama um workflow centralizado.
 
-=== Fluxo de trabalho centralizado
+=== Workflow centralizado
 
-A definição de fluxo de trabalho disponível em {url-main-repo}/blob/main/.github/workflows/modules-release-please.yaml[repositório principal].
+A definição de workflow disponível em {url-main-repo}/blob/main/.github/workflows/modules-release-please.yaml[repositório principal].
 
 [fonte,yaml]
 ----
@@ -25,15 +25,15 @@ incluem::exemplos$github_workflows/modules-release-please.yaml[]
 
 Observe as seguintes linhas:
 
-. A configuração `workflow_call` significa que o fluxo de trabalho só é acionado por uma chamada externa (ou seja, quando um módulo o chama).
+. A configuração `workflow_call` significa que o workflow só é acionado por uma chamada externa (ou seja, quando um módulo o chama).
 
-. A configuração `release-type` está definida como `simple`, o que significa que apenas atualiza o arquivo `CHANGELOG.md` e altera a versão no arquivo `version.txt`.
+. A configuração `config-file` é usada para especificar o caminho para a configuração do release-please no repositório. Dentro destas definições temos que configurar qual tipo de release será criada atraves da variavel `release-type` que está definida como `simple`, o que significa que apenas atualiza o arquivo `CHANGELOG.md` e altera a versão no arquivo `version.txt`.
 
-. A configuração `extra-files` é usada para especificar arquivos adicionais que precisam ser atualizados ao alterar a versão. No nosso caso, também precisamos atualizar o arquivo `variables.tf`. *Isso ocorre porque precisamos definir estaticamente a variável `target_revision`, que é usada para fixar a versão do módulo nos recursos `argocd_application`.*
+. A configuração `manifest-file` é usada para especificar o caminho para o manifesto das versões de lançamento.
 
-=== Fluxo de trabalho do chamador
+=== Chamador do workflow
 
-O fluxo de trabalho do chamador em cada módulo simplesmente aponta para este fluxo de trabalho e é configurado para ser executado em cada push para o branch `main`. Esta é a definição do fluxo de trabalho:
+O caller workflow em cada módulo simplesmente aponta para este workflow e é configurado para ser executado em cada push para o branch `main`. Esta é a definição do workflow:
 
 [source,yaml]
 ----
@@ -50,13 +50,13 @@ jobs:
     uses: GersonRS/modern-gitops-stack/.github/workflows/modules-release-please.yaml@main
 ----
 
-NOTE: Nosso {url-template-repo}/blob/main/.github/workflows/release-please.yaml[module template] já contém esta definição de fluxo de trabalho, mas com uma ressalva. Para evitar a criação de releases no próprio template, ele foi desativado e é necessário reativá-lo ao criar um novo módulo. Os comentários no arquivo são autoexplicativos.
+NOTE: O {url-template-repo}/blob/main/.github/workflows/release-please.yaml[module template] já contém esta definição de workflow, mas com uma ressalva. Para evitar a criação de releases no próprio template, ele foi desativado e é necessário reativá-lo ao criar um novo módulo. Os comentários no arquivo são autoexplicativos.
 
 == Versionamento automático
 
 As mensagens de commit são usadas para determinar o tipo de release que precisa ser criado.
 
-Somente os tipos de commit `feat` e `fix` acionarão o IC de lançamento. O tipo de commit `feat` irá desencadear um aumento de versão secundária, enquanto o tipo de commit `fix` irá desencadear um aumento de versão de patch. Se você adicionar um `!` após o tipo de commit, o lançamento será um aumento na versão principal. Por exemplo, `feat!: this is a break change` irá desencadear um aumento na versão principal.
+Somente os tipos de commit `feat` e `fix` acionarão o IC de lançamento. O tipo de commit `feat` irá desencadear um aumento de versão secundária, enquanto o tipo de commit `fix` irá desencadear um aumento de versão de patch. Se você adicionar um `!` após o tipo de commit, o lançamento terá um aumento na versão principal. Por exemplo, `feat!: this is a break change` irá desencadear um aumento na versão principal.
 
 Qualquer outro tipo de commit não acionará um lançamento. Isso inclui `chore`, `docs`, `style`, `refactor`, `perf` e `test`. Se você ainda quiser forçar um lançamento, você pode adicionar um rodapé a qualquer mensagem de commit com o prefixo `Release-As:`.
 
@@ -66,6 +66,6 @@ Quando um módulo ainda está em fase de pré-lançamento, o versionamento é um
 
 Propomos que enquanto o módulo estiver em fase de pré-lançamento, você deve apenas fazer um `Squash and Merge` e adicionar o rodapé `Release-As:` ao comentário de mesclagem. O PR de lançamento conterá a versão que você especificou no rodapé `Release-As:`. Você pode então aprovar e mesclar o PR de lançamento.
 
-Para versionamento de pré-lançamento, propomos usar `v1.0.0-alpha.X` ou `v1.0.0-beta.X`, dependendo da maturidade. `X` é a versão de pré-lançamento e é o que deve ser incrementado manualmente.
+Para versionamento de pré-lançamento, proponho usar `v1.0.0-alpha.X` ou `v1.0.0-beta.X`, dependendo da maturidade. `X` é a versão de pré-lançamento e é o que deve ser incrementado manualmente.
 
 IMPORTANT: Quando um módulo estiver pronto para o primeiro lançamento, você precisará adicionar o rodapé `Release-As: v1.0.0` e isso acionará o primeiro lançamento. Depois disso, o processo de liberação será automático.

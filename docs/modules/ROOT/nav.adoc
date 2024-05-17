@@ -1,28 +1,28 @@
-.*Main Documentation*
+.*Documentação Principal*
 * xref:ROOT:index.adoc[Home]
-* Explanations
+* Explicações
 ** xref:ROOT:explanations/purpose.adoc[Purpose]
 ** xref:ROOT:explanations/cloud_agnostic.adoc[Cloud Agnostic]
 ** xref:ROOT:explanations/infrastructure_as_code.adoc[Infrastructure as Code]
 ** xref:ROOT:explanations/continuous_deployment.adoc[Continuous Deployment]
 ** xref:ROOT:explanations/lifecycle_operations.adoc[Lifecycle Operations]
-* Tutorials
+* Tutoriais
 ** xref:ROOT:tutorials/deploy_kind.adoc[Deployment on KinD]
 ** xref:ROOT:tutorials/deploy_aks.adoc[Deployment on AKS]
 ** xref:ROOT:tutorials/deploy_eks.adoc[Deployment on EKS]
-* Contributing Guidelines
+* Diretrizes de contribuição
 ** xref:ROOT:contributing/general_guidelines.adoc[General Guidelines]
 ** xref:ROOT:contributing/modules.adoc[Modern Gitops Stack Modules]
 ** xref:ROOT:contributing/documentation.adoc[Documentation]
 ** xref:ROOT:contributing/release.adoc[Release]
 ** xref:ROOT:contributing/project_board.adoc[Project Board]
 
-.*Cluster Modules*
+.*Módulos de cluster*
 * xref:aks:ROOT:README.adoc[Azure AKS]
 * xref:eks:ROOT:README.adoc[Amazon EKS]
 * xref:kind:ROOT:index.adoc[KinD]
 
-.*Chart Modules*
+.*Módulos de Charts*
 * xref:argocd:ROOT:README.adoc[Argo CD]
 * xref:oidc-aws-cognito:ROOT:README.adoc[AWS Cognito OIDC]
 * xref:cert-manager:ROOT:README.adoc[cert-manager]
