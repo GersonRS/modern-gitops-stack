@@ -48,3 +48,4 @@ jobs:
           folder: public/docs
           target-folder: .
           commit-message: "ci: publish documentation for ${{ github.sha }}"
+          token: ${{ secrets.PAT }}
