@@ -6,7 +6,6 @@
 // Essas URLs são usadas no documento como estão para gerar novas URLs, portanto, não devem conter nenhuma barra final.
 :url-main-repo: https://github.com/GersonRS/modern-gitops-stack
 :url-c2c: https://gersonrs.github.io
-:url-devops-stack-repo: https://github.com/camptocamp/devops-stack
 
 image::modern-gitops-stack-logo_large.png[Modern Gitops Stack]
 
@@ -16,7 +15,7 @@ TIP: Para começar com o Modern Gitops Stack de forma fácil, siga o tutorial na
 
 == Projeto
 
-Este projeto é uma extensão do projeto {url-devops-stack-repo}[DevOps Stack]. *Ele é voltado para GitOps e MLOps, facilitando o desenvolvimento e a implantação de Modelos de Machine Learning*. O código-fonte é aberto e licenciado sob a Apache 2.
+Este projeto é uma extensão do projeto DevOps Stack. *Ele é voltado para GitOps e MLOps, facilitando o desenvolvimento e a implantação de Modelos de Machine Learning*. O código-fonte é aberto e licenciado sob a Apache 2.
 
 == Visão Geral
 
