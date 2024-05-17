@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.17.3](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.2...v1.17.3) (2024-05-17)
+
+
+### 📚 Documentation
+
+* update documentation ([989da1f](https://github.com/GersonRS/modern-gitops-stack/commit/989da1f0e9da4fd50d2737857381c440bc11eb07))
+
+
+### ⌨️ Code Refactoring
+
+* adjust pre-commit and add workflow path ([1383493](https://github.com/GersonRS/modern-gitops-stack/commit/1383493f001ee138ab69e5c05dab6a612b344cf6))
+* adjust publish antora workflow ([7911bd5](https://github.com/GersonRS/modern-gitops-stack/commit/7911bd53b278fab054cc3dd7f45b47d3b6164d81))
+* publish antora docs adjust ([ca01d94](https://github.com/GersonRS/modern-gitops-stack/commit/ca01d94b1f555a9983f86a127acff82b6e662e5e))
+
 ## [1.17.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.1...v1.17.2) (2024-05-17)
 
 
