@@ -131,6 +131,35 @@ module "minio" {
   }
 }
 
+module "zookeeper" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-zookeeper.git?ref=v1.2.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
+  }
+}
+
+module "nifi" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-nifi.git?ref=v1.3.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  oidc                   = module.oidc.oidc
+  dependency_ids = {
+    zookeeper = module.zookeeper.id
+  }
+}
+
 module "loki-stack" {
   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v1.1.0"
 

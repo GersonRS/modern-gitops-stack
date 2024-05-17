@@ -34,14 +34,14 @@ jobs:
           args: generate antora-playbook.yml --to-dir public/docs
 
       - name: "Upload generated artifact"
-        if: github.event_name == 'pull_request'
+        # if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: documentation
           path: ${{ github.workspace }}/public/docs
 
       - name: "Deploy documentation to GitHub Pages"
-        if: github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        # if: github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         uses: JamesIves/github-pages-deploy-action@v4.6.0
         with:
           branch: gh-pages
