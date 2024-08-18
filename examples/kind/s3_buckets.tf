@@ -6,6 +6,10 @@ resource "random_password" "thanos_secretkey" {
   length  = 32
   special = false
 }
+resource "random_password" "mlflow_secretkey" {
+  length  = 32
+  special = false
+}
 
 locals {
   minio_config = {
@@ -35,6 +39,19 @@ locals {
             actions   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
           }
         ]
+      },
+      {
+        name = "mlflow-policy"
+        statements = [
+          {
+            resources = ["arn:aws:s3:::mlflow-bucket"]
+            actions   = ["s3:CreateBucket", "s3:DeleteBucket", "s3:GetBucketLocation", "s3:ListBucket", "s3:ListBucketMultipartUploads"]
+          },
+          {
+            resources = ["arn:aws:s3:::mlflow-bucket/*"]
+            actions   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+          }
+        ]
       }
     ],
     users = [
@@ -47,6 +64,11 @@ locals {
         accessKey = "thanos-user"
         secretKey = random_password.thanos_secretkey.result
         policy    = "thanos-policy"
+      },
+      {
+        accessKey = "mlflow-user"
+        secretKey = random_password.mlflow_secretkey.result
+        policy    = "mlflow-policy"
       }
     ],
     buckets = [
@@ -55,6 +77,9 @@ locals {
       },
       {
         name = "thanos-bucket"
+      },
+      {
+        name = "mlflow"
       }
     ]
   }
