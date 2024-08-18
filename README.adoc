@@ -10,4 +10,4 @@ Lá você encontrará tudo o que precisa saber para começar a usar o Modern Git
 
 == Estatísticas
 
-![Alt](https://repobeats.axiom.co/api/embed/997f57828b6e37e68d612042185d35a9a761dcd4.svg "Repobeats analytics image")
+image::https://repobeats.axiom.co/api/embed/997f57828b6e37e68d612042185d35a9a761dcd4.svg[Repobeats analytics image]
