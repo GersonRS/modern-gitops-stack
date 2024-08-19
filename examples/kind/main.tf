@@ -160,6 +160,122 @@ module "mlflow" {
   }
 }
 
+module "strimzi" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-strimzi.git?ref=v1.3.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
+  }
+}
+
+module "kafka" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-kafka.git?ref=v2.7.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  dependency_ids = {
+    argocd  = module.argocd_bootstrap.id
+    traefik = module.traefik.id
+    strimzi = module.strimzi.id
+  }
+}
+
+module "cp-schema-registry" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry.git?ref=v1.2.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  kafka_broker_name      = module.kafka.broker_name
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
+    kafka  = module.kafka.id
+  }
+}
+module "kafka-ui" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-kafka-ui.git?ref=v1.2.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  kafka_broker_name      = module.kafka.broker_name
+  dependency_ids = {
+    argocd             = module.argocd_bootstrap.id
+    kafka              = module.kafka.id
+    cp-schema-registry = module.cp-schema-registry.id
+  }
+}
+
+module "pinot" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-pinot.git?ref=v1.1.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  storage = {
+    bucket_name       = "pinot"
+    endpoint          = module.minio.endpoint
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
+  dependency_ids = {
+    argocd  = module.argocd_bootstrap.id
+    traefik = module.traefik.id
+    minio   = module.minio.id
+  }
+}
+
+module "trino" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-trino.git?ref=v1.1.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+  pinot_dns              = module.pinot.cluster_dns
+  storage = {
+    bucket_name       = "trino"
+    endpoint          = module.minio.endpoint
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
+  database = {
+    user     = module.postgresql.credentials.user
+    password = module.postgresql.credentials.password
+    database = "curated"
+    service  = module.postgresql.cluster_dns
+  }
+  dependency_ids = {
+    argocd     = module.argocd_bootstrap.id
+    traefik    = module.traefik.id
+    oidc       = module.oidc.id
+    minio      = module.minio.id
+    postgresql = module.postgresql.id
+    pinot      = module.pinot.id
+  }
+}
+
 # module "zookeeper" {
 #   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-zookeeper.git?ref=v1.2.0"
 #   cluster_name           = local.cluster_name
@@ -328,41 +444,41 @@ module "kube-prometheus-stack" {
 #   }
 # }
 
-module "jupyterhub" {
-  source         = "git::https://github.com/GersonRS/modern-gitops-stack-module-jupyterhub.git?ref=v1.1.0"
-  cluster_name   = local.cluster_name
-  base_domain    = local.base_domain
-  subdomain      = local.subdomain
-  cluster_issuer = local.cluster_issuer
-  argocd_project = local.cluster_name
-  app_autosync   = local.app_autosync
-  oidc           = module.oidc.oidc
-  storage = {
-    bucket_name       = "mlflow"
-    endpoint          = module.minio.endpoint
-    access_key        = module.minio.minio_root_user_credentials.username
-    secret_access_key = module.minio.minio_root_user_credentials.password
-  }
-  database = {
-    database = "jupyterhub"
-    user     = module.postgresql.credentials.user
-    password = module.postgresql.credentials.password
-    endpoint = module.postgresql.cluster_dns
-  }
-  mlflow = {
-    endpoint = module.mlflow.cluster_dns
-  }
-  # ray = {
-  #   endpoint = module.ray.cluster_dns
-  # }
-  dependency_ids = {
-    argocd     = module.argocd_bootstrap.id
-    traefik    = module.traefik.id
-    oidc       = module.oidc.id
-    minio      = module.minio.id
-    postgresql = module.postgresql.id
-  }
-}
+# module "jupyterhub" {
+#   source         = "git::https://github.com/GersonRS/modern-gitops-stack-module-jupyterhub.git?ref=v1.1.0"
+#   cluster_name   = local.cluster_name
+#   base_domain    = local.base_domain
+#   subdomain      = local.subdomain
+#   cluster_issuer = local.cluster_issuer
+#   argocd_project = local.cluster_name
+#   app_autosync   = local.app_autosync
+#   oidc           = module.oidc.oidc
+#   storage = {
+#     bucket_name       = "mlflow"
+#     endpoint          = module.minio.endpoint
+#     access_key        = module.minio.minio_root_user_credentials.username
+#     secret_access_key = module.minio.minio_root_user_credentials.password
+#   }
+#   database = {
+#     database = "jupyterhub"
+#     user     = module.postgresql.credentials.user
+#     password = module.postgresql.credentials.password
+#     endpoint = module.postgresql.cluster_dns
+#   }
+#   mlflow = {
+#     endpoint = module.mlflow.cluster_dns
+#   }
+#   # ray = {
+#   #   endpoint = module.ray.cluster_dns
+#   # }
+#   dependency_ids = {
+#     argocd     = module.argocd_bootstrap.id
+#     traefik    = module.traefik.id
+#     oidc       = module.oidc.id
+#     minio      = module.minio.id
+#     postgresql = module.postgresql.id
+#   }
+# }
 
 module "argocd" {
   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.3.0"
