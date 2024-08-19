@@ -161,10 +161,10 @@ locals {
     ],
     buckets = [
       {
-        name = "loki-bucket"
+        name = "loki"
       },
       {
-        name = "thanos-bucket"
+        name = "thanos"
       },
       {
         name = "mlflow"
