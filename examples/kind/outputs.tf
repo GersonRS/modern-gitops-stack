@@ -20,6 +20,11 @@ output "keycloak_users" {
   value       = module.oidc.modern_gitops_stack_users_passwords
   sensitive   = true
 }
+output "keycloak_oidc" {
+  description = "OIDC"
+  value       = module.oidc.oidc
+  sensitive   = true
+}
 
 output "cluster_issuers" {
   description = "Map containing the cluster issuers created by cert-manager."
