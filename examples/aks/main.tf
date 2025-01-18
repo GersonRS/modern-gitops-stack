@@ -54,7 +54,7 @@ module "aks" {
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.5.0"
 
   argocd_projects = {
     "${module.aks.cluster_name}" = {
