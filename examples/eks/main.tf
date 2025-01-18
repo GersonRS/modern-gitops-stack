@@ -56,7 +56,7 @@ module "eks" {
 }
 
 module "oidc" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-oidc-aws-cognito.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-oidc-aws-cognito.git?ref=v1.3.0"
 
   cluster_name = module.eks.cluster_name
   base_domain  = module.eks.base_domain
