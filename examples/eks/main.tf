@@ -24,7 +24,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-eks.git?ref=v1.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-eks.git?ref=v2.4.0"
 
   cluster_name       = local.cluster_name
   kubernetes_version = local.kubernetes_version
@@ -56,7 +56,7 @@ module "eks" {
 }
 
 module "oidc" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-oidc-aws-cognito.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-oidc-aws-cognito.git?ref=v1.3.0"
 
   cluster_name = module.eks.cluster_name
   base_domain  = module.eks.base_domain
@@ -87,7 +87,7 @@ module "argocd_bootstrap" {
 }
 
 module "metrics-server" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v1.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v2.5.0"
 
   argocd_project = module.eks.cluster_name
 
@@ -181,7 +181,7 @@ module "thanos" {
 }
 
 module "kube-prometheus-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//eks?ref=v1.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//eks?ref=v2.5.0"
 
   cluster_name   = module.eks.cluster_name
   base_domain    = module.eks.base_domain
@@ -221,7 +221,7 @@ module "kube-prometheus-stack" {
 }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.5.0"
 
   cluster_name   = module.eks.cluster_name
   base_domain    = module.eks.base_domain

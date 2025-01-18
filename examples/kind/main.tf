@@ -38,7 +38,7 @@ module "metrics-server" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//kind?ref=v1.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//kind?ref=v2.5.0"
 
   argocd_project = local.cluster_name
 
@@ -51,7 +51,7 @@ module "traefik" {
 }
 
 module "cert-manager" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//self-signed?ref=v1.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//self-signed?ref=v2.5.0"
 
   argocd_project = local.cluster_name
 
@@ -64,7 +64,7 @@ module "cert-manager" {
 }
 
 module "keycloak" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v2.4.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -81,7 +81,7 @@ module "keycloak" {
 }
 
 module "oidc" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git//oidc_bootstrap?ref=v1.0.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git//oidc_bootstrap?ref=v2.4.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -109,7 +109,7 @@ module "postgresql" {
 }
 
 module "minio" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v1.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v2.5.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain

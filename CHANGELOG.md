@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.5](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.4...v1.17.5) (2025-01-18)
+
+
+### 🛠️ Build System
+
+* **deps:** bump actions/add-to-project from 1.0.1 to 1.0.2 ([8f501d6](https://github.com/GersonRS/modern-gitops-stack/commit/8f501d6dc65de2c978427c6087bb412a3b73d8f8))
+* **deps:** bump terraform-docs/gh-actions from 1.1.0 to 1.2.0 ([28b7176](https://github.com/GersonRS/modern-gitops-stack/commit/28b7176ccf86e64e7ef5963245ce708d33671d3a))
+
 ## [1.17.4](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.3...v1.17.4) (2024-05-17)
 
 

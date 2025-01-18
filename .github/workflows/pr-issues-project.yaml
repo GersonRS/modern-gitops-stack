@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add PR or issue to Modern GitOps Stack project board
-        uses: actions/add-to-project@v1.0.1
+        uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/GersonRS/projects/2
           github-token: ${{ secrets.PAT }}
