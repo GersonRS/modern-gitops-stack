@@ -9,5 +9,5 @@ locals {
   subdomain              = "apps"
   cluster_issuer         = module.cert-manager.cluster_issuers.ca
   enable_service_monitor = false # Can be enabled after the first bootstrap.
-  app_autosync           = true ? { allow_empty = false, prune = true, self_heal = true } : {}
+  app_autosync           = { allow_empty = false, prune = true, self_heal = true }
 }

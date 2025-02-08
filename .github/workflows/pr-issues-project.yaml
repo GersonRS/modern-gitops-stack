@@ -14,6 +14,10 @@ on:
         description: "GitHub token for the Modern Gitops Stack Project"
         required: true
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
@@ -25,3 +29,8 @@ jobs:
           github-token: ${{ secrets.PAT }}
           labeled: bug, needs-triage
           label-operator: NOT
+      - name: Auto Author Assign
+        uses: toshimaru/auto-author-assign
+        with:
+          repo-token: ${{ secrets.PAT }}
+          author: 'GersonRS'
