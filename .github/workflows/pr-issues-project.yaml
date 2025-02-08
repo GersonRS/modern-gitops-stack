@@ -30,7 +30,7 @@ jobs:
           labeled: bug, needs-triage
           label-operator: NOT
       - name: Auto Author Assign
-        uses: toshimaru/auto-author-assign
+        uses: toshimaru/auto-author-assign@v2.1.1
         with:
           repo-token: ${{ secrets.PAT }}
           author: 'GersonRS'
