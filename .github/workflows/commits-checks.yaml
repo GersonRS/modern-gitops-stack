@@ -1,18 +1,9 @@
 ---
-name: "commits-checks"
+name: "linters"
 
 on:
   pull_request:
 
 jobs:
-  commits-checks:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: "Check out the repository"
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-
-      - name: "Check commit messages"
-        uses: aevea/commitsar@v0.20.2
+  linters:
+    uses: GersonRS/modern-gitops-stack/.github/workflows/modules-linters.yaml@main

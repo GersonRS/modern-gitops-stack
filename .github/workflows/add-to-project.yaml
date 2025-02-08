@@ -13,6 +13,6 @@ on:
 
 jobs:
   add-to-project:
-    uses: GersonRS/modern-gitops-stack/.github/workflows/pr-issues-project.yaml@main
+    uses: GersonRS/modern-gitops-stack/.github/workflows/modules-add-to-project.yaml@main
     secrets:
       PAT: ${{ secrets.PAT }}

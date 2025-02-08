@@ -5,7 +5,7 @@
 # order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
 # changes when modifying this workflow.
 
-name: "pr-issues-project"
+name: "add-to-project"
 
 on:
   workflow_call:
