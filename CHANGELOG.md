@@ -1,5 +1,43 @@
 # Changelog
 
+## [1.18.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.5...v1.18.0) (2025-02-08)
+
+
+### 🚀 New Features
+
+* adjust code ([a4c4a5e](https://github.com/GersonRS/modern-gitops-stack/commit/a4c4a5e8e058ce5d822966c367eafa9928d2b638))
+
+
+### ⌨️ Code Refactoring
+
+* adjust all workflow ([d9401f1](https://github.com/GersonRS/modern-gitops-stack/commit/d9401f162b0e900756864dbc328885d0fad73bcd))
+* adjust pr-issues-project workflow ([f4342af](https://github.com/GersonRS/modern-gitops-stack/commit/f4342afe2ffefff0ffb95ff7406a6466a13dd571))
+* adjust release-please workflow ([0b6b746](https://github.com/GersonRS/modern-gitops-stack/commit/0b6b746f0cd30d32436a088b5e0b9c2c371bdb91))
+* adjust schedule cron chart-update workflow ([b36a9d5](https://github.com/GersonRS/modern-gitops-stack/commit/b36a9d5c59cd5743ab7233427559d47f69adc32d))
+* adjust schedule cron chart-update workflow ([c0f7c42](https://github.com/GersonRS/modern-gitops-stack/commit/c0f7c42d24c9f8ba82478215e850edd54c397e95))
+
+
+### 🛠️ Build System
+
+* **deps:** bump airflow::modern-gitops-stack-module-airflow ([0255a96](https://github.com/GersonRS/modern-gitops-stack/commit/0255a96cbd091268f7497f74bf6fb16809c5cbdc))
+* **deps:** bump argocd_bootstrap::modern-gitops-stack-module-argocd ([d7684ec](https://github.com/GersonRS/modern-gitops-stack/commit/d7684ec851a2f6e85ed7f624dd42b1da6b41738a))
+* **deps:** bump argocd_bootstrap::modern-gitops-stack-module-argocd ([6006c5c](https://github.com/GersonRS/modern-gitops-stack/commit/6006c5c10c6638aadb3d4136a20e3bd1db6af4a0))
+* **deps:** bump argocd_bootstrap::modern-gitops-stack-module-argocd ([566128b](https://github.com/GersonRS/modern-gitops-stack/commit/566128b9e6adf2e2df8569ab4a68fa393f477488))
+* **deps:** bump argocd::modern-gitops-stack-module-argocd ([e76a057](https://github.com/GersonRS/modern-gitops-stack/commit/e76a0579e56ae7821785ee371858d468565bb383))
+* **deps:** bump argocd::modern-gitops-stack-module-argocd ([e97cdd2](https://github.com/GersonRS/modern-gitops-stack/commit/e97cdd2af3091dee4e995bcffbd9b2de14a89e8b))
+* **deps:** bump camptocamp/helm-dependency-update-action ([a4341d3](https://github.com/GersonRS/modern-gitops-stack/commit/a4341d34dd1dca524c2774b8e5c906f7544e8491))
+* **deps:** bump keycloak::modern-gitops-stack-module-keycloak ([3a65a99](https://github.com/GersonRS/modern-gitops-stack/commit/3a65a99f97401d04079c7041ec0ac2ed48f5a670))
+* **deps:** bump kube-prometheus-stack::modern-gitops-stack-module-kube-prometheus-stack ([feba9ad](https://github.com/GersonRS/modern-gitops-stack/commit/feba9ad068fff4bd75d9546be96a436bccd0c612))
+* **deps:** bump kube-prometheus-stack::modern-gitops-stack-module-kube-prometheus-stack ([33b2caa](https://github.com/GersonRS/modern-gitops-stack/commit/33b2caa426ca7d9f5558295a77edc986203ada84))
+* **deps:** bump loki-stack::modern-gitops-stack-module-loki-stack ([a2735b5](https://github.com/GersonRS/modern-gitops-stack/commit/a2735b5942e448991328bd3719e35257da8a209f))
+* **deps:** bump loki-stack::modern-gitops-stack-module-loki-stack ([ac2486e](https://github.com/GersonRS/modern-gitops-stack/commit/ac2486e8c64195557ff2b08ba691512495ffd9b5))
+* **deps:** bump metrics-server::modern-gitops-stack-module-metrics-server ([b6b4b51](https://github.com/GersonRS/modern-gitops-stack/commit/b6b4b513ce439fc68b36a276db67d5557811db1c))
+* **deps:** bump peter-evans/create-pull-request from 6 to 7 ([0997c55](https://github.com/GersonRS/modern-gitops-stack/commit/0997c5526ed30903b03aee14aa55a5dea1f51785))
+* **deps:** bump terraform-docs/gh-actions from 1.2.0 to 1.3.0 ([64cec6e](https://github.com/GersonRS/modern-gitops-stack/commit/64cec6e8ffe72b01ec5cbbd35d91498b5417e1d5))
+* **deps:** bump thanos::modern-gitops-stack-module-thanos ([ce6b93d](https://github.com/GersonRS/modern-gitops-stack/commit/ce6b93d6a82a4b0f4f058f57b600c88a1f64834f))
+* **deps:** bump traefik::modern-gitops-stack-module-traefik ([e8c7151](https://github.com/GersonRS/modern-gitops-stack/commit/e8c7151ab107016d850d28c59900b5a8b5ae1f4b))
+* **deps:** update hashicorp/azurerm requirement from ~&gt; 3 to ~> 4 ([e3e567d](https://github.com/GersonRS/modern-gitops-stack/commit/e3e567d286c06bca2805fb42da52210cd157f640))
+
 ## [1.17.5](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.4...v1.17.5) (2025-01-18)
 
 
