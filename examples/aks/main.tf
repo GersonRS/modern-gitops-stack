@@ -54,7 +54,7 @@ module "aks" {
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.8.0"
 
   argocd_projects = {
     "${module.aks.cluster_name}" = {
@@ -66,7 +66,7 @@ module "argocd_bootstrap" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//aks?ref=v1.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//aks?ref=v2.6.0"
 
   cluster_name   = module.aks.cluster_name
   base_domain    = module.aks.base_domain
@@ -121,7 +121,7 @@ module "loki-stack" {
 }
 
 module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//aks?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//aks?ref=v2.6.1"
 
   cluster_name   = module.aks.cluster_name
   base_domain    = module.aks.base_domain
@@ -152,7 +152,7 @@ module "thanos" {
 }
 
 module "kube-prometheus-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//aks?ref=v1.2.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//aks?ref=v2.6.0"
 
   cluster_name   = module.aks.cluster_name
   base_domain    = module.aks.base_domain
