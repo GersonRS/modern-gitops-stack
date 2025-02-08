@@ -7,3 +7,7 @@ O Modern Gitops Stack fornece uma plataforma Kubernetes padrão, reunindo provis
 A documentação está publicada aqui: https://gersonrs.github.io/modern-gitops-stack/
 
 Lá você encontrará tudo o que precisa saber para começar a usar o Modern Gitops Stack, bem como nossas diretrizes de contribuição.
+
+== Estatísticas
+
+image::https://repobeats.axiom.co/api/embed/997f57828b6e37e68d612042185d35a9a761dcd4.svg[Repobeats analytics image]
