@@ -9,6 +9,14 @@ name: "modules-release-please"
 
 on:
   workflow_call:
+    secrets:
+      PAT:
+        description: "GitHub token for the Modern Gitops Stack Project"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   release-please:
@@ -16,8 +24,10 @@ jobs:
     outputs:
       releases_created: ${{ steps.release-please.outputs.releases_created }}
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: actions/checkout@v4
+      - uses: googleapis/release-please-action@v4
         id: release-please
         with:
+          token: ${{ secrets.PAT }}
           config-file: .github/release-please-config.json
           manifest-file: .github/.release-please-manifest.json
