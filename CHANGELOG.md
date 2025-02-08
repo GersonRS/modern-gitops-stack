@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.18.0...v1.18.1) (2025-02-08)
+
+
+### 🧪 Automated Testing
+
+* test new workflows ([90d559e](https://github.com/GersonRS/modern-gitops-stack/commit/90d559efb5abadb2d239e560e51592d7b663a59a))
+
 ## [1.18.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.17.5...v1.18.0) (2025-02-08)
 
 
