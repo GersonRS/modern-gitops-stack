@@ -128,35 +128,35 @@ module "minio" {
   }
 }
 
-module "mlflow" {
-  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-mlflow.git?ref=v1.2.0"
-  cluster_name           = local.cluster_name
-  base_domain            = local.base_domain
-  subdomain              = local.subdomain
-  cluster_issuer         = local.cluster_issuer
-  argocd_project         = local.cluster_name
-  app_autosync           = local.app_autosync
-  enable_service_monitor = local.enable_service_monitor
+# module "mlflow" {
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-mlflow.git?ref=v1.2.0"
+#   cluster_name           = local.cluster_name
+#   base_domain            = local.base_domain
+#   subdomain              = local.subdomain
+#   cluster_issuer         = local.cluster_issuer
+#   argocd_project         = local.cluster_name
+#   app_autosync           = local.app_autosync
+#   enable_service_monitor = local.enable_service_monitor
 
-  storage = {
-    bucket_name       = "mlflow"
-    endpoint          = module.minio.endpoint
-    access_key        = module.minio.minio_root_user_credentials.username
-    secret_access_key = module.minio.minio_root_user_credentials.password
-  }
-  database = {
-    user     = module.postgresql.credentials.user
-    password = module.postgresql.credentials.password
-    database = "mlflow"
-    service  = module.postgresql.cluster_dns
-  }
-  dependency_ids = {
-    argocd     = module.argocd_bootstrap.id
-    traefik    = module.traefik.id
-    minio      = module.minio.id
-    postgresql = module.postgresql.id
-  }
-}
+#   storage = {
+#     bucket_name       = "mlflow"
+#     endpoint          = module.minio.endpoint
+#     access_key        = module.minio.minio_root_user_credentials.username
+#     secret_access_key = module.minio.minio_root_user_credentials.password
+#   }
+#   database = {
+#     user     = module.postgresql.credentials.user
+#     password = module.postgresql.credentials.password
+#     database = "mlflow"
+#     service  = module.postgresql.cluster_dns
+#   }
+#   dependency_ids = {
+#     argocd     = module.argocd_bootstrap.id
+#     traefik    = module.traefik.id
+#     minio      = module.minio.id
+#     postgresql = module.postgresql.id
+#   }
+# }
 
 # module "strimzi" {
 #   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-strimzi.git?ref=v1.4.2"
