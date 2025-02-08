@@ -393,26 +393,26 @@ module "kube-prometheus-stack" {
   }
 }
 
-# module "spark" {
-#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.0"
+module "spark" {
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.0"
 
-#   cluster_name           = local.cluster_name
-#   base_domain            = local.base_domain
-#   subdomain              = local.subdomain
-#   cluster_issuer         = local.cluster_issuer
-#   argocd_project         = local.cluster_name
-#   app_autosync           = local.app_autosync
-#   enable_service_monitor = local.enable_service_monitor
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
 
-#   storage = {
-#     access_key        = module.minio.minio_root_user_credentials.username
-#     secret_access_key = module.minio.minio_root_user_credentials.password
-#   }
+  storage = {
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
 
-#   dependency_ids = {
-#     cert-manager = module.cert-manager.id
-#   }
-# }
+  dependency_ids = {
+    cert-manager = module.cert-manager.id
+  }
+}
 
 # module "airflow" {
 #   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-airflow.git?ref=v1.5.0"
