@@ -1,4 +1,5 @@
 name: Publish to GitHub Pages with Lunr Search Extension
+run-name: Deploy GitHub Pages site by @${{ github.actor }}
 on:
   push:
     branches:

@@ -1,18 +1,18 @@
 module "kind" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git?ref=v2.4.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-kind.git?ref=v2.4.2"
 
   cluster_name       = local.cluster_name
   kubernetes_version = local.kubernetes_version
 }
 
 module "metallb" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v2.7.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metallb.git?ref=v2.7.1"
 
   subnet = module.kind.kind_subnet
 }
 
 module "argocd_bootstrap" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.8.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git//bootstrap?ref=v2.10.0"
 
   argocd_projects = {
     "${local.cluster_name}" = {
@@ -24,7 +24,7 @@ module "argocd_bootstrap" {
 }
 
 module "metrics-server" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v2.7.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-metrics-server.git?ref=v2.7.1"
 
   argocd_project = local.cluster_name
 
@@ -38,7 +38,7 @@ module "metrics-server" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//kind?ref=v2.6.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//kind?ref=v2.6.1"
 
   argocd_project = local.cluster_name
 
@@ -51,7 +51,7 @@ module "traefik" {
 }
 
 module "cert-manager" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//self-signed?ref=v2.6.2"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//self-signed?ref=v2.6.6"
 
   argocd_project = local.cluster_name
 
@@ -64,7 +64,7 @@ module "cert-manager" {
 }
 
 module "keycloak" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git?ref=v2.5.1"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -81,7 +81,7 @@ module "keycloak" {
 }
 
 module "oidc" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git//oidc_bootstrap?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-keycloak.git//oidc_bootstrap?ref=v2.5.1"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -94,7 +94,7 @@ module "oidc" {
 }
 
 module "postgresql" {
-  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.8.1"
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.8.2"
   cluster_name           = local.cluster_name
   base_domain            = local.base_domain
   subdomain              = local.subdomain
@@ -109,7 +109,7 @@ module "postgresql" {
 }
 
 module "minio" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v2.6.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v2.6.2"
 
   cluster_name           = local.cluster_name
   base_domain            = local.base_domain
@@ -128,38 +128,38 @@ module "minio" {
   }
 }
 
-# module "mlflow" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-mlflow.git?ref=v1.2.0"
-#   cluster_name           = local.cluster_name
-#   base_domain            = local.base_domain
-#   subdomain              = local.subdomain
-#   cluster_issuer         = local.cluster_issuer
-#   argocd_project         = local.cluster_name
-#   app_autosync           = local.app_autosync
-#   enable_service_monitor = local.enable_service_monitor
+module "mlflow" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-mlflow.git?ref=v1.2.1"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
 
-#   storage = {
-#     bucket_name       = "mlflow"
-#     endpoint          = module.minio.endpoint
-#     access_key        = module.minio.minio_root_user_credentials.username
-#     secret_access_key = module.minio.minio_root_user_credentials.password
-#   }
-#   database = {
-#     user     = module.postgresql.credentials.user
-#     password = module.postgresql.credentials.password
-#     database = "mlflow"
-#     service  = module.postgresql.cluster_dns
-#   }
-#   dependency_ids = {
-#     argocd     = module.argocd_bootstrap.id
-#     traefik    = module.traefik.id
-#     minio      = module.minio.id
-#     postgresql = module.postgresql.id
-#   }
-# }
+  storage = {
+    bucket_name       = "mlflow"
+    endpoint          = module.minio.endpoint
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
+  database = {
+    user     = module.postgresql.credentials.user
+    password = module.postgresql.credentials.password
+    database = "mlflow"
+    service  = module.postgresql.cluster_dns
+  }
+  dependency_ids = {
+    argocd     = module.argocd_bootstrap.id
+    traefik    = module.traefik.id
+    minio      = module.minio.id
+    postgresql = module.postgresql.id
+  }
+}
 
 # module "strimzi" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-strimzi.git?ref=v1.4.2"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-strimzi.git?ref=v1.4.3"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -173,7 +173,7 @@ module "minio" {
 # }
 
 # module "kafka" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-kafka.git?ref=v2.10.0"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-kafka.git?ref=v2.11.0"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -189,7 +189,7 @@ module "minio" {
 # }
 
 # module "cp-schema-registry" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry.git?ref=v1.3.0"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry.git?ref=v1.3.2"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -205,7 +205,7 @@ module "minio" {
 # }
 
 # module "kafka-ui" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-kafka-ui.git?ref=v1.3.0"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-kafka-ui.git?ref=v1.3.3"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -222,7 +222,7 @@ module "minio" {
 # }
 
 # module "pinot" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-pinot.git?ref=v1.1.0"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-pinot.git?ref=v1.1.1"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -244,7 +244,7 @@ module "minio" {
 # }
 
 # module "trino" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-trino.git?ref=v1.1.0"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-trino.git?ref=v1.1.1"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -325,7 +325,7 @@ module "loki-stack" {
 }
 
 module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v2.6.1"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v2.6.0"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -393,29 +393,29 @@ module "kube-prometheus-stack" {
   }
 }
 
-module "spark" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.0"
+# module "spark" {
+#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.1"
 
-  cluster_name           = local.cluster_name
-  base_domain            = local.base_domain
-  subdomain              = local.subdomain
-  cluster_issuer         = local.cluster_issuer
-  argocd_project         = local.cluster_name
-  app_autosync           = local.app_autosync
-  enable_service_monitor = local.enable_service_monitor
+#   cluster_name           = local.cluster_name
+#   base_domain            = local.base_domain
+#   subdomain              = local.subdomain
+#   cluster_issuer         = local.cluster_issuer
+#   argocd_project         = local.cluster_name
+#   app_autosync           = local.app_autosync
+#   enable_service_monitor = local.enable_service_monitor
 
-  storage = {
-    access_key        = module.minio.minio_root_user_credentials.username
-    secret_access_key = module.minio.minio_root_user_credentials.password
-  }
+#   storage = {
+#     access_key        = module.minio.minio_root_user_credentials.username
+#     secret_access_key = module.minio.minio_root_user_credentials.password
+#   }
 
-  dependency_ids = {
-    cert-manager = module.cert-manager.id
-  }
-}
+#   dependency_ids = {
+#     cert-manager = module.cert-manager.id
+#   }
+# }
 
 # module "airflow" {
-#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-airflow.git?ref=v1.5.0"
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-airflow.git?ref=v1.6.2"
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
 #   subdomain              = local.subdomain
@@ -425,7 +425,6 @@ module "spark" {
 #   enable_service_monitor = local.enable_service_monitor
 #   oidc                   = module.oidc.oidc
 #   fernetKey              = base64encode(resource.random_password.airflow_fernetKey.result)
-#   target_revision        = "develop"
 #   storage = {
 #     bucket_name       = "airflow"
 #     endpoint          = module.minio.endpoint
@@ -438,9 +437,9 @@ module "spark" {
 #     password = module.postgresql.credentials.password
 #     endpoint = module.postgresql.cluster_dns
 #   }
-#   mlflow = {
-#     endpoint = module.mlflow.cluster_dns
-#   }
+#   # mlflow = {
+#   #   endpoint = module.mlflow.cluster_dns
+#   # }
 #   # ray = {
 #   #   endpoint = module.ray.cluster_dns
 #   # }
@@ -454,7 +453,7 @@ module "spark" {
 # }
 
 # module "jupyterhub" {
-#   source         = "git::https://github.com/GersonRS/modern-gitops-stack-module-jupyterhub.git?ref=v1.1.0"
+#   source         = "git::https://github.com/GersonRS/modern-gitops-stack-module-jupyterhub.git?ref=v1.1.2"
 #   cluster_name   = local.cluster_name
 #   base_domain    = local.base_domain
 #   subdomain      = local.subdomain
@@ -486,11 +485,12 @@ module "spark" {
 #     oidc       = module.oidc.id
 #     minio      = module.minio.id
 #     postgresql = module.postgresql.id
+#     mlflow     = module.mlflow.id
 #   }
 # }
 
 # module "qdrant" {
-#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-qdrant.git?ref=develop"
+#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-qdrant.git?ref=v1.2.0"
 
 #   cluster_name           = local.cluster_name
 #   base_domain            = local.base_domain
@@ -508,7 +508,7 @@ module "spark" {
 # }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.8.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.10.0"
 
   base_domain              = local.base_domain
   cluster_name             = local.cluster_name
