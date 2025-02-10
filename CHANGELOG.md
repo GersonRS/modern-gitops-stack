@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.18.3](https://github.com/GersonRS/modern-gitops-stack/compare/v1.18.2...v1.18.3) (2025-02-10)
+
+
+### 🔥 Bug Fixes
+
+* fix check-yaml paths ([06f97ba](https://github.com/GersonRS/modern-gitops-stack/commit/06f97ba5f2ace9a211fbd2dff48dc218dc90b7bf))
+* fix check-yaml paths ([445f18c](https://github.com/GersonRS/modern-gitops-stack/commit/445f18c8fb7e51cfa006504f7384b8b051e7a2b3))
+* fix check-yaml paths ([5987a13](https://github.com/GersonRS/modern-gitops-stack/commit/5987a13bd33cb0dc88d340805c0b1da4af220dc8))
+
+
+### ⌨️ Code Refactoring
+
+* add run-name in deploy github pages ([fdc98ac](https://github.com/GersonRS/modern-gitops-stack/commit/fdc98ac01703a230e1a6592ffbd4413e343cf0be))
+
 ## [1.18.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.18.1...v1.18.2) (2025-02-08)
 
 
