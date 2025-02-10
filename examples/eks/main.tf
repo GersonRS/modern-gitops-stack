@@ -112,7 +112,7 @@ module "traefik" {
 }
 
 module "cert-manager" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//eks?ref=v1.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//eks?ref=v2.6.6"
 
   cluster_name   = module.eks.cluster_name
   base_domain    = module.eks.base_domain
