@@ -1,6 +1,6 @@
 ---
 name: "linters"
-
+run-name: Checking commits and code by @${{ github.actor }}
 on:
   pull_request:
 
