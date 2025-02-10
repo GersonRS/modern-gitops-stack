@@ -1,5 +1,7 @@
 name: "add-to-project"
 
+run-name: Adding this pull request to the project by @${{ github.actor }}
+
 on:
   issues:
     types:
