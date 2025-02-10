@@ -7,7 +7,7 @@
 # changes when modifying this workflow.
 
 name: "modules-linters"
-
+run-name: Checking commits and code by @${{ github.actor }}
 on:
   workflow_call:
 

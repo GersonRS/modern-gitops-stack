@@ -6,7 +6,7 @@
 # changes when modifying this workflow.
 
 name: "add-to-project"
-
+run-name: Adding this pull request to the project by @${{ github.actor }}
 on:
   workflow_call:
     secrets:
