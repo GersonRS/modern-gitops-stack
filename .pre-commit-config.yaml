@@ -3,7 +3,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-yaml
-        exclude: ^(node_modules/|docs/|node_modules/)
+        exclude: ^(build/|website/|node_modules/|docs)
       - id: pretty-format-json
         args: ["--autofix"]
         exclude: "Pipfile.lock"
