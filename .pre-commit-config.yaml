@@ -1,9 +1,9 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
-        exclude: ^(build/|website/|node_modules/)
+        exclude: ^(build/|website/|node_modules/|docs)
       - id: pretty-format-json
         args: ["--autofix"]
         exclude: "Pipfile.lock"
@@ -14,7 +14,7 @@ repos:
         args: ["--branch", "main"]
 
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.10.0
+    rev: v9.20.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
