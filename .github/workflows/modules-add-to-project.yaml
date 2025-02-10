@@ -35,4 +35,3 @@ jobs:
         uses: toshimaru/auto-author-assign@v2.1.1
         with:
           repo-token: ${{ secrets.PAT }}
-          author: 'GersonRS'
