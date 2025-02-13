@@ -191,6 +191,9 @@ locals {
         name = "curated"
       },
       {
+        name = "warehouse"
+      },
+      {
         name = "bronze"
       },
       {
