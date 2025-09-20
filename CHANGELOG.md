@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.20.0...v1.21.0) (2025-09-20)
+
+
+### 🚀 New Features
+
+* update argocd ([4ba950d](https://github.com/GersonRS/modern-gitops-stack/commit/4ba950de4881c6e543546ba675b0987e2f42bdde))
+
 ## [1.20.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.19.0...v1.20.0) (2025-09-20)
 
 
