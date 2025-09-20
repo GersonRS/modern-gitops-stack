@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.20.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.19.0...v1.20.0) (2025-09-20)
+
+
+### 🚀 New Features
+
+* update workflows ([d2f25a3](https://github.com/GersonRS/modern-gitops-stack/commit/d2f25a3e5cdd6f224ec0b0c5fd5179509a8dd7c0))
+* update workflows ([6daa7d8](https://github.com/GersonRS/modern-gitops-stack/commit/6daa7d8e89bef696c607b1bfd4a05513c8a6ab48))
+
 ## [1.19.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.18.2...v1.19.0) (2025-09-20)
 
 
