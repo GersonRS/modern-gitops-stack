@@ -1,5 +1,64 @@
 # Changelog
 
+## [1.19.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.18.2...v1.19.0) (2025-09-20)
+
+
+### 🚀 New Features
+
+* add hive-metastore module ([f0ef802](https://github.com/GersonRS/modern-gitops-stack/commit/f0ef802afe6f19fc86d6b4dd8f733aa327e9f46e))
+* new versions ([6e751c1](https://github.com/GersonRS/modern-gitops-stack/commit/6e751c1dadfabf27d661f2fb65a94e04dbec4bae))
+* remove run-name in workflows ([53e5ced](https://github.com/GersonRS/modern-gitops-stack/commit/53e5ced6e85f68ec2745bfdd0322910b1b561851))
+
+
+### 🔥 Bug Fixes
+
+* fix auto-author-assing ([43e3383](https://github.com/GersonRS/modern-gitops-stack/commit/43e33832e8ecc493beea40d90d4ee20e316e7fa0))
+* fix auto-author-assing ([d4b0abf](https://github.com/GersonRS/modern-gitops-stack/commit/d4b0abf53f78c978f4c55bb1739505498135f36b))
+* fix auto-author-assing ([7d0e190](https://github.com/GersonRS/modern-gitops-stack/commit/7d0e1909b31c39a937cf6a657c4f77dcaabb43dd))
+* fix check-yaml paths ([06f97ba](https://github.com/GersonRS/modern-gitops-stack/commit/06f97ba5f2ace9a211fbd2dff48dc218dc90b7bf))
+* fix check-yaml paths ([445f18c](https://github.com/GersonRS/modern-gitops-stack/commit/445f18c8fb7e51cfa006504f7384b8b051e7a2b3))
+* fix check-yaml paths ([5987a13](https://github.com/GersonRS/modern-gitops-stack/commit/5987a13bd33cb0dc88d340805c0b1da4af220dc8))
+
+
+### ⌨️ Code Refactoring
+
+* add run-name in deploy github pages ([6afad9f](https://github.com/GersonRS/modern-gitops-stack/commit/6afad9f04baef0f7d0bb8071dc7b6df154420251))
+* add run-name in deploy github pages ([fdc98ac](https://github.com/GersonRS/modern-gitops-stack/commit/fdc98ac01703a230e1a6592ffbd4413e343cf0be))
+
+
+### 🛠️ Build System
+
+* **deps:** bump aks::modern-gitops-stack-module-cluster-aks ([698debb](https://github.com/GersonRS/modern-gitops-stack/commit/698debb276865a5b439679410f45b3bb1fd1b3f6))
+* **deps:** bump aks::modern-gitops-stack-module-cluster-aks from 1.1.0 to 2.4.0 in /examples/aks ([8ba5551](https://github.com/GersonRS/modern-gitops-stack/commit/8ba55510ef43da108cffe8e0dc4da910d7bdbb09))
+* **deps:** bump argocd_bootstrap::modern-gitops-stack-module-argocd ([100fa6d](https://github.com/GersonRS/modern-gitops-stack/commit/100fa6da88fd12b298b34bbcf587c48e8ad5e0ad))
+* **deps:** bump argocd_bootstrap::modern-gitops-stack-module-argocd from 2.8.0 to 2.10.0 in /examples/eks ([cbf4c5f](https://github.com/GersonRS/modern-gitops-stack/commit/cbf4c5fab970a7b36ba5a64cb5644ba7855583dc))
+* **deps:** bump argocd::modern-gitops-stack-module-argocd ([c8a40a3](https://github.com/GersonRS/modern-gitops-stack/commit/c8a40a3b658f5bc29b749c1f7c1c610aa7ef7169))
+* **deps:** bump argocd::modern-gitops-stack-module-argocd from 2.5.0 to 2.10.0 in /examples/aks ([fc54242](https://github.com/GersonRS/modern-gitops-stack/commit/fc54242f51349d00e60fcda1a3571e9a40b371c8))
+* **deps:** bump cert-manager::modern-gitops-stack-module-cert-manager ([35ebdf1](https://github.com/GersonRS/modern-gitops-stack/commit/35ebdf1034e7494f09f60e831a14e6d596f05617))
+* **deps:** bump cert-manager::modern-gitops-stack-module-cert-manager ([d554743](https://github.com/GersonRS/modern-gitops-stack/commit/d5547432742302f1e05eac2a34649c176932aca4))
+* **deps:** bump cert-manager::modern-gitops-stack-module-cert-manager from 1.1.0 to 2.6.6 in /examples/eks ([6c2c995](https://github.com/GersonRS/modern-gitops-stack/commit/6c2c995e06c086f4462f7e9b27d791d04e10c03a))
+* **deps:** bump cert-manager::modern-gitops-stack-module-cert-manager from 2.5.0 to 2.6.6 in /examples/aks ([ea0b776](https://github.com/GersonRS/modern-gitops-stack/commit/ea0b776786fd28471b91c6910b78e26c86eb60cd))
+* **deps:** bump kube-prometheus-stack::modern-gitops-stack-module-kube-prometheus-stack ([6de377f](https://github.com/GersonRS/modern-gitops-stack/commit/6de377f14e99a4f37a66b1fc8ef2748e641a6b1f))
+* **deps:** bump kube-prometheus-stack::modern-gitops-stack-module-kube-prometheus-stack ([7287da1](https://github.com/GersonRS/modern-gitops-stack/commit/7287da12c28405df7209d57e1b92422365e41a82))
+* **deps:** bump kube-prometheus-stack::modern-gitops-stack-module-kube-prometheus-stack from 2.6.0 to 2.6.1 in /examples/eks ([76618e7](https://github.com/GersonRS/modern-gitops-stack/commit/76618e73bd7e7cbf6ed457559f3e0653aad06c56))
+* **deps:** bump kube-prometheus-stack::modern-gitops-stack-module-kube-prometheus-stack from 2.6.0 to 2.6.1 in /examples/kind ([e282a66](https://github.com/GersonRS/modern-gitops-stack/commit/e282a6678c254ac1b92228bceb24a7a9d76c2141))
+* **deps:** bump loki-stack::modern-gitops-stack-module-loki-stack ([180c5eb](https://github.com/GersonRS/modern-gitops-stack/commit/180c5eb81eea9fb72d38df039b709ccf66d693f8))
+* **deps:** bump loki-stack::modern-gitops-stack-module-loki-stack ([cfa3ba1](https://github.com/GersonRS/modern-gitops-stack/commit/cfa3ba19240bd926da1b9ae6e6d6988743c06bd4))
+* **deps:** bump loki-stack::modern-gitops-stack-module-loki-stack from 2.5.0 to 2.6.1 in /examples/aks ([9e09f12](https://github.com/GersonRS/modern-gitops-stack/commit/9e09f120915218ba5799d38df7a881f95f308809))
+* **deps:** bump loki-stack::modern-gitops-stack-module-loki-stack from 2.6.0 to 2.6.1 in /examples/kind ([a183c06](https://github.com/GersonRS/modern-gitops-stack/commit/a183c06c90fe8c8f6bb30fb8a1f8754bccf55fba))
+* **deps:** bump metrics-server::modern-gitops-stack-module-metrics-server ([798e40f](https://github.com/GersonRS/modern-gitops-stack/commit/798e40f13cc890f154dd00112053881e4c73ff5b))
+* **deps:** bump metrics-server::modern-gitops-stack-module-metrics-server from 2.7.0 to 2.7.1 in /examples/eks ([beecc20](https://github.com/GersonRS/modern-gitops-stack/commit/beecc200f9209e403e534b7a7e37b91a6d67731f))
+* **deps:** bump postgresql::modern-gitops-stack-module-postgresql ([9b0d619](https://github.com/GersonRS/modern-gitops-stack/commit/9b0d61955bf1d6c862c1d96552fdf9f60e081784))
+* **deps:** bump postgresql::modern-gitops-stack-module-postgresql from 2.8.2 to 2.10.0 in /examples/kind ([ae48d29](https://github.com/GersonRS/modern-gitops-stack/commit/ae48d292d51c2cecaa9364da122eaf16cdd1d06c))
+* **deps:** bump terraform-docs/gh-actions from 1.3.0 to 1.4.1 ([228b332](https://github.com/GersonRS/modern-gitops-stack/commit/228b332a8c4c08ac4d446db520d15289cc64a0e3))
+* **deps:** bump terraform-docs/gh-actions from 1.3.0 to 1.4.1 ([1f30ae6](https://github.com/GersonRS/modern-gitops-stack/commit/1f30ae695b27ee5e67f2788059c9facac947b0d2))
+* **deps:** bump thanos::modern-gitops-stack-module-thanos ([949e4c3](https://github.com/GersonRS/modern-gitops-stack/commit/949e4c35ee6911f981bee8f977cdb97d1d02b2e2))
+* **deps:** bump thanos::modern-gitops-stack-module-thanos ([4b93260](https://github.com/GersonRS/modern-gitops-stack/commit/4b93260cbb58976903f66857c1ae670500f10498))
+* **deps:** bump thanos::modern-gitops-stack-module-thanos from 1.1.0 to 2.6.2 in /examples/eks ([cc82d72](https://github.com/GersonRS/modern-gitops-stack/commit/cc82d72ad75bdc06791c9d7486be1a5c27696e8a))
+* **deps:** bump thanos::modern-gitops-stack-module-thanos from 2.6.0 to 2.6.2 in /examples/kind ([19db5c3](https://github.com/GersonRS/modern-gitops-stack/commit/19db5c31c5f97143324532f4b5e8ed00ea68fd8e))
+* **deps:** bump traefik::modern-gitops-stack-module-traefik ([ea0644b](https://github.com/GersonRS/modern-gitops-stack/commit/ea0644bb1a16d3853c83700ac8ff82382ca4d49d))
+* **deps:** bump traefik::modern-gitops-stack-module-traefik from 2.6.0 to 2.6.1 in /examples/aks ([2beb4fb](https://github.com/GersonRS/modern-gitops-stack/commit/2beb4fb5be7271abacfa9345c72c17245663ab88))
+
 ## [1.18.2](https://github.com/GersonRS/modern-gitops-stack/compare/v1.18.1...v1.18.2) (2025-02-08)
 
 
