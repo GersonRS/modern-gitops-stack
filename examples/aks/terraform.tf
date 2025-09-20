@@ -15,7 +15,7 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2"
+      version = "~> 3"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -23,7 +23,7 @@ terraform {
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2"
+      version = "~> 3"
     }
     argocd = {
       source  = "oboukili/argocd"
