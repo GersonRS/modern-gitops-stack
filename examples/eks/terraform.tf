@@ -10,7 +10,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5"
+      version = "~> 6"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -18,7 +18,7 @@ terraform {
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2"
+      version = "~> 3"
     }
     argocd = {
       source  = "oboukili/argocd"

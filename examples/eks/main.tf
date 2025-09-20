@@ -2,7 +2,7 @@ data "aws_availability_zones" "available" {}
 
 module "vpc" {
   source               = "terraform-aws-modules/vpc/aws"
-  version              = "~> 5.0"
+  version              = "~> 6.0"
   name                 = module.eks.cluster_name
   cidr                 = local.vpc_cidr
   azs                  = data.aws_availability_zones.available.names
@@ -99,7 +99,7 @@ module "metrics-server" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//eks?ref=v1.3.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//eks?ref=v2.6.1"
 
   argocd_project = module.eks.cluster_name
 
@@ -131,7 +131,7 @@ module "cert-manager" {
 }
 
 module "loki-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//eks?ref=v2.6.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//eks?ref=v2.6.1"
 
   argocd_project = module.eks.cluster_name
 
