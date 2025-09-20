@@ -19,7 +19,7 @@ resource "azurerm_virtual_network" "this" {
 }
 
 module "aks" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-aks?ref=v1.1.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cluster-aks?ref=v2.4.0"
 
   cluster_name         = local.cluster_name
   base_domain          = local.base_domain
@@ -66,7 +66,7 @@ module "argocd_bootstrap" {
 }
 
 module "traefik" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//aks?ref=v2.6.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-traefik.git//aks?ref=v2.6.1"
 
   cluster_name   = module.aks.cluster_name
   base_domain    = module.aks.base_domain
@@ -81,7 +81,7 @@ module "traefik" {
 }
 
 module "cert-manager" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//aks?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-cert-manager.git//aks?ref=v2.6.6"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -101,7 +101,7 @@ module "cert-manager" {
 }
 
 module "loki-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//aks?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//aks?ref=v2.6.1"
 
   argocd_project = module.aks.cluster_name
 
@@ -192,7 +192,7 @@ module "kube-prometheus-stack" {
 }
 
 module "argocd" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.5.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-argocd.git?ref=v2.10.0"
 
   cluster_name   = module.aks.cluster_name
   base_domain    = module.aks.base_domain

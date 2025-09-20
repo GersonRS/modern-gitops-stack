@@ -93,6 +93,21 @@ module "oidc" {
   }
 }
 
+module "postgresql" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.10.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
+  }
+}
+
 module "minio" {
   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-minio.git?ref=v2.6.2"
 
@@ -290,7 +305,7 @@ module "minio" {
 # }
 
 module "loki-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v2.6.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-loki-stack.git//kind?ref=v2.6.1"
 
   argocd_project = local.cluster_name
 
@@ -310,7 +325,7 @@ module "loki-stack" {
 }
 
 module "thanos" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v2.6.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-thanos.git//kind?ref=v2.6.2"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
@@ -343,7 +358,7 @@ module "thanos" {
 }
 
 module "kube-prometheus-stack" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//kind?ref=v2.6.0"
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-kube-prometheus-stack.git//kind?ref=v2.6.1"
 
   cluster_name   = local.cluster_name
   base_domain    = local.base_domain
