@@ -128,35 +128,35 @@ module "minio" {
   }
 }
 
-module "mlflow" {
-  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-mlflow.git?ref=v1.2.1"
-  cluster_name           = local.cluster_name
-  base_domain            = local.base_domain
-  subdomain              = local.subdomain
-  cluster_issuer         = local.cluster_issuer
-  argocd_project         = local.cluster_name
-  app_autosync           = local.app_autosync
-  enable_service_monitor = local.enable_service_monitor
+# module "mlflow" {
+#   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-mlflow.git?ref=v1.2.1"
+#   cluster_name           = local.cluster_name
+#   base_domain            = local.base_domain
+#   subdomain              = local.subdomain
+#   cluster_issuer         = local.cluster_issuer
+#   argocd_project         = local.cluster_name
+#   app_autosync           = local.app_autosync
+#   enable_service_monitor = local.enable_service_monitor
 
-  storage = {
-    bucket_name       = "mlflow"
-    endpoint          = module.minio.endpoint
-    access_key        = module.minio.minio_root_user_credentials.username
-    secret_access_key = module.minio.minio_root_user_credentials.password
-  }
-  database = {
-    user     = module.postgresql.credentials.user
-    password = module.postgresql.credentials.password
-    database = "mlflow"
-    service  = module.postgresql.cluster_dns
-  }
-  dependency_ids = {
-    argocd     = module.argocd_bootstrap.id
-    traefik    = module.traefik.id
-    minio      = module.minio.id
-    postgresql = module.postgresql.id
-  }
-}
+#   storage = {
+#     bucket_name       = "mlflow"
+#     endpoint          = module.minio.endpoint
+#     access_key        = module.minio.minio_root_user_credentials.username
+#     secret_access_key = module.minio.minio_root_user_credentials.password
+#   }
+#   database = {
+#     user     = module.postgresql.credentials.user
+#     password = module.postgresql.credentials.password
+#     database = "mlflow"
+#     service  = module.postgresql.cluster_dns
+#   }
+#   dependency_ids = {
+#     argocd     = module.argocd_bootstrap.id
+#     traefik    = module.traefik.id
+#     minio      = module.minio.id
+#     postgresql = module.postgresql.id
+#   }
+# }
 
 # module "strimzi" {
 #   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-strimzi.git?ref=v1.4.3"
@@ -393,26 +393,78 @@ module "kube-prometheus-stack" {
   }
 }
 
-# module "spark" {
-#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.1"
+module "spark" {
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.1"
 
-#   cluster_name           = local.cluster_name
-#   base_domain            = local.base_domain
-#   subdomain              = local.subdomain
-#   cluster_issuer         = local.cluster_issuer
-#   argocd_project         = local.cluster_name
-#   app_autosync           = local.app_autosync
-#   enable_service_monitor = local.enable_service_monitor
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
 
-#   storage = {
-#     access_key        = module.minio.minio_root_user_credentials.username
-#     secret_access_key = module.minio.minio_root_user_credentials.password
-#   }
+  storage = {
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
 
-#   dependency_ids = {
-#     cert-manager = module.cert-manager.id
-#   }
-# }
+  dependency_ids = {
+    argocd       = module.argocd_bootstrap.id
+    traefik      = module.traefik.id
+    cert-manager = module.cert-manager.id
+    minio        = module.minio.id
+  }
+}
+
+module "postgresql" {
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.10.0"
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+
+  dependency_ids = {
+    argocd = module.argocd_bootstrap.id
+  }
+}
+
+module "hive-metastore" {
+  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-hive-metastore.git?ref=v1.2.0"
+
+  cluster_name           = local.cluster_name
+  base_domain            = local.base_domain
+  subdomain              = local.subdomain
+  cluster_issuer         = local.cluster_issuer
+  argocd_project         = local.cluster_name
+  app_autosync           = local.app_autosync
+  enable_service_monitor = local.enable_service_monitor
+
+  storage = {
+    bucket_name       = "warehouse"
+    endpoint          = module.minio.endpoint
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
+  database = {
+    user     = module.postgresql.credentials.user
+    password = module.postgresql.credentials.password
+    database = "metastore"
+    service  = module.postgresql.cluster_dns
+  }
+
+  dependency_ids = {
+    argocd       = module.argocd_bootstrap.id
+    traefik      = module.traefik.id
+    cert-manager = module.cert-manager.id
+    minio        = module.minio.id
+    postgresql   = module.postgresql.id
+    spark        = module.spark.id
+  }
+}
 
 # module "airflow" {
 #   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-airflow.git?ref=v1.6.2"
