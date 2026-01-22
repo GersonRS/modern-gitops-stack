@@ -94,7 +94,7 @@ module "oidc" {
 }
 
 module "postgresql" {
-  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.10.0"
+  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.11.0"
   cluster_name           = local.cluster_name
   base_domain            = local.base_domain
   subdomain              = local.subdomain
@@ -347,6 +347,19 @@ module "thanos" {
     oidc = module.oidc.oidc
   }
 
+  helm_values = [{
+    redis = {
+      image = {
+        repository = "bitnamilegacy/redis"
+      }
+    }
+    thanos = {
+      image = {
+        repository = "bitnamilegacy/thanos"
+      }
+    }
+  }]
+
   dependency_ids = {
     argocd       = module.argocd_bootstrap.id
     traefik      = module.traefik.id
@@ -393,78 +406,63 @@ module "kube-prometheus-stack" {
   }
 }
 
-module "spark" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.1"
+# module "spark" {
+#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-spark.git?ref=v1.5.1"
 
-  cluster_name           = local.cluster_name
-  base_domain            = local.base_domain
-  subdomain              = local.subdomain
-  cluster_issuer         = local.cluster_issuer
-  argocd_project         = local.cluster_name
-  app_autosync           = local.app_autosync
-  enable_service_monitor = local.enable_service_monitor
+#   cluster_name           = local.cluster_name
+#   base_domain            = local.base_domain
+#   subdomain              = local.subdomain
+#   cluster_issuer         = local.cluster_issuer
+#   argocd_project         = local.cluster_name
+#   app_autosync           = local.app_autosync
+#   enable_service_monitor = local.enable_service_monitor
 
-  storage = {
-    access_key        = module.minio.minio_root_user_credentials.username
-    secret_access_key = module.minio.minio_root_user_credentials.password
-  }
+#   storage = {
+#     access_key        = module.minio.minio_root_user_credentials.username
+#     secret_access_key = module.minio.minio_root_user_credentials.password
+#   }
 
-  dependency_ids = {
-    argocd       = module.argocd_bootstrap.id
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    minio        = module.minio.id
-  }
-}
+#   dependency_ids = {
+#     argocd       = module.argocd_bootstrap.id
+#     traefik      = module.traefik.id
+#     cert-manager = module.cert-manager.id
+#     minio        = module.minio.id
+#   }
+# }
 
-module "postgresql" {
-  source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-postgresql.git?ref=v2.10.0"
-  cluster_name           = local.cluster_name
-  base_domain            = local.base_domain
-  subdomain              = local.subdomain
-  cluster_issuer         = local.cluster_issuer
-  argocd_project         = local.cluster_name
-  app_autosync           = local.app_autosync
-  enable_service_monitor = local.enable_service_monitor
+# module "hive-metastore" {
+#   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-hive-metastore.git?ref=v1.2.0"
 
-  dependency_ids = {
-    argocd = module.argocd_bootstrap.id
-  }
-}
+#   cluster_name           = local.cluster_name
+#   base_domain            = local.base_domain
+#   subdomain              = local.subdomain
+#   cluster_issuer         = local.cluster_issuer
+#   argocd_project         = local.cluster_name
+#   app_autosync           = local.app_autosync
+#   enable_service_monitor = local.enable_service_monitor
 
-module "hive-metastore" {
-  source = "git::https://github.com/GersonRS/modern-gitops-stack-module-hive-metastore.git?ref=v1.2.0"
+#   storage = {
+#     bucket_name       = "warehouse"
+#     endpoint          = module.minio.endpoint
+#     access_key        = module.minio.minio_root_user_credentials.username
+#     secret_access_key = module.minio.minio_root_user_credentials.password
+#   }
+#   database = {
+#     user     = module.postgresql.credentials.user
+#     password = module.postgresql.credentials.password
+#     database = "metastore"
+#     service  = module.postgresql.cluster_dns
+#   }
 
-  cluster_name           = local.cluster_name
-  base_domain            = local.base_domain
-  subdomain              = local.subdomain
-  cluster_issuer         = local.cluster_issuer
-  argocd_project         = local.cluster_name
-  app_autosync           = local.app_autosync
-  enable_service_monitor = local.enable_service_monitor
-
-  storage = {
-    bucket_name       = "warehouse"
-    endpoint          = module.minio.endpoint
-    access_key        = module.minio.minio_root_user_credentials.username
-    secret_access_key = module.minio.minio_root_user_credentials.password
-  }
-  database = {
-    user     = module.postgresql.credentials.user
-    password = module.postgresql.credentials.password
-    database = "metastore"
-    service  = module.postgresql.cluster_dns
-  }
-
-  dependency_ids = {
-    argocd       = module.argocd_bootstrap.id
-    traefik      = module.traefik.id
-    cert-manager = module.cert-manager.id
-    minio        = module.minio.id
-    postgresql   = module.postgresql.id
-    spark        = module.spark.id
-  }
-}
+#   dependency_ids = {
+#     argocd       = module.argocd_bootstrap.id
+#     traefik      = module.traefik.id
+#     cert-manager = module.cert-manager.id
+#     minio        = module.minio.id
+#     postgresql   = module.postgresql.id
+#     spark        = module.spark.id
+#   }
+# }
 
 # module "airflow" {
 #   source                 = "git::https://github.com/GersonRS/modern-gitops-stack-module-airflow.git?ref=v1.6.2"
@@ -504,42 +502,42 @@ module "hive-metastore" {
 #   }
 # }
 
-# module "jupyterhub" {
-#   source         = "git::https://github.com/GersonRS/modern-gitops-stack-module-jupyterhub.git?ref=v1.1.2"
-#   cluster_name   = local.cluster_name
-#   base_domain    = local.base_domain
-#   subdomain      = local.subdomain
-#   cluster_issuer = local.cluster_issuer
-#   argocd_project = local.cluster_name
-#   app_autosync   = local.app_autosync
-#   oidc           = module.oidc.oidc
-#   storage = {
-#     bucket_name       = "mlflow"
-#     endpoint          = module.minio.endpoint
-#     access_key        = module.minio.minio_root_user_credentials.username
-#     secret_access_key = module.minio.minio_root_user_credentials.password
-#   }
-#   database = {
-#     database = "jupyterhub"
-#     user     = module.postgresql.credentials.user
-#     password = module.postgresql.credentials.password
-#     endpoint = module.postgresql.cluster_dns
-#   }
-#   mlflow = {
-#     endpoint = module.mlflow.cluster_dns
-#   }
-#   # ray = {
-#   #   endpoint = module.ray.cluster_dns
-#   # }
-#   dependency_ids = {
-#     argocd     = module.argocd_bootstrap.id
-#     traefik    = module.traefik.id
-#     oidc       = module.oidc.id
-#     minio      = module.minio.id
-#     postgresql = module.postgresql.id
-#     mlflow     = module.mlflow.id
-#   }
-# }
+module "jupyterhub" {
+  source         = "git::https://github.com/GersonRS/modern-gitops-stack-module-jupyterhub.git?ref=v1.1.2"
+  cluster_name   = local.cluster_name
+  base_domain    = local.base_domain
+  subdomain      = local.subdomain
+  cluster_issuer = local.cluster_issuer
+  argocd_project = local.cluster_name
+  app_autosync   = local.app_autosync
+  oidc           = module.oidc.oidc
+  storage = {
+    bucket_name       = "mlflow"
+    endpoint          = module.minio.endpoint
+    access_key        = module.minio.minio_root_user_credentials.username
+    secret_access_key = module.minio.minio_root_user_credentials.password
+  }
+  database = {
+    database = "jupyterhub"
+    user     = module.postgresql.credentials.username
+    password = module.postgresql.credentials.password
+    endpoint = module.postgresql.cluster_dns
+  }
+  # mlflow = {
+  #   endpoint = module.mlflow.cluster_dns
+  # }
+  # ray = {
+  #   endpoint = module.ray.cluster_dns
+  # }
+  dependency_ids = {
+    argocd     = module.argocd_bootstrap.id
+    traefik    = module.traefik.id
+    oidc       = module.oidc.id
+    minio      = module.minio.id
+    postgresql = module.postgresql.id
+    # mlflow     = module.mlflow.id
+  }
+}
 
 # module "qdrant" {
 #   source = "git::https://github.com/GersonRS/modern-gitops-stack-module-qdrant.git?ref=v1.2.0"
