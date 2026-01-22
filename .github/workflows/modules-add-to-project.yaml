@@ -12,6 +12,15 @@ on:
       PAT:
         description: "GitHub token for the Modern Gitops Stack Project"
         required: true
+  issues:
+    types:
+      - opened
+      - reopened
+
+  pull_request:
+    types:
+      - opened
+      - reopened
 
 permissions:
   issues: write
