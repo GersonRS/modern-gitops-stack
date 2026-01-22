@@ -30,7 +30,7 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     host                   = module.kind.parsed_kubeconfig.host
     client_certificate     = module.kind.parsed_kubeconfig.client_certificate
     client_key             = module.kind.parsed_kubeconfig.client_key

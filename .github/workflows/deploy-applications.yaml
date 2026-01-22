@@ -1,0 +1,74 @@
+name: 'deploy-applications'
+
+on:
+  pull_request:
+    # Executa em PRs para validação
+  push:
+    tags:
+      - 'v*' # Trigger a build when a version tag is pushed
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref, 'release-please--') }}
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    # Load all Terraform variables from a single JSON secret
+    # The secret TF_VARS_JSON should contain: {"host":"...","client_certificate":"...","client_key":"...",...}
+    - name: Load Terraform Variables
+      run: |
+        echo '${{ secrets.TF_VARS_JSON }}' | jq -r 'to_entries | .[] | "TF_VAR_\(.key)=\(.value)"' >> $GITHUB_ENV
+
+    - name: Gerar token de autenticação do GitHub App
+      id: generate_token
+      uses: tibdex/github-app-token@v2
+      with:
+        app_id: 882683
+        private_key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
+
+    # Configure Git to access private repositories using GitHub App token
+    - name: Configure Git for Private Repositories
+      run: |
+        # Configure Git credential helper for GitHub
+        git config --global credential.helper store
+        echo "https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com" > ~/.git-credentials
+        
+        # Alternative: configure URL rewriting
+        git config --global url."https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/GersonRS".insteadOf "https://github.com/GersonRS"
+        
+        echo "✅ Git configured to access private repositories using GitHub App"
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init -backend-config="access_key=${{ secrets.ACCESS_KEY_ID }}" -backend-config="secret_key=${{ secrets.SECRET_ACCESS_KEY }}" -migrate-state
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan -input=false
+
+      # Deploy da infraestrutura quando uma tag de versão é criada
+      # Nota: Executa apenas quando tags v* são pushed (ex: v1.0.0, v2.1.3)
+    - name: Terraform Apply
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+      run: terraform apply -auto-approve -input=false

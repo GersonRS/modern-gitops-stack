@@ -1,10 +1,10 @@
 ---
-# GitHub Actions workflow to automatically generate documentation from the .tf files of the module.
-# The generated documentation will be injected between AsciiDoc comments on the README.adoc.
+# Workflow do GitHub Actions para gerar automaticamente documentação dos arquivos .tf do módulo.
+# A documentação gerada será injetada entre comentários AsciiDoc no README.adoc.
 #
-# IMPORTANT: This workflow is called by other workflows in our Modern Gitops Stack repositories and it is centralized here in
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
-# changes when modifying this workflow.
+# IMPORTANTE: Este workflow é chamado por outros workflows nos repositórios do Modern Gitops Stack e está
+# centralizado aqui para facilitar a manutenção entre módulos. Por isso, certifique-se de não introduzir
+# mudanças que quebrem a compatibilidade ao modificar este workflow.
 
 name: "modules-terraform-docs"
 
@@ -12,27 +12,27 @@ on:
   workflow_call:
     inputs:
       variants:
-        description: "List of the variants folders as a comma-separated list inside a string (i.e. 'eks,aks')."
+        description: "Lista das pastas de variantes como uma lista separada por vírgulas dentro de uma string (ex: 'eks,aks')."
         type: string
         required: false
         default: ""
 
 env:
-  ARGS: "--hide-empty=true --sort=false" # Do not show empty sections and do not sort items
-  DOCS_TPL: "// BEGIN_TF_DOCS\n{{ .Content }}\n// END_TF_DOCS" # Define template compatible with AsciiDoc
-  TABLES_TPL: "// BEGIN_TF_TABLES\n{{ .Content }}\n// END_TF_TABLES" # Define template compatible with AsciiDoc
+  ARGS: "--hide-empty=true --sort=false" # Não mostrar seções vazias e não ordenar itens
+  DOCS_TPL: "// BEGIN_TF_DOCS\n{{ .Content }}\n// END_TF_DOCS" # Definir template compatível com AsciiDoc
+  TABLES_TPL: "// BEGIN_TF_TABLES\n{{ .Content }}\n// END_TF_TABLES" # Definir template compatível com AsciiDoc
 
 jobs:
   terraform-docs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Check out the repository"
-        uses: actions/checkout@v5
+      - name: "Fazer checkout do repositório"
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: "Generate Terraform docs"
+      - name: "Gerar documentação Terraform"
         uses: terraform-docs/gh-actions@v1.4.1
         with:
           working-dir: .
@@ -44,11 +44,11 @@ jobs:
           args: ${{ env.ARGS }}
           git-push: false
 
-      - name: "Generate Terraform tables"
+      - name: "Gerar tabelas Terraform"
         uses: terraform-docs/gh-actions@v1.4.1
         with:
           working-dir: .
-          indention: 1 # Since the headings are not read inside the collapsible block we can indent as 1
+          indention: 1 # Como os cabeçalhos não são lidos dentro do bloco recolhível, podemos indentar como 1
           output-format: asciidoc table
           output-file: README.adoc
           output-method: inject
@@ -56,7 +56,7 @@ jobs:
           args: ${{ env.ARGS }}
           git-push: false
 
-      - name: "Generate Terraform docs for the variants"
+      - name: "Gerar documentação Terraform para as variantes"
         if: ${{ inputs.variants != '' }}
         uses: terraform-docs/gh-actions@v1.4.1
         with:
@@ -69,12 +69,12 @@ jobs:
           args: ${{ env.ARGS }}
           git-push: false
 
-      - name: "Generate Terraform tables for the variants"
+      - name: "Gerar tabelas Terraform para as variantes"
         if: ${{ inputs.variants != '' }}
         uses: terraform-docs/gh-actions@v1.4.1
         with:
           working-dir: ${{ inputs.variants }}
-          indention: 1 # Since the headings are not read inside the collapsible block we can indent as 1
+          indention: 1 # Como os cabeçalhos não são lidos dentro do bloco recolhível, podemos indentar como 1
           output-format: asciidoc table
           output-file: README.adoc
           output-method: inject
@@ -82,13 +82,13 @@ jobs:
           args: ${{ env.ARGS }}
           git-push: false
 
-      # This step comes after long hours of debugging permission errors on the workflow when trying to do a commit after
-      # executing the terraform-docs actions. See https://github.com/terraform-docs/gh-actions/issues/90
-      - name: "Correct ownership of files in preparation for the next step"
+      # Este passo vem após longas horas de depuração de erros de permissão no workflow ao tentar fazer commit
+      # após executar as ações do terraform-docs. Veja https://github.com/terraform-docs/gh-actions/issues/90
+      - name: "Corrigir propriedade dos arquivos em preparação para o próximo passo"
         run: sudo chown runner:docker -Rv .git
 
-      # This step avoids a commit for each previous step and instead commits everything on a single commit
-      - name: "Commit changes done in the previous steps"
-        uses: stefanzweifel/git-auto-commit-action@v6
+      # Este passo evita um commit para cada passo anterior e em vez disso faz commit de tudo em um único commit
+      - name: "Fazer commit das mudanças feitas nos passos anteriores"
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "docs(terraform-docs): generate docs and write to README.adoc"
+          commit_message: "docs(terraform-docs): gerar docs e escrever no README.adoc"
