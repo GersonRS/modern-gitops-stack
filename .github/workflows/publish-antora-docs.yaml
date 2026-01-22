@@ -2,8 +2,10 @@ name: Publish to GitHub Pages with Lunr Search Extension
 
 on:
   push:
-    tags:
-      - 'v*' # Trigger a build when a version tag is pushed
+    branches:
+      - main
+    paths:
+      - "version.txt" # Trigger a build when the version changes in order to take the version tag into account
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 concurrency:
