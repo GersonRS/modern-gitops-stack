@@ -1,37 +1,48 @@
 ---
-# GitHub Actions workflow to automatically push PRs and issues to the Modern Gitops Stack project board.
+# GitHub Actions workflow para automaticamente adicionar PRs e issues ao project board do Modern Gitops Stack.
 #
-# IMPORTANT: This workflow is called by other workflows in our Modern Gitops Stack repositories and it is centralized here in
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
-# changes when modifying this workflow.
-
-name: "add-to-project"
-
+# Este workflow gerencia issues e pull requests no projeto Modern Gitops Stack,
+# organizando-os no board para melhor acompanhamento e gestão.
+  
+name: "modern-gitops-stack-add-to-project"
 on:
   workflow_call:
     secrets:
-      PAT:
-        description: "GitHub token for the Modern Gitops Stack Project"
+      PROJECT_APP_PRIVATE_KEY:
+        description: "GitHub App private key para o projeto Modern Gitops Stack"
         required: true
 
-permissions:
-  issues: write
-  pull-requests: write
-  contents: write
+  issues:
+    types:
+      - opened
+      - reopened
+
+  pull_request:
+    types:
+      - opened
+      - reopened
 
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - name: Add PR or issue to Modern GitOps Stack project board
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Gerar token de autenticação do GitHub App
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: 882683
+          private_key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
+
+      - name: Adicionar PR ou issue ao project board do Modern Gitops Stack
+        id: add-to-project
         uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/GersonRS/projects/2
-          github-token: ${{ secrets.PAT }}
-          labeled: bug, needs-triage
-          label-operator: NOT
-      - name: Auto Author Assign
+          github-token: ${{ steps.generate_token.outputs.token }}
+          
+      - name: Auto-atribuição ao autor
         uses: toshimaru/auto-author-assign@v2.1.1
         with:
-          repo-token: ${{ secrets.PAT }}
+          repo-token: ${{ steps.generate_token.outputs.token }}

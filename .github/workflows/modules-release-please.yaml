@@ -1,18 +1,21 @@
 ---
-# GitHub Actions workflow to automatically create releases and changelogs in our Modern GitOps Stack repositories.
+# Fluxo de trabalho do GitHub Actions para criar automaticamente releases e changelogs para o Modern GitOps Stack.
 #
-# IMPORTANT: This workflow is called by other workflows in our Modern GitOps Stack repositories and it is centralized here in
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
-# changes when modifying this workflow.
+# Este fluxo de trabalho cria releases, atualiza números de versão em módulos e arquivos de configuração,
+# e gera changelogs baseados em commits convencionais.
 
 name: "modules-release-please"
 
 on:
   workflow_call:
     secrets:
-      PAT:
-        description: "GitHub token for the Modern Gitops Stack Project"
+      PROJECT_APP_PRIVATE_KEY:
+        description: "Chave privada do GitHub App para o projeto Modern GitOps Stack"
         required: true
+  
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -24,10 +27,18 @@ jobs:
     outputs:
       releases_created: ${{ steps.release-please.outputs.releases_created }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
+      
+      - name: Gerar token de autenticação do GitHub App
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: 882683
+          private_key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
+      
       - uses: googleapis/release-please-action@v4
         id: release-please
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ steps.generate_token.outputs.token }}
           config-file: .github/release-please-config.json
           manifest-file: .github/.release-please-manifest.json

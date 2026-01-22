@@ -1,9 +1,0 @@
----
-name: "linters"
-
-on:
-  pull_request:
-
-jobs:
-  linters:
-    uses: GersonRS/modern-gitops-stack/.github/workflows/modules-linters.yaml@main

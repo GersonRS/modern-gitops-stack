@@ -1,38 +1,41 @@
 ---
-# GitHub Actions workflow to check that the Terraform code is well formatted and if the commits have the conventional
-# commit message structure (the latter is needed to properly create automatic releases with Release Please).
+# Workflow do GitHub Actions para verificar se o código Terraform está bem formatado e se os commits seguem
+# a estrutura de mensagens de commit convencionais (necessário para criar releases automáticas com Release Please).
 #
-# IMPORTANT: This workflow is called by other workflows in our Modern Gitops Stack repositories and it is centralized here in
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
-# changes when modifying this workflow.
+# IMPORTANTE: Este workflow é chamado por outros workflows nos repositórios da Modern Gitops Stack e está
+# centralizado aqui para facilitar a manutenção entre módulos. Por isso, certifique-se de não introduzir
+# mudanças que quebrem a compatibilidade ao modificar este workflow.
 
 name: "modules-linters"
 
 on:
   workflow_call:
+  pull_request:
 
 jobs:
   terraform-format:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Check out the repository"
-        uses: actions/checkout@v5
+      - name: "Fazer checkout do repositório"
+        uses: actions/checkout@v6
 
-      - name: Setup Terraform
+      - name: "Configurar Terraform"
         uses: hashicorp/setup-terraform@v3
 
-      - name: "Run terraform fmt -check"
+      - name: "Executar terraform fmt -check"
         run: "terraform fmt -check"
 
   commits-checks:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Check out the repository"
-        uses: actions/checkout@v5
+      - name: "Fazer checkout do repositório"
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0 # Buscar todo o histórico para todas as tags e branches
 
-      - name: "Check commit messages"
-        uses: docker://aevea/commitsar
+      - name: "Verificar mensagens de commit"
+        uses: docker://aevea/commitsar:0.20.2
+        env:
+          COMMITSAR_CONFIG_PATH : ./.github

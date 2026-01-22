@@ -1,50 +1,51 @@
 ---
-# GitHub Actions workflow to update the Helm chart dependencies on our modules.
+# GitHub Actions workflow para atualizar dependências dos Helm charts da Modern Gitops Stack.
 #
-# IMPORTANT: This workflow is called by other workflows in our Modern Gitops Stack repositories and it is centralized here in
-# order to be easily maintained across modules. Because of this, please make sure you're not introducing any breaking
-# changes when modifying this workflow.
+# Este workflow automatiza a atualização das dependências dos charts utilizados na infraestrutura
+# Modern Gitops Stack, criando PRs para facilitar a revisão e deploy das atualizações.
 
 name: "modules-chart-update"
 
 on:
   workflow_call:
     secrets:
-      PAT:
-        description: "GitHub token for the Modern Gitops Stack Project"
+      PROJECT_APP_PRIVATE_KEY:
+        description: "GitHub token para o projeto Modern Gitops Stack"
         required: true
     inputs:
       update-strategy:
-        description: "Upgrade strategy to use. Valid values are 'major', 'minor' or 'patch'"
+        description: "Estratégia de atualização. Valores válidos: 'major', 'minor' ou 'patch'"
         type: string
         required: true
       excluded-dependencies:
-        description: "Comma-separated list of dependencies to exclude from the update (i.e. 'dependency1,dependency2,dependency3')"
+        description: "Lista separada por vírgulas de dependências a excluir (ex: 'dependency1,dependency2')"
         type: string
         required: false
         default: ""
       dry-run:
-        description: "Whether to run the update in dry-run mode or not"
+        description: "Se deve executar em modo dry-run ou não"
         type: boolean
         required: false
         default: false
 
 jobs:
   list-charts:
+    name: "Listar charts Modern Gitops Stack"
     runs-on: ubuntu-latest
 
     outputs:
       charts: ${{ steps.find-charts.outputs.charts }}
 
     steps:
-      - name: "Check out the repository"
-        uses: actions/checkout@v5
+      - name: "Fazer checkout do repositório Modern Gitops Stack"
+        uses: actions/checkout@v6
 
-      - name: "List charts in the ./charts folder"
+      - name: "Listar charts na pasta ./charts"
         id: find-charts
         run: cd charts && echo "charts=$(find . -maxdepth 2 -name 'Chart.yaml' -exec dirname {} \; | sed 's|^\./||' | sort -u | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
 
   chart-update:
+    name: "Atualizar chart: ${{ matrix.chart-name }}"
     runs-on: ubuntu-latest
 
     needs: list-charts
@@ -58,10 +59,10 @@ jobs:
       author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
 
     steps:
-      - name: "Check out the repository"
-        uses: actions/checkout@v5
+      - name: "Fazer checkout do repositório Modern Gitops Stack"
+        uses: actions/checkout@v6
 
-      - name: "Upgrade Helm chart dependencies"
+      - name: "Atualizar dependências do Helm chart"
         id: deps-update
         uses: camptocamp/helm-dependency-update-action@v0.5.0
         with:
@@ -71,16 +72,16 @@ jobs:
           update-strategy: "${{ inputs.update-strategy }}"
           dry-run: "${{ inputs.dry-run }}"
 
-      - name: "Create Pull Request for a minor/patch update"
+      - name: "Criar Pull Request para atualização minor/patch"
         if: ${{ !inputs.dry-run && steps.deps-update.outputs.update-type != 'none' && steps.deps-update.outputs.update-type != 'major' }}
         id: minor-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         env:
-          pr-title: "feat(chart): ${{ steps.deps-update.outputs.update-type }} update of dependencies on ${{ matrix.chart-name }} chart"
+          pr-title: "feat(chart): atualização ${{ steps.deps-update.outputs.update-type }} de dependências no chart ${{ matrix.chart-name }}"
           branch: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}-${{ matrix.chart-name }}"
           labels: "chart-autoupdate-${{ steps.deps-update.outputs.update-type }}"
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
           base: ${{ github.head_ref }}
           commit-message: ${{ env.pr-title }}
           author: ${{ env.author }}
@@ -93,25 +94,38 @@ jobs:
           reviewers: GersonRS
           delete-branch: true
           body: |
-            :robot: I have updated the chart *beep* *boop*
+            🤖 Atualizei o chart automaticamente do Modern Gitops Stack *beep* *boop*
             ---
 
-            ## Description of the changes
+            ## 📋 Descrição
 
-            This PR updates the dependencies of the **${{ matrix.chart-name }}** Helm chart.
+            ### O que mudou?
+            Este PR atualiza as dependências do Helm chart **${{ matrix.chart-name }}** do Modern Gitops Stack.
 
-            The maximum version bump was a **${{ steps.deps-update.outputs.update-type }}** step.
+            ### Por que foi necessário?
+            Atualização automática para manter os charts seguros e atualizados.
 
-      - name: "Create Pull Request for a major update"
+            ## 🔧 Tipo de Mudança
+            - [x] 🔧 Configuração/Charts
+
+            ## 📊 Detalhes da Atualização
+            - **Chart**: ${{ matrix.chart-name }}
+            - **Tipo de atualização**: ${{ steps.deps-update.outputs.update-type }}
+            - **Estratégia**: Atualização automática segura
+
+            ## ✅ Checklist
+            - [x] Dependências atualizadas automaticamente
+            - [x] Seguindo conventional commits
+            - [x] Labels apropriadas aplicadas
+
+      - name: "Criar Pull Request para atualização major"
         if: ${{ !inputs.dry-run && steps.deps-update.outputs.update-type != 'none' && steps.deps-update.outputs.update-type == 'major' }}
         id: major-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         env:
-          # This step does not have a branch and labels environment variable, because it is forcefully a major update,
-          # unlike the previous step, which can either be a patch, minor or major update.
-          pr-title: "feat(chart)!: major update of dependencies on ${{ matrix.chart-name }} chart"
+          pr-title: "feat(chart)!: atualização major de dependências no chart ${{ matrix.chart-name }}"
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
           base: ${{ github.head_ref }}
           commit-message: ${{ env.pr-title }}
           author: ${{ env.author }}
@@ -124,11 +138,37 @@ jobs:
           reviewers: GersonRS
           delete-branch: true
           body: |
-            :robot: I have updated the chart *beep* *boop*
+            🤖 Atualizei o chart automaticamente do Modern Gitops Stack *beep* *boop*
             ---
 
-            ## Description of the changes
+            ## 📋 Descrição
 
-            This PR updates the dependencies of the **${{ matrix.chart-name }}** Helm chart.
+            ### O que mudou?
+            Este PR atualiza as dependências do Helm chart **${{ matrix.chart-name }}** do Modern Gitops Stack.
 
-            :warning: This was a **major** update! Please check the changelog of the updated dependencies and **take notice of any breaking changes before merging**. :warning:
+            ### Por que foi necessário?
+            Atualização automática para manter os charts seguros e atualizados.
+
+            ## 🔧 Tipo de Mudança
+            - [x] 💥 Breaking change
+            - [x] 🔧 Configuração/Charts
+
+            ## ⚠️ Atenção - Atualização Major!
+
+            Esta foi uma **atualização major**! Por favor:
+            1. 📖 Verifique o changelog das dependências atualizadas
+            2. 🔍 Revise cuidadosamente as breaking changes
+            3. 🧪 Teste em ambiente de desenvolvimento antes do merge
+            4. 📚 Atualize a documentação se necessário
+
+            ## 📊 Detalhes da Atualização
+            - **Chart**: ${{ matrix.chart-name }}
+            - **Tipo**: Major update (pode conter breaking changes)
+            - **Componentes afetados**: Modern Gitops Stack
+
+            ## ✅ Checklist de Revisão
+            - [ ] Verificar changelog das dependências
+            - [ ] Revisar breaking changes
+            - [ ] Testar em ambiente de desenvolvimento
+            - [ ] Validar impacto no Modern Gitops Stack
+            - [ ] Atualizar documentação se necessário
