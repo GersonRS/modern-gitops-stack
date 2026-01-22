@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.22.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.22.0...v1.22.1) (2026-01-22)
+
+
+### 🔥 Bug Fixes
+
+* adjust gitpage ([b12e0aa](https://github.com/GersonRS/modern-gitops-stack/commit/b12e0aa54912f606ceaf485c0256d62cc623e31c))
+* adjust gitpage ([f70ec58](https://github.com/GersonRS/modern-gitops-stack/commit/f70ec5891c1a4790204e3c76f7606dea5d538ad6))
+
 ## [1.22.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.21.0...v1.22.0) (2026-01-22)
 
 
