@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.22.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.21.0...v1.22.0) (2026-01-22)
+
+
+### 🚀 New Features
+
+* adjust workflows ([bcaa20a](https://github.com/GersonRS/modern-gitops-stack/commit/bcaa20a982cbf0629796d311d92a6332c9fc7ef2))
+* backup ([01a6622](https://github.com/GersonRS/modern-gitops-stack/commit/01a662211768ba88e71f3a3bdd0e779603d47360))
+
+
+### 🔥 Bug Fixes
+
+* adjust module ([e73fee9](https://github.com/GersonRS/modern-gitops-stack/commit/e73fee97533b10b4d5cdeb19128b28acaf0d73e0))
+* adjust module add project ([c66bc17](https://github.com/GersonRS/modern-gitops-stack/commit/c66bc17070189df786023255dad59d92b22417ac))
+* adjust module add to project ([d48ecb6](https://github.com/GersonRS/modern-gitops-stack/commit/d48ecb6e2b1d3e02756eb9533905a92760ac9b0b))
+
+
+### ⚙️ Chores
+
+* adjust workflows ([62806da](https://github.com/GersonRS/modern-gitops-stack/commit/62806dac853540e194e07ef25a94e65e9a58abbf))
+
 ## [1.21.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.20.0...v1.21.0) (2025-09-20)
 
 
