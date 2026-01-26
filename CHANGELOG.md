@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.23.0](https://github.com/GersonRS/modern-gitops-stack/compare/v1.22.1...v1.23.0) (2026-01-26)
+
+
+### 🚀 New Features
+
+* add new build image module ([37631ad](https://github.com/GersonRS/modern-gitops-stack/commit/37631ad7c91ece9f3faa5e48e152c82ec4b57891))
+* tudo funcionando perfeitamente ([0ebbcdb](https://github.com/GersonRS/modern-gitops-stack/commit/0ebbcdbdf0a2ecf14e638e73a2dccfc1c30d6c5e))
+* tudo funcionando perfeitamente ([8a9dc9f](https://github.com/GersonRS/modern-gitops-stack/commit/8a9dc9fce718e7be1eb607cc0df952ca9f14e773))
+
 ## [1.22.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.22.0...v1.22.1) (2026-01-22)
 
 
