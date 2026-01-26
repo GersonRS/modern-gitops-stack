@@ -3,7 +3,7 @@ resource "random_password" "airflow_fernetKey" {
   special = false
 }
 locals {
-  kubernetes_version     = "v1.29.2"
+  kubernetes_version     = "v1.35.0"
   cluster_name           = "kind"
   base_domain            = format("%s.nip.io", replace(module.traefik.external_ip, ".", "-"))
   subdomain              = "apps"

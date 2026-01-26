@@ -2,19 +2,19 @@ terraform {
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2"
+      version = ">= 2"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 3"
+      version = ">= 3"
     }
     argocd = {
       source  = "argoproj-labs/argocd"
-      version = "~> 7"
+      version = ">= 7"
     }
     keycloak = {
       source  = "mrparkers/keycloak"
-      version = "~> 4"
+      version = ">= 4"
     }
   }
 }
@@ -55,7 +55,7 @@ provider "keycloak" {
   client_id                = "admin-cli"
   username                 = module.keycloak.admin_credentials.username
   password                 = module.keycloak.admin_credentials.password
-  url                      = format("https://keycloak.%s.%s", trimprefix("${local.subdomain}.${local.cluster_name}", "."), local.base_domain)
+  url                      = "https://keycloak.${local.subdomain != "" ? "${trimprefix(local.subdomain, ".")}." : ""}${local.base_domain}"
   tls_insecure_skip_verify = true
   initial_login            = false
 }
