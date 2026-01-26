@@ -1,0 +1,95 @@
+---
+# Workflow do GitHub Actions para criar e publicar uma imagem Docker no Docker Hub.
+#
+# IMPORTANTE: Este workflow é chamado por outros workflows e está
+# centralizado aqui para facilitar a manutenção entre módulos. Por isso, certifique-se de não introduzir
+# mudanças que quebrem a compatibilidade ao modificar este workflow.
+
+name: "modules-docker-build-push"
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: "Nome da imagem Docker (ex: gersonrs/minha-app)"
+        required: true
+        type: string
+      context:
+        description: "Contexto do Docker build (diretório do Dockerfile)"
+        required: false
+        type: string
+        default: "."
+      dockerfile:
+        description: "Caminho para o Dockerfile"
+        required: false
+        type: string
+        default: "Dockerfile"
+      platforms:
+        description: "Plataformas para build multi-arch (ex: linux/amd64,linux/arm64)"
+        required: false
+        type: string
+        default: "linux/amd64"
+    secrets:
+      DOCKERHUB_USERNAME:
+        description: "Username do Docker Hub"
+        required: true
+      DOCKERHUB_TOKEN:
+        description: "Token de acesso do Docker Hub"
+        required: true
+
+permissions:
+  id-token: write
+  packages: write
+  contents: read
+  attestations: write
+
+env:
+  REGISTRY: docker.io
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    # Pula o build se o PR foi criado pelo release-please
+    if: |
+      github.event_name != 'pull_request' || 
+      !startsWith(github.head_ref, 'release-please--')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ inputs.image_name }}
+          tags: |
+            type=ref,event=tag
+            type=ref,event=pr
+            type=sha,prefix=
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.context }}/${{ inputs.dockerfile }}
+          platforms: ${{ inputs.platforms }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
