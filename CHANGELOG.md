@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.23.0](https://github.com/gersonrs/modern-gitops-stack/compare/v1.22.1...v1.23.0) (2026-02-15)
+
+
+### 🚀 New Features
+
+* add load image in pipeline local ([d8c7a9f](https://github.com/gersonrs/modern-gitops-stack/commit/d8c7a9f2effb195903a37758d806898e534b0ed1))
+* add load image in pipeline local ([40e205f](https://github.com/gersonrs/modern-gitops-stack/commit/40e205ffdeb4869b5fb5d06b76d60a71d72c9eae))
+* add new build image module ([37631ad](https://github.com/gersonrs/modern-gitops-stack/commit/37631ad7c91ece9f3faa5e48e152c82ec4b57891))
+* add new workflow ([8080c83](https://github.com/gersonrs/modern-gitops-stack/commit/8080c83e2e574e94b0e0c1790e6cbc31f5c7ca40))
+* adjust docker build workflow ([dfd7252](https://github.com/gersonrs/modern-gitops-stack/commit/dfd7252c42671e1c2898c0672aaa5ddcd60005b8))
+* adjust docker build workflow ([06c5b28](https://github.com/gersonrs/modern-gitops-stack/commit/06c5b28687d2b8d77059899dcc4757d692c0623f))
+* improvement docker build workflow ([94e3b98](https://github.com/gersonrs/modern-gitops-stack/commit/94e3b9828258482da9072dc4141ee599466d88f7))
+* improvement docker build workflow ([8796887](https://github.com/gersonrs/modern-gitops-stack/commit/87968876ead7c08591b592f3e957aff8c72a647a))
+* tudo funcionando perfeitamente ([0ebbcdb](https://github.com/gersonrs/modern-gitops-stack/commit/0ebbcdbdf0a2ecf14e638e73a2dccfc1c30d6c5e))
+* tudo funcionando perfeitamente ([8a9dc9f](https://github.com/gersonrs/modern-gitops-stack/commit/8a9dc9fce718e7be1eb607cc0df952ca9f14e773))
+
 ## [1.22.1](https://github.com/GersonRS/modern-gitops-stack/compare/v1.22.0...v1.22.1) (2026-01-22)
 
 
