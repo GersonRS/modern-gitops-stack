@@ -29,12 +29,17 @@ on:
         required: false
         type: string
         default: "linux/amd64"
+      registry:
+        description: "Registro Docker (ex: docker.io/quay.io/ghcr.io)"
+        required: false
+        type: string
+        default: "docker.io"
     secrets:
-      DOCKERHUB_USERNAME:
-        description: "Username do Docker Hub"
+      USERNAME:
+        description: "Username do Docker Hub ou outro registro Docker"
         required: true
-      DOCKERHUB_TOKEN:
-        description: "Token de acesso do Docker Hub"
+      TOKEN:
+        description: "Token de acesso do Docker Hub ou outro registro Docker"
         required: true
 
 permissions:
@@ -44,7 +49,7 @@ permissions:
   attestations: write
 
 env:
-  REGISTRY: docker.io
+  REGISTRY: ${{ inputs.registry }}
 
 jobs:
   docker:
@@ -77,8 +82,8 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.TOKEN }}
 
       - name: Build and push
         id: push
