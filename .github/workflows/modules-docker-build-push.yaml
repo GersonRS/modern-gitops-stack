@@ -75,7 +75,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker Buildx 🐳
         uses: docker/setup-buildx-action@v3
 
       - name: Login to DockerHub
@@ -94,10 +94,10 @@ jobs:
           file: ${{ inputs.context }}/${{ inputs.dockerfile }}
           platforms: ${{ inputs.platforms }}
           push: ${{ github.event_name != 'pull_request' }}
-          load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
+          sbom: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
