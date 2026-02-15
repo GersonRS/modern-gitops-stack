@@ -10,21 +10,18 @@ name: "modules-linters"
 
 on:
   workflow_call:
-  pull_request:
 
 jobs:
-  terraform-format:
+  commits-checks:
     runs-on: ubuntu-latest
 
     steps:
       - name: "Fazer checkout do repositório"
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # Buscar todo o histórico para todas as tags e branches
 
-      - name: "Configurar Terraform"
-        uses: hashicorp/setup-terraform@v3
-
-      - name: "Executar terraform fmt -check"
-        run: "terraform fmt -check"
-
-  commits-checks:
-    uses: GersonRS/modern-gitops-stack/.github/workflows/modules-commitlinter.yaml@main
+      - name: "Verificar mensagens de commit"
+        uses: docker://aevea/commitsar:0.20.2
+        env:
+          COMMITSAR_CONFIG_PATH : ./.github
