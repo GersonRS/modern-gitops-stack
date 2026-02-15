@@ -82,6 +82,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
+          registry: ${{ inputs.registry }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.TOKEN }}
 
@@ -99,3 +100,5 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            DOCKER_METADATA_OUTPUT_JSON
